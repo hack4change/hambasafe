@@ -215,7 +215,7 @@ namespace Hambasafe.Server.Controllers.v1
 
         [AllowAnonymous]
         [Route("events"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsBySuburbName(string suburb)
+        public async Task<HttpResponseMessage> GetEventsBySuburbName(string suburbname)
         {
             try
             {
