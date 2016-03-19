@@ -77,7 +77,13 @@ angular.module('starter.services', [])
 
   .factory('eventFactory', ['$resource', 'config',
     function ($resource, config) {
-      return $resource(config.baseServiceURL + '/users/profileConstants');
+      return $resource(config.baseServiceURL + '/v1/events',{},{
+        getAllEvents: {
+          method: 'GET',
+          url: config.baseServiceURL + '/v1/events/all',
+          isArray: true
+        }
+      });
     }
   ]);
 

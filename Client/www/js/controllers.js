@@ -98,15 +98,15 @@ angular.module('starter.controllers', [])
   })
 
   .controller('HomeCtrl', function ($scope, eventFactory) {
-    var t = eventFactory.get();
+    $scope.init = function () {
+      eventFactory.getAllEvents({}
+        , function (events) {
+          $scope.events = events;
+        }
+        , function (error) {
 
-    $scope.events = [];
-
-    for (var i = 0; i < 50; i++) {
-      var event = {label: "Test " + i};
-      $scope.events.push(event)
+        });
     }
-
 
     $scope.goCreateAnEvent = function () {
       $location.path('registration');

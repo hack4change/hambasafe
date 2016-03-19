@@ -8,8 +8,8 @@
 angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.services', 'facebook', 'ngResource'])
 
   .constant('config', {
-    //baseServiceURL: "http://hambasafedev.azurewebsites.net"
-    baseServiceURL: "http://api.emguidance.com/openmed/api"
+    baseServiceURL: "http://hambasafedev.azurewebsites.net"
+    //baseServiceURL: "http://api.emguidance.com/openmed/api"
   })
 
   .run(function ($ionicPlatform) {

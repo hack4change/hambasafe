@@ -1,5 +1,5 @@
 <ion-nav-bar class="bar-stable"></ion-nav-bar>
-<ion-view view-title="Home">
+<ion-view view-title="Home" ng-init="init()">
   <div class="tabs-top tabs-background-positive tabs-color-light">
     <div class="tabs">
       <a class="tab-item active" href="#">
@@ -15,7 +15,18 @@
       <div class="item" collection-repeat="event in events"
            collection-item-width="'100%'"
            collection-item-height="150">
-        {{event.label}}
+        <!--<div>{{event.Name}}</div>-->
+        <div class="list-thumbnail">
+          <img src="img/image_placeholder1.png">
+        </div>
+        <div class="right">
+            <h3>{{event.Name}}</h3>
+            <h3>{{event.Description}}</h3>
+            <h3>{{event.Distance}}km</h3>
+            <h3 ng-show="event.PublicEvent">Public Event</h3>
+            <h3 ng-show="!event.PublicEvent">Private Event</h3>
+        </div>
+        <div class="clear"></div>
       </div>
     </div>
   </ion-content>
