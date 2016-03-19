@@ -54,10 +54,10 @@ angular.module('starter.controllers', [])
       });
     };
 
-    $scope.doRegister = function(valid) {
+    $scope.doRegister = function (valid) {
       $scope.submitted = true;
 
-      if(!$scope.loginData.password) {
+      if (!$scope.loginData.password) {
         valid = false;
       } else if ($scope.loginData.password.length < 7) {
         valid = false;
@@ -87,29 +87,67 @@ angular.module('starter.controllers', [])
     }
   })
 
+  .controller('TermsCtrl', function ($scope) {
+    console.log('Here');
+  })
+
   .controller('AccountCtrl', function ($scope) {
     $scope.settings = {
       enableFriends: true
-    }
+    };
   })
-  .controller('HomeCtrl', function ($scope) {
-      $scope.event = "hi";
-      $scope.log = function() {
-        console.log($scope.event);
-      }
-  })
-  .controller('LatestCtrl', function ($scope) {
+  .controller('LatestCtrl', function ($scope, $location) {
 
-    $scope.goCreateAnEvent = function() {
+
+
+    $scope.goCreateAnEvent = function () {
       $location.path('registration');
     }
 
     $scope.goHambaSafe = function() {
-      $location.path('tab.home');
+      $location.path('eventdetail');
     } 
-  }).controller('CreateCtrl', function ($scope) {
+  })
+  .controller('EventDetailCtrl', function ($scope, $location) {
+      
+      $scope.eventData = {
+          attending: false,
+          location: "CAPE TOWN, RONDEBOSH",
+          title: "Cycling in numbers",
+          type: "CYCLE",
+          distance: "5KM",
+          level: "NOVICE",
+          date: "20 November 2015",
+          summary: "This is a 'Facebook' styled Card. The header is created from a Thumbnail List item,        the content is from a card-body consisting of an image and paragraph text. The footer consists of tabs, icons aligned left, within the card-footer.",
+          numberOfAttendees: "4"
+      }
+
+      $scope.init = function() {
+        $scope.attendingDescription = "JOIN";
+        if ($scope.eventData.attending) {
+          $scope.attendingDescription = "CANCEL"
+        }  
+      }
+      
+      $scope.doAttend = function() {
+        $scope.eventData.attending = !$scope.eventData.attending;
+        $scope.attendingDescription = "JOIN";
+        if ($scope.eventData.attending) {
+          $scope.attendingDescription = "CANCEL"
+        }  
+      }
+ 
+  })
+  .controller('HomeCtrl', function ($scope, eventFactory) {
+    var t = eventFactory.get();
+
+    $scope.events = [];
+
+    for (var i = 0; i < 50; i++) {
+      var event = {label: "Test " + i};
+      $scope.events.push(event)
+    }
+  })
+  .controller('CreateCtrl', function ($scope) {
   });
-
-  
-
 

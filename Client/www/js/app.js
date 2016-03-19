@@ -5,7 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.services', 'facebook'])
+angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.services', 'facebook', 'ngResource'])
+
+  .constant('config', {
+    //baseServiceURL: "http://hambasafedev.azurewebsites.net"
+    baseServiceURL: "http://api.emguidance.com/openmed/api"
+  })
 
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
@@ -27,8 +32,9 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
     });
   })
 
-  .config(function ($stateProvider, $urlRouterProvider, FacebookProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, FacebookProvider, $httpProvider) {
 
+    $httpProvider.defaults.useXDomain = true;
     FacebookProvider.init('289482390688');
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -48,6 +54,17 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         templateUrl: 'templates/registration.html',
         controller: 'RegistrationCtrl'
       })
+      .state('home', {
+        url: '/home',
+        templateUrl: 'templates/home.html',
+        controller: 'HomeCtrl'
+      })
+
+      .state('terms', {
+        url: '/terms',
+        templateUrl: 'templates/terms.html',
+        controller: 'TermsCtrl'
+      })
 
       .state('tab', {
         url: '/tab',
@@ -55,37 +72,24 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         templateUrl: 'templates/tabs.html'
       })
 
-      // Each tab has its own nav history stack:
-
-      .state('tab.home', {
-        url: '/home',
-        views: {
-          'tab-home': {
-            templateUrl: 'templates/home.html',
-            controller: 'HomeCtrl'
-          }
-        }
-      })
-      
       .state('latest', {
         url: '/latest',
-       // views: {
-       //   'tab-latest': {
-            templateUrl: 'templates/latest.html',
-            controller: 'LatestCtrl'
-        //  }
-        //}
+        templateUrl: 'templates/latest.html',
+        controller: 'LatestCtrl'
       })
-      
-      .state('tab.create', {
+
+      .state('eventdetail', {
+        url: '/eventdetail',
+        templateUrl: 'templates/eventDetail.html',
+        controller: 'EventDetailCtrl'
+      })
+
+      .state('create', {
         url: '/create',
-        views: {
-          'tab-create': {
-            templateUrl: 'templates/create.html',
-            controller: 'CreateCtrl'
-          }
-        }
+        templateUrl: 'templates/create.html',
+        controller: 'CreateCtrl'
       })
+
       .state('tab.dash', {
         url: '/dash',
         views: {
@@ -105,6 +109,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
           }
         }
       })
+
       .state('tab.chat-detail', {
         url: '/chats/:chatId',
         views: {
@@ -125,6 +130,6 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         }
       })
 
-    // if none of the above states are matched, use this as the fallback
-
+      // if none of the above states are matched, use this as the fallback
+      $urlRouterProvider.otherwise('/landing');
   });
