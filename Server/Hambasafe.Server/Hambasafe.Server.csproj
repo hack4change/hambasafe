@@ -258,6 +258,7 @@
     <Compile Include="Attributes\GeneralExceptionFilterAttribute.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\v1\EventController.cs" />
     <Compile Include="Controllers\v1\UsersController.cs" />
     <Compile Include="Controllers\VersionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -316,7 +317,9 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="Properties\PublishProfiles\HambasafeDev.pubxml" />
+    <Content Include="API - Data layer interactions.md" />
+    <None Include="Properties\PublishProfiles\HambasafeDev - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
