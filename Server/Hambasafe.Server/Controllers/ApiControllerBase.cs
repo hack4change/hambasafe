@@ -26,7 +26,8 @@ namespace Hambasafe.Server.Controllers
 
         protected HttpResponseMessage HandleError(Exception error)
         {
-            WriteErrorReport(error);
+            // Until we can figure out how to push to the azure storage, errors are not going to be logged
+            // WriteErrorReport(error);
             Log.Error(error.Message, error);
 
             return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, error.Message);
