@@ -1,15 +1,19 @@
 <ion-view ng-init="getLoginStatus()" class="sign-up">
   <ion-content class="padding">
 
+  	<!-- Profile image -->
+  	<!-- When an image is added the outline automatically disappears -->
   	<img src="" class="profile" style="background: white">
   	
   	<p>Access with</p>
 
+  	<!-- facebook login button -->
     <button class="button button-block" style="height: 60px;" ng-click="fbLogin()">
      	<img src="/img/facebook-icon.png" style="left: 0; position: absolute; padding: 0 20px; margin: 10px 0; border-right: 2px solid grey;">
       FB Login
     </button>
 
+    <!-- Terms of use link -->
     <div class="conditions">
     	<a href="#">Terms of use</a>
     </div>
