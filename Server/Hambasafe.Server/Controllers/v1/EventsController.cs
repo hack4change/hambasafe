@@ -109,6 +109,7 @@ namespace Hambasafe.Server.Controllers.v1
                     EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
 
                 };
+
                 var dummyEvents = new[]
                 {
                     event1,
