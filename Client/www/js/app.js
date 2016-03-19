@@ -60,6 +60,12 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         controller: 'HomeCtrl'
       })
 
+      .state('terms', {
+        url: '/terms',
+        templateUrl: 'templates/terms.html',
+        controller: 'TermsCtrl'
+      })
+
       .state('tab', {
         url: '/tab',
         abstract: true,
@@ -68,32 +74,26 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
 
       // Each tab has its own nav history stack:
 
-      .state('tab.home', {
+      .state('home', {
         url: '/home',
-        views: {
-          'tab-home': {
-            templateUrl: 'templates/home.html',
-            controller: 'HomeCtrl'
-          }
-        }
+        templateUrl: 'templates/home.html',
+        controller: 'HomeCtrl'
       })
-      .state('tab.latest', {
+
+      .state('latest', {
         url: '/latest',
-        views: {
-          'tab-latest': {
+       // views: {
+       //   'tab-latest': {
             templateUrl: 'templates/latest.html',
             controller: 'LatestCtrl'
-          }
-        }
+        //  }
+        //}
       })
-      .state('tab.create', {
+
+      .state('create', {
         url: '/create',
-        views: {
-          'tab-create': {
-            templateUrl: 'templates/create.html',
-            controller: 'CreateCtrl'
-          }
-        }
+        templateUrl: 'templates/create.html',
+        controller: 'CreateCtrl'
       })
       .state('tab.dash', {
         url: '/dash',
@@ -134,6 +134,6 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         }
       })
 
-    // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/home');
+      // if none of the above states are matched, use this as the fallback
+      $urlRouterProvider.otherwise('/landing');
   });
