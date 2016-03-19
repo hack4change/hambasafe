@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Threading.Tasks;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
+using Hambasafe.Server.Models;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -24,20 +25,20 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Models.EventModel event1 = new Models.EventModel()
+                EventModel event1 = new EventModel()
                 {
                     Name = "Event 1",
                     Description = "Event 1 Description",
-                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
+                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
                     EventDateTimeStart = DateTime.Now.Date.AddHours(14),
                     EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
                     PublicEvent = true,
                     Distance = 4,
                     WaitMins = 5,
                     StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new Models.SuburbModel() { Name = "Claremont", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+                    StartSuburb = new SuburbModel() { Name = "Claremont", City = new CityModel() { Name = "Cape Town", Province = new ProvinceModel() { Name = "Western Cape" } } },
                     EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new Models.SuburbModel() { Name = "Claremont", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+                    EndSuburb = new SuburbModel() { Name = "Claremont", City = new CityModel() { Name = "Cape Town", Province = new ProvinceModel() { Name = "Western Cape" } } },
 
                 };
                 Models.EventModel event2 = new Models.EventModel()
@@ -51,7 +52,7 @@ namespace Hambasafe.Server.Controllers.v1
                     Distance = 4,
                     WaitMins = 5,
                     StartAddressLines = new List<string>() { "cnr Klipper Rd and Main Rd" },
-                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } },
                     EndAddressLines = new List<string>() { "cnr Woolsack Rd and Main Rd" },
                     EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
 
@@ -62,6 +63,58 @@ namespace Hambasafe.Server.Controllers.v1
                     event2
                 };
 
+                return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("eventsSuburb"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsSuburb(SuburbModel suburb)
+        {
+            try
+            {
+                EventModel event1 = new EventModel()
+                {
+                    Name = "Event 1",
+                    Description = "Event 1 Description",
+                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
+                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
+                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
+                    PublicEvent = true,
+                    Distance = 4,
+                    WaitMins = 5,
+                    StartAddressLines = new List<string>() { "100 Main Rd" },
+                    StartSuburb = new SuburbModel() { Name = "Newlands", City = new CityModel() { Name = "Cape Town", Province = new ProvinceModel() { Name = "Western Cape" } } },
+                    EndAddressLines = new List<string>() { "100 Main Rd" },
+                    EndSuburb = new SuburbModel() { Name = "Claremont", City = new CityModel() { Name = "Cape Town", Province = new ProvinceModel() { Name = "Western Cape" } } },
+
+                };
+                Models.EventModel event2 = new Models.EventModel()
+                {
+                    Name = "Event 2",
+                    Description = "Event 2 Description",
+                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
+                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
+                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
+                    PublicEvent = true,
+                    Distance = 4,
+                    WaitMins = 5,
+                    StartAddressLines = new List<string>() { "cnr Klipper Rd and Main Rd" },
+                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } },
+                    EndAddressLines = new List<string>() { "cnr Woolsack Rd and Main Rd" },
+                    EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+
+                };
+
+                var dummyEvents = new[]
+                {
+                    event1,
+                    event2
+                };
                 return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
             }
             catch (Exception error)
