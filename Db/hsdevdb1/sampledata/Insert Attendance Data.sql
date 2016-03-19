@@ -1,0 +1,12 @@
+set IDENTITY_INSERT Attendance ON;
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (401, 1, 201, 1, '2016-03-19 00:00:00');
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (402, 2, 201, 0, '2016-03-19 00:00:00');
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (403, 3, 201, 0, '2016-03-19 00:00:00');
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (404, 4, 202, 0, '2016-03-19 00:00:00');
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (405, 5, 202, 0, '2016-03-19 00:00:00');
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (406, 6, 202, 1, '2016-03-19 00:00:00');
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (407, 7, 203, 1, '2016-03-19 00:00:00');
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (408, 8, 203, 1, '2016-03-19 00:00:00');
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (409, 9, 204, 1, '2016-03-19 00:00:00');
+insert into Attendance (Attendanceid, Userid, Eventid, Attended, DateCreated) values (410, 10, 204, 0, '2016-03-19 00:00:00');
+set IDENTITY_INSERT Attendance OFF;
