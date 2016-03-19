@@ -92,9 +92,14 @@ angular.module('starter.controllers', [])
       enableFriends: true
     }
   })
+  .controller('HomeCtrl', function ($scope) {
+      $scope.event = "hi";
+      $scope.log = function() {
+        console.log($scope.event);
+      }
+  })
+  .controller('LatestCtrl', function ($scope) {
 
-  .controller('LatestCtrl', function ($scope, $location) {
-    
     $scope.goCreateAnEvent = function() {
       $location.path('registration');
     }
@@ -102,6 +107,7 @@ angular.module('starter.controllers', [])
     $scope.goHambaSafe = function() {
       $location.path('tab.home');
     } 
+  }).controller('CreateCtrl', function ($scope) {
   });
 
   
