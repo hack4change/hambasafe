@@ -307,6 +307,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="API - Data layer interactions.md" />
     <None Include="Properties\PublishProfiles\HambasafeDev - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy %282%29.pubxml" />
