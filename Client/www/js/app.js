@@ -80,7 +80,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
 
       .state('eventdetail', {
         url: '/eventdetail',
-        templateUrl: 'templates/eventDetail.html',
+        templateUrl: 'templates/event-detail.html',
         controller: 'EventDetailCtrl'
       })
 
@@ -128,6 +128,12 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
             controller: 'AccountCtrl'
           }
         }
+      })
+
+      .state('emergency', {
+        url: '/emergency',
+        templateUrl: 'templates/emergency.html',
+        //controller: 'EventDetailCtrl'
       })
 
       // if none of the above states are matched, use this as the fallback
