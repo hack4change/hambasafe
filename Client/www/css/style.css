@@ -1,1 +1,52 @@
-/* Empty. Add your own CSS if you like */
+@import url(bootstrap-columns.css);
+
+/* General styles */
+a
+{
+    text-decoration: none;
+}
+.no-padding
+{
+    padding: 0 !important;
+}
+.no-padding-left
+{
+    padding-left: 0;
+}
+.no-padding-right
+{
+    padding-right: 0;
+}
+.margin-top
+{
+    margin-top: 15px;
+}
+.margin-top-small
+{
+    margin-top: 10px;
+}
+.margin-bottom
+{
+    margin-bottom: 15px;
+}
+.margin-bottom-small
+{
+    margin-bottom: 10px;
+}
+
+/* Search page */
+.search-tabs .search-tab
+{
+    padding: 20px;
+    border: 1px solid #333;
+    color: #333;
+    text-align: center;
+    font-size: 20px;
+    display: block;
+}
+.search-tabs .search-tab.active,
+.search-tabs .search-tab:hover
+{
+    background-color: #333;
+    color: #ffffff;
+}
