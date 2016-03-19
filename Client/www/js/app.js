@@ -80,18 +80,26 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
 
       .state('latest', {
         url: '/latest',
-       // views: {
-       //   'tab-latest': {
-            templateUrl: 'templates/latest.html',
-            controller: 'LatestCtrl'
-        //  }
-        //}
+        templateUrl: 'templates/latest.html',
+        controller: 'LatestCtrl'
+      })
+
+      .state('eventdetail', {
+        url: '/eventdetail',
+        templateUrl: 'templates/eventDetail.html',
+        controller: 'EventDetailCtrl'
       })
 
       .state('create', {
         url: '/create',
         templateUrl: 'templates/create.html',
         controller: 'CreateCtrl'
+      })
+
+      .state('search', {
+        url: '/search',
+        templateUrl: 'templates/search.html',
+        controller: 'SearchCtrl'
       })
 
       .state('tab.dash', {
