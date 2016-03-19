@@ -63,14 +63,10 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
 
       // Each tab has its own nav history stack:
 
-      .state('tab.home', {
+      .state('home', {
         url: '/home',
-        views: {
-          'tab-home': {
-            templateUrl: 'templates/home.html',
-            controller: 'HomeCtrl'
-          }
-        }
+        templateUrl: 'templates/home.html',
+        controller: 'HomeCtrl'
       })
       
       .state('latest', {
@@ -83,14 +79,10 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         //}
       })
       
-      .state('tab.create', {
+      .state('create', {
         url: '/create',
-        views: {
-          'tab-create': {
-            templateUrl: 'templates/create.html',
-            controller: 'CreateCtrl'
-          }
-        }
+        templateUrl: 'templates/create.html',
+        controller: 'CreateCtrl'
       })
       .state('tab.dash', {
         url: '/dash',
