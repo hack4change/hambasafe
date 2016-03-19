@@ -24,11 +24,36 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
+                Models.EventModel event1 = new Models.EventModel()
+                {
+                    Name = "Event 1",
+                    Description = "Event 1 Description",
+                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
+                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
+                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
+                    PublicEvent = true,
+                    Distance = 4,
+                    WaitMins = 5,
+                    Suburb = new Models.SuburbModel() { Name = "Claremont", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+
+                };
+                Models.EventModel event2 = new Models.EventModel()
+                {
+                    Name = "Event 2",
+                    Description = "Event 2 Description",
+                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
+                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
+                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
+                    PublicEvent = true,
+                    Distance = 4,
+                    WaitMins = 5,
+                    Suburb = new Models.SuburbModel() { Name = "Newlands", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+
+                };
                 var dummyEvents = new[]
                 {
-                    new { Id = 1, Name = "Event 1"},
-                    new { Id = 2, Name = "Event 2"},
-                    new {Id = 3, Name = "Event 3"}
+                    event1,
+                    event2
                 };
 
                 return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
@@ -40,4 +65,3 @@ namespace Hambasafe.Server.Controllers.v1
         }
     }
 }
-
