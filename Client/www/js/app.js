@@ -66,15 +66,17 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
           }
         }
       })
-      .state('tab.latest', {
+      
+      .state('latest', {
         url: '/latest',
-        views: {
-          'tab-latest': {
+       // views: {
+       //   'tab-latest': {
             templateUrl: 'templates/latest.html',
             controller: 'LatestCtrl'
-          }
-        }
+        //  }
+        //}
       })
+      
       .state('tab.create', {
         url: '/create',
         views: {
