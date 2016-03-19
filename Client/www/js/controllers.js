@@ -1,7 +1,13 @@
 angular.module('starter.controllers', [])
 
 .controller('SearchCtrl', function($scope) {
-
+  (function(){
+     
+  })()
+  $scope.search = function(){
+    var searchFilter = document.querySelector('#search-bar').value;
+    
+  };
 })
 .controller('DashCtrl', function($scope) {})
 

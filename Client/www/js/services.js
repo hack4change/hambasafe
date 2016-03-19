@@ -47,4 +47,15 @@ angular.module('starter.services', [])
       return null;
     }
   };
-});
+})
+.factory('Events', ['$http', '$q', function($http, $q){
+  return {
+    search: function(query){
+         
+    },
+    join: function(){
+    
+    }
+  }
+}]);
+
