@@ -12,7 +12,7 @@ namespace Hambasafe.Server.Models
     {
         private string _name;
         private GeoCoordinate _coord;
-        private CityModel _city;
+        private ProvinceModel _province;
 
         public string Name
         {
@@ -26,10 +26,10 @@ namespace Hambasafe.Server.Models
             set { _coord = value; }
         }
 
-        public CityModel City
+        public ProvinceModel Province
         {
-            get { return _city; }
-            set { _city = value; }
+            get { return _province; }
+            set { _province = value; }
         }
     }
 }
