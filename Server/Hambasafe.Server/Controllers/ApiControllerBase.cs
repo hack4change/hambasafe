@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Hambasafe.Server.Attributes;
 using Hambasafe.Server.Models;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
@@ -11,6 +12,7 @@ using log4net;
 
 namespace Hambasafe.Server.Controllers
 {
+    [GeneralExceptionFilter]
     public class ApiControllerBase : ApiController
     {
         private readonly IConfigurationService _configuration;
