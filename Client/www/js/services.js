@@ -74,4 +74,11 @@ angular.module('starter.services', [])
         }
       };
     }])
+
+  .factory('eventFactory', ['$resource', 'config',
+    function ($resource, config) {
+      return $resource(config.baseServiceURL + '/users/profileConstants');
+    }
+  ]);
+
 ;

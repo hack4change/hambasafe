@@ -54,10 +54,10 @@ angular.module('starter.controllers', [])
       });
     };
 
-    $scope.doRegister = function(valid) {
+    $scope.doRegister = function (valid) {
       $scope.submitted = true;
 
-      if(!$scope.loginData.password) {
+      if (!$scope.loginData.password) {
         valid = false;
       } else if ($scope.loginData.password.length < 7) {
         valid = false;
@@ -87,20 +87,20 @@ angular.module('starter.controllers', [])
     }
   })
 
+  .controller('TermsCtrl', function ($scope) {
+    console.log('Here');
+  })
+
   .controller('AccountCtrl', function ($scope) {
     $scope.settings = {
       enableFriends: true
-    }
-  })
-  .controller('HomeCtrl', function ($scope) {
-      $scope.event = "hi";
-      $scope.log = function() {
-        console.log($scope.event);
-      }
+    };
   })
   .controller('LatestCtrl', function ($scope, $location) {
 
-    $scope.goCreateAnEvent = function() {
+
+
+    $scope.goCreateAnEvent = function () {
       $location.path('registration');
     }
 
@@ -138,10 +138,16 @@ angular.module('starter.controllers', [])
       }
  
   })
+  .controller('HomeCtrl', function ($scope, eventFactory) {
+    var t = eventFactory.get();
+
+    $scope.events = [];
+
+    for (var i = 0; i < 50; i++) {
+      var event = {label: "Test " + i};
+      $scope.events.push(event)
+    }
+  })
   .controller('CreateCtrl', function ($scope) {
-  
   });
-
-  
-
 
