@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Web.Http;
 using Hambasafe.Server.Models.v1;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
+using Entities = Hambasafe.DataAccess.Entities;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -24,35 +26,9 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                var users = new UserModel[]
-                {
-                    new UserModel
-                    {
-                        UserId = 1,
-                        FirstNames = "Foo",
-                        LastName = "Bar",
-                        DateOfBirth = DateTime.Now.AddYears(-21),
-                        EmailAddress = "Foo@Bar.co.za",
-                        Gender = "M",
-                        IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                        MobileNumber = "123456789",
-                        ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                        Status = "Verified"
-                    },
-                    new UserModel
-                    {
-                        UserId = 2,
-                        FirstNames = "Hum",
-                        LastName = "Bug",
-                        DateOfBirth = DateTime.Now.AddYears(-75),
-                        EmailAddress = "Hum@Bug.co.za",
-                        Gender = "M",
-                        IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                        MobileNumber = "987654321",
-                        ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                        Status = "Unverified"
-                    }
-                };
+                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+
+                var users = context.Users.Select(e => new UserModel(e)).ToArray();
 
                 return Request.CreateResponse(HttpStatusCode.OK, users);
             }
@@ -68,35 +44,11 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                var users = new UserModel[]
-                {
-                    new UserModel
-                    {
-                        UserId = 1,
-                        FirstNames = $"Foo{username}",
-                        LastName = "Bar",
-                        DateOfBirth = DateTime.Now.AddYears(-21),
-                        EmailAddress = "Foo@Bar.co.za",
-                        Gender = "M",
-                        IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                        MobileNumber = "123456789",
-                        ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                        Status = "Verified"
-                    },
-                    new UserModel
-                    {
-                        UserId = 2,
-                        FirstNames = "Hum",
-                        LastName = $"Bug{username}",
-                        DateOfBirth = DateTime.Now.AddYears(-75),
-                        EmailAddress = "Hum@Bug.co.za",
-                        Gender = "M",
-                        IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                        MobileNumber = "987654321",
-                        ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                        Status = "Unverified"
-                    }
-                };
+                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+
+                var users = context.Users.Where(a=>
+                                a.FirstNames.ToUpper().Contains(username.ToUpper()) 
+                                || a.LastName.ToUpper().Contains(username.ToUpper())).Select(e => new UserModel(e)).ToArray();
 
                 return Request.CreateResponse(HttpStatusCode.OK, users);
             }
@@ -112,19 +64,9 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                var user = new UserModel
-                {
-                    UserId = id,
-                    FirstNames = "Foo",
-                    LastName = "Bar",
-                    DateOfBirth = DateTime.Now.AddYears(-21),
-                    EmailAddress = "Foo@Bar.co.za",
-                    Gender = "M",
-                    IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                    MobileNumber = "123456789",
-                    ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                    Status = "Verified"
-                };
+                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+
+                UserModel user = new UserModel(context.Users.Where(e => e.UserId == id) as Entities.User);
 
                 return Request.CreateResponse(HttpStatusCode.OK, user);
             }
@@ -140,19 +82,9 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                var user = new UserModel
-                {
-                    UserId = id,
-                    FirstNames = "Foo",
-                    LastName = "Bar",
-                    DateOfBirth = DateTime.Now.AddYears(-21),
-                    EmailAddress = "Foo@Bar.co.za",
-                    Gender = "M",
-                    IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                    MobileNumber = "123456789",
-                    ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                    Status = "Verified"
-                };
+                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+
+                UserModel user = new UserModel(context.Users.Where(e => e.UserId == id) as Entities.User);
 
                 return Request.CreateResponse(HttpStatusCode.OK, user);
             }
