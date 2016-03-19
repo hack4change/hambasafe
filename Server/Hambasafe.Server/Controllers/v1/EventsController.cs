@@ -96,7 +96,7 @@ namespace Hambasafe.Server.Controllers.v1
             catch (Exception error)
             {
                 return HandleError(error);
-            }
+        }
         }
 
         [AllowAnonymous]
