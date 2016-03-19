@@ -9,8 +9,15 @@ namespace Hambasafe.Server.Models
     [RoutePrefix("v1")]
     public class EventTypeModel
     {
+        private int _eventTypeID;
         private string _name;
         private string _description;
+
+        public int EventTypeID
+        {
+            get{ return _eventTypeID;}
+            set{ _eventTypeID = value;} 
+        }
 
         public string Name
         {
