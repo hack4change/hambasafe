@@ -88,7 +88,11 @@ angular.module('starter.controllers', [])
   })
 
   .controller('TermsCtrl', function ($scope) {
-    console.log('Here');
+
+  })
+
+  .controller('AboutUsCtrl', function ($scope) {
+
   })
 
   .controller('AccountCtrl', function ($scope) {

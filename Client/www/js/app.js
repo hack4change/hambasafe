@@ -66,6 +66,12 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         controller: 'TermsCtrl'
       })
 
+      .state('about-us', {
+        url: '/about-us',
+        templateUrl: 'templates/about-us.html',
+        controller: 'AboutUsCtrl'
+      })
+
       .state('tab', {
         url: '/tab',
         abstract: true,
