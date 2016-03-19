@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Hambasafe.Server.Models;
@@ -14,20 +15,28 @@ namespace Hambasafe.Server.Controllers
     {
         private readonly IConfigurationService _configuration;
         private readonly ITableStorageService _tableStorage;
+
         public ApiControllerBase(IConfigurationService configuration, ITableStorageService tableStorage)
         {
-
             _configuration = configuration;
             _tableStorage = tableStorage;
         }
 
-        protected string ConnectionString()
+        protected HttpResponseMessage HandleError(Exception error)
+        {
+            WriteErrorReport(error);
+            Log.Error(error.Message, error);
+
+            return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, error.Message);
+        }
+
+        private string ConnectionString()
         {
             string connectionString = _configuration.GetStorageConnectionString();
             return connectionString;
         }
 
-        protected void WriteErrorReport(Exception error)
+        private void WriteErrorReport(Exception error)
         {
             ErrorReport errorReport = new ErrorReport(error);
             string connectionString = ConnectionString();
@@ -45,17 +54,7 @@ namespace Hambasafe.Server.Controllers
             _tableStorage.Save(connectionString, "ApiError", errorReport);
         }
 
-        protected void HandleError(Exception error)
-        {
-            WriteErrorReport(error);
-            Log.Error(error.Message, error);
-            throw new HttpResponseException(new HttpResponseMessage()
-            {
-                StatusCode = HttpStatusCode.InternalServerError,
-                Content = new StringContent(error.Message)
-            });
-        }
-        protected ILog Log
+        private ILog Log
         {
             get
             {
