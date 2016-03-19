@@ -5,31 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b50e14cb159b4204b2d4f605ba1822ba" Name="Diagram1">
-        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Attendance" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Hambasafe.Server.Entities.AttendanceRating" Width="1.5" PointX="8.25" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Hambasafe.Server.Entities.BlockedUser" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Event" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Hambasafe.Server.Entities.EventType" Width="1.5" PointX="3.75" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Friend" Width="1.5" PointX="3.125" PointY="13.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Invitation" Width="1.5" PointX="11.25" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Hambasafe.Server.Entities.User" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Attendance_Event" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Attendance_User" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_AttendanceRating_Attendance" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_AttendanceRating_User" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_AttendanceRating_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_BlockedUser_User" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_BlockedUser_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Event_EventType" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Event_User" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Invitation_Event" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Friend_User" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Friend_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Invitation_User" ManuallyRouted="false" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Invitation_User1" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Suburb" Width="1.5" PointX="0.75" PointY="1" />
-        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Event_Suburb" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
