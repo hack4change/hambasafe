@@ -49,6 +49,13 @@ angular.module('starter.services', [])
     };
   })
 
+  .factory('Event', function(){
+    return {
+      createEvent: function(data) {
+         
+      }
+    } 
+  })
   .factory("LocalStorage", ['$window',
     function ($window) {
       var _facebookAuth = null

@@ -94,9 +94,50 @@ angular.module('starter.controllers', [])
   .controller('AccountCtrl', function ($scope) {
     $scope.settings = {
       enableFriends: true
-    };
+    }
   })
+  .controller('LatestCtrl', function ($scope, $location) {
 
+
+
+    $scope.goCreateAnEvent = function () {
+      $location.path('registration');
+    }
+
+    $scope.goHambaSafe = function() {
+      $location.path('eventdetail');
+    }
+  })
+  .controller('EventDetailCtrl', function ($scope, $location) {
+
+      $scope.eventData = {
+          attending: false,
+          location: "CAPE TOWN, RONDEBOSH",
+          title: "Cycling in numbers",
+          type: "CYCLE",
+          distance: "5KM",
+          level: "NOVICE",
+          date: "20 November 2015",
+          summary: "This is a 'Facebook' styled Card. The header is created from a Thumbnail List item,        the content is from a card-body consisting of an image and paragraph text. The footer consists of tabs, icons aligned left, within the card-footer.",
+          numberOfAttendees: "4"
+      }
+
+      $scope.init = function() {
+        $scope.attendingDescription = "JOIN";
+        if ($scope.eventData.attending) {
+          $scope.attendingDescription = "CANCEL"
+        }
+      }
+
+      $scope.doAttend = function() {
+        $scope.eventData.attending = !$scope.eventData.attending;
+        $scope.attendingDescription = "JOIN";
+        if ($scope.eventData.attending) {
+          $scope.attendingDescription = "CANCEL"
+        }
+      }
+
+  })
   .controller('HomeCtrl', function ($scope, eventFactory) {
     $scope.init = function () {
       eventFactory.getAllEvents({}
@@ -106,20 +147,40 @@ angular.module('starter.controllers', [])
         , function (error) {
 
         });
-    }
+  }).controller('CreateCtrl', function ($scope) {
+    //init
+    (function(){
+    })()
+  }).controller('SearchCtrl', function ($scope) {
+    //init
+    (function(){
+    })()
+    $scope.searchEvents = function(){
 
-    $scope.goCreateAnEvent = function () {
-      $location.path('registration');
     }
+    $scope.eventType = ["Walk", "Run", "Cycle"];
+    $scope.typeSelected = $scope.eventType[0];
 
-    $scope.goHambaSafe = function () {
-      $location.path('tab.home');
-    }
+    /*
+     * if given group is the selected group, deselect it
+     * else, select the given group
+     */
+    $scope.toggleGroup = function(group) {
+      if ($scope.isGroupShown(group)) {
+        $scope.shownGroup = null;
+      } else {
+        $scope.shownGroup = group;
+      }
+    };
+    $scope.isGroupShown = function(group) {
+      return $scope.shownGroup === group;
+    };
+    /*
+     * if given group is the selected group, deselect it
+     * else, select the given group
+     */
+    $scope.toggleSelection = function(selected) {
+      $scope.typeSelected = selected;
+    };
+
   })
-
-  .controller('CreateCtrl', function ($scope) {
-  });
-
-
-
-
