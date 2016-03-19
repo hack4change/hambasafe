@@ -97,10 +97,6 @@ angular.module('starter.controllers', [])
     }
   })
   .controller('HomeCtrl', function ($scope) {
-      $scope.event = "hi";
-      $scope.log = function() {
-        console.log($scope.event);
-      }
   })
   .controller('LatestCtrl', function ($scope) {
 
@@ -112,6 +108,25 @@ angular.module('starter.controllers', [])
       $location.path('tab.home');
     } 
   }).controller('CreateCtrl', function ($scope) {
+    //init
+    (function(){
+      $scope.createModel = {
+        eventTitle    : null,
+        startTime     : null,
+        finishTime    : null,
+        startDate     : null, 
+        description   : null,
+        maxTime       : null,
+        availabilty   : null,
+        eventType     : null,
+        pace          : null, 
+        distance      : null,
+        meetingPoint  : null,
+      };
+    })()
+    $scope.createEvent() = function(){
+       
+    }
   });
 
   
