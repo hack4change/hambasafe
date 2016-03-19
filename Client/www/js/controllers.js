@@ -27,7 +27,7 @@ angular.module('starter.controllers', [])
       Facebook.getLoginStatus(function (response) {
         if (response.status === 'connected') {
           $scope.loggedIn = true;
-          $location.path('registration')
+          $location.path('registration');
         } else {
           $scope.loggedIn = false;
         }
@@ -40,6 +40,7 @@ angular.module('starter.controllers', [])
         // Do something with response.
         console.log(response);
         LocalStorage.facebookAuth = response;
+        $location.path('registration');
       });
     };
   })
