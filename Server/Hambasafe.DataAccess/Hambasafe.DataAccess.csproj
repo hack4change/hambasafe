@@ -52,77 +52,84 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Attendance.cs">
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\AttendanceRating.cs">
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\BlockedUser.cs">
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Connection.cs">
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Country.cs">
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Event.cs">
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\EventLocation.cs">
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\EventType.cs">
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Friend.cs">
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\HambaDataEntities.Context.cs">
+    <Compile Include="Entities\HambasafeDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HambaDataEntities.Context.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\HambaDataEntities.cs">
+    <Compile Include="Entities\HambasafeDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\HambaDataEntities.Designer.cs">
+    <Compile Include="Entities\HambasafeDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HambaDataEntities.edmx</DependentUpon>
+      <DependentUpon>HambasafeDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entities\Invitation.cs">
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Province.cs">
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Suburb.cs">
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\User.cs">
-      <DependentUpon>HambaDataEntities.tt</DependentUpon>
+      <DependentUpon>HambasafeDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <EntityDeploy Include="Entities\HambaDataEntities.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HambaDataEntities.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="Entities\HambaDataEntities.edmx.diagram">
-      <DependentUpon>HambaDataEntities.edmx</DependentUpon>
+    <EntityDeploy Include="Entities\HambasafeDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HambasafeDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\HambasafeDataModel.edmx.diagram">
+      <DependentUpon>HambasafeDataModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Entities\HambaDataEntities.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HambaDataEntities.edmx</DependentUpon>
-      <LastGenOutput>HambaDataEntities.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Entities\HambaDataEntities.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HambaDataEntities.edmx</DependentUpon>
-      <LastGenOutput>HambaDataEntities.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Entities\HambasafeDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HambasafeDataModel.edmx</DependentUpon>
+      <LastGenOutput>HambasafeDataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Entities\HambasafeDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HambasafeDataModel.edmx</DependentUpon>
+      <LastGenOutput>HambasafeDataModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

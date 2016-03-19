@@ -13,10 +13,10 @@ namespace Hambasafe.DataAccess.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class hambasafeEntities : DbContext
+    public partial class HambasafeConnectionString : DbContext
     {
-        public hambasafeEntities()
-            : base("name=hambasafeEntities")
+        public HambasafeConnectionString()
+            : base("name=HambasafeConnectionString")
         {
         }
     
