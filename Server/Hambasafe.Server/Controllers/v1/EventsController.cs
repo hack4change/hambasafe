@@ -37,7 +37,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("events{id:int}"), HttpGet]
+        [Route("events"), HttpGet]
         public async Task<HttpResponseMessage> GetEvent(int id)
         {
             try
@@ -68,7 +68,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("events{userid:int}"), HttpGet]
+        [Route("events"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByCreator(int userid)
         {
             try
@@ -99,8 +99,8 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("events{attendeeid:int}"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsByAttendee(int userid)
+        [Route("events"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
         {
             try
             {
@@ -182,8 +182,8 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("events{suburb:string}"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsSuburb(SuburbModel suburb)
+        [Route("events"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsSuburb(string suburb)
         {
             try
             {
@@ -234,7 +234,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("events{longitude:double,latitude:double,radius:int}"), HttpGet]
+        [Route("events"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsGPS(double latitude, double longitude, int radius)
         {
             try
