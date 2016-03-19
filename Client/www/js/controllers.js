@@ -150,19 +150,6 @@ angular.module('starter.controllers', [])
   }).controller('CreateCtrl', function ($scope) {
     //init
     (function(){
-      $scope.createModel = {
-        eventTitle    : null,
-        startTime     : null,
-        finishTime    : null,
-        startDate     : null, 
-        description   : null,
-        maxTime       : null,
-        availabilty   : null,
-        eventType     : null,
-        pace          : null, 
-        distance      : null,
-        meetingPoint  : null,
-      };
     })()
   }).controller('SearchCtrl', function ($scope) {
     //init
