@@ -49,6 +49,12 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         controller: 'RegistrationCtrl'
       })
 
+      .state('terms', {
+        url: '/terms',
+        templateUrl: 'templates/terms.html',
+        controller: 'TermsCtrl'
+      })
+
       .state('tab', {
         url: '/tab',
         abstract: true,
