@@ -100,10 +100,14 @@ angular.module('starter.controllers', [])
     $scope.settings = {
       enableFriends: true
     };
-  }).controller('HomeCtrl', function ($scope) {
-
-  }).controller('LatestCtrl', function ($scope) {
+  })
+  .controller('HomeCtrl', function ($scope) {
+      $scope.event = "hi";
+      $scope.log = function() {
+        console.log($scope.event);
+      }
+  })
+  .controller('LatestCtrl', function ($scope) {
 
   }).controller('CreateCtrl', function ($scope) {
-
   });
