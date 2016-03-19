@@ -1,8 +1,10 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
+using System.Threading.Tasks;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
 
@@ -15,6 +17,7 @@ namespace Hambasafe.Server.Controllers.v1
             base(configuration, tableStorage)
         {
         }
+
         [AllowAnonymous]
         [Route("events"), HttpGet]
         public async Task<HttpResponseMessage> GetEvents()
@@ -23,8 +26,9 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var dummyEvents = new[]
                 {
-                    new { Id = 1, Name = "Event 1", Type="Trail Run" },
-                    new { Id = 2, Name = "Event 2", Type="MTB" }
+                    new { Id = 1, Name = "Event 1"},
+                    new { Id = 2, Name = "Event 2"},
+                    new {Id = 3, Name = "Event 3"}
                 };
 
                 return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
@@ -34,21 +38,6 @@ namespace Hambasafe.Server.Controllers.v1
                 return HandleError(error);
             }
         }
-
-        [AllowAnonymous]
-        [Route("event"), HttpGet]
-        public async Task<HttpResponseMessage> GetEvent(int id)
-        {
-            try
-            {
-                var dummyEvent = new { Id = 1, Name = "Event 1", Type = "Trail Run" };
-
-                return Request.CreateResponse(HttpStatusCode.OK, dummyEvent);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
     }
 }
+

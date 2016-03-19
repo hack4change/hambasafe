@@ -13,7 +13,9 @@
 
 - `/v1/events/`
 - `/v1/events?id=1`
-- `/v1/events?created-by-user="peter"`  Will list the events created by this user
+- `/v1/events?created-by-user="peter"`
+- `/v1/events?attended-by-user="peter"`
+- `/v1/events?suburb="rondebosch"`
 
 
 
@@ -28,5 +30,7 @@
 ###Address Attributes
 
 - `/v1/provinces`
+- `/v1/cities`
 - `/v1/cities?province="Western Cape"`
+- `/v1/suburbs`
 - `/v1/suburbs?city="Cape Town"`
