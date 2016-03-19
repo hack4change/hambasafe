@@ -147,6 +147,7 @@ angular.module('starter.controllers', [])
         , function (error) {
 
         });
+    }
   }).controller('CreateCtrl', function ($scope) {
     //init
     (function(){
