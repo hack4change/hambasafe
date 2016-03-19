@@ -164,9 +164,6 @@ angular.module('starter.controllers', [])
         meetingPoint  : null,
       };
     })()
-    $scope.createEvent() = function(){
-       
-    }
   }).controller('SearchCtrl', function ($scope) {
     //init
     (function(){
