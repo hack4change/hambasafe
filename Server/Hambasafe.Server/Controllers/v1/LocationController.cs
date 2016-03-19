@@ -20,8 +20,8 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("provinces/all"), HttpGet]
-        public async Task<HttpResponseMessage> GetProvinces()
+        [Route("provinces"), HttpGet]
+        public async Task<HttpResponseMessage> GetAllProvinces()
         {
             try
             {
@@ -40,8 +40,8 @@ namespace Hambasafe.Server.Controllers.v1
         }     
 
         [AllowAnonymous]
-        [Route("suburbs/all"), HttpGet]
-        public async Task<HttpResponseMessage> GetSuburbs()
+        [Route("suburbs"), HttpGet]
+        public async Task<HttpResponseMessage> GetAllSuburbs()
         {
             try
             {
@@ -60,8 +60,8 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("suburbs"), HttpGet]
-        public async Task<HttpResponseMessage> GetSuburbsByCity(string province)
+        [Route("suburbsbyprovince"), HttpGet]
+        public async Task<HttpResponseMessage> GetSuburbsInProvince(string province)
         {
             try
             {                               
