@@ -8,8 +8,8 @@
 angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.services', 'facebook', 'ngResource'])
 
   .constant('config', {
-    //baseServiceURL: "http://hambasafedev.azurewebsites.net"
-    baseServiceURL: "http://api.emguidance.com/openmed/api"
+    baseServiceURL: "http://hambasafedev.azurewebsites.net"
+    //baseServiceURL: "http://api.emguidance.com/openmed/api"
   })
 
   .run(function ($ionicPlatform) {
@@ -66,6 +66,12 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         controller: 'TermsCtrl'
       })
 
+      .state('about-us', {
+        url: '/about-us',
+        templateUrl: 'templates/about-us.html',
+        controller: 'AboutUsCtrl'
+      })
+
       .state('tab', {
         url: '/tab',
         abstract: true,
@@ -80,7 +86,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
 
       .state('eventdetail', {
         url: '/eventdetail',
-        templateUrl: 'templates/eventDetail.html',
+        templateUrl: 'templates/event-detail.html',
         controller: 'EventDetailCtrl'
       })
 
@@ -134,6 +140,12 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
             controller: 'AccountCtrl'
           }
         }
+      })
+
+      .state('emergency', {
+        url: '/emergency',
+        templateUrl: 'templates/emergency.html',
+        //controller: 'EventDetailCtrl'
       })
 
       // if none of the above states are matched, use this as the fallback
