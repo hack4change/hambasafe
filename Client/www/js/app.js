@@ -5,7 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.services', 'facebook'])
+angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.services', 'facebook', 'ngResource'])
+
+  .constant('config', {
+    //baseServiceURL: "http://hambasafedev.azurewebsites.net"
+    baseServiceURL: "http://api.emguidance.com/openmed/api"
+  })
 
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
@@ -27,8 +32,9 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
     });
   })
 
-  .config(function ($stateProvider, $urlRouterProvider, FacebookProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, FacebookProvider, $httpProvider) {
 
+    $httpProvider.defaults.useXDomain = true;
     FacebookProvider.init('289482390688');
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -48,6 +54,11 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         templateUrl: 'templates/registration.html',
         controller: 'RegistrationCtrl'
       })
+      .state('home', {
+        url: '/home',
+        templateUrl: 'templates/home.html',
+        controller: 'HomeCtrl'
+      })
 
       .state('terms', {
         url: '/terms',
@@ -61,14 +72,6 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         templateUrl: 'templates/tabs.html'
       })
 
-      // Each tab has its own nav history stack:
-
-      .state('home', {
-        url: '/home',
-        templateUrl: 'templates/home.html',
-        controller: 'HomeCtrl'
-      })
-      
       .state('latest', {
         url: '/latest',
        // views: {
@@ -78,12 +81,13 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         //  }
         //}
       })
-      
+
       .state('create', {
         url: '/create',
         templateUrl: 'templates/create.html',
         controller: 'CreateCtrl'
       })
+
       .state('tab.dash', {
         url: '/dash',
         views: {
@@ -103,6 +107,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
           }
         }
       })
+
       .state('tab.chat-detail', {
         url: '/chats/:chatId',
         views: {
