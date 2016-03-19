@@ -72,14 +72,6 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         templateUrl: 'templates/tabs.html'
       })
 
-      // Each tab has its own nav history stack:
-
-      .state('home', {
-        url: '/home',
-        templateUrl: 'templates/home.html',
-        controller: 'HomeCtrl'
-      })
-
       .state('latest', {
         url: '/latest',
        // views: {
@@ -95,6 +87,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         templateUrl: 'templates/create.html',
         controller: 'CreateCtrl'
       })
+
       .state('tab.dash', {
         url: '/dash',
         views: {
@@ -114,6 +107,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
           }
         }
       })
+
       .state('tab.chat-detail', {
         url: '/chats/:chatId',
         views: {
