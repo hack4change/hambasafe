@@ -75,3 +75,4 @@ C:\dev\git\hambasafe\Server\Hambasafe.Server\bin\System.Web.Http.Owin.xml
 C:\dev\git\hambasafe\Server\Hambasafe.Server\obj\Debug\Hambasafe.Server.csprojResolveAssemblyReference.cache
 C:\dev\git\hambasafe\Server\Hambasafe.Server\obj\Debug\Hambasafe.Server.dll
 C:\dev\git\hambasafe\Server\Hambasafe.Server\obj\Debug\Hambasafe.Server.pdb
+C:\Development\hambasafe\Server\Hambasafe.Server\obj\Debug\Hambasafe.Server.csprojResolveAssemblyReference.cache
