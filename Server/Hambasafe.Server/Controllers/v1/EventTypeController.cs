@@ -12,26 +12,26 @@ using Hambasafe.Server.Services.TableStorage;
 namespace Hambasafe.Server.Controllers.v1
 {
     [RoutePrefix("v1")]
-    public class UsersController : ApiControllerBase
+    public class EventTypeController : ApiControllerBase
     {
-        public UsersController(IConfigurationService configuration, ITableStorageService tableStorage) :
+        public EventTypeController(IConfigurationService configuration, ITableStorageService tableStorage) :
             base(configuration, tableStorage)
         {
         }
 
         [AllowAnonymous]
-        [Route("users"), HttpGet]
-        public async Task<HttpResponseMessage> GetUsers()
+        [Route("eventTypes"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventTypes()
         {
             try
             {
-                var dummyUsers = new[]
+                var dummyEventTypes = new[]
                 {
-                    new { Id = 1, Name = "Foo" },
-                    new { Id = 2, Name = "Bar" }
+                    new { EventTypeId = 101, Name = "Recreational Walk", Description = "A recreational walk" },
+                    new { EventTypeId = 102, Name = "Road Ride", Description = "A recreational road ride" }
                 };
 
-                return Request.CreateResponse(HttpStatusCode.OK, dummyUsers);
+                return Request.CreateResponse(HttpStatusCode.OK, dummyEventTypes);
             }
             catch (Exception error)
             {
