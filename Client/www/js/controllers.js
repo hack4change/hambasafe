@@ -2,11 +2,18 @@ angular.module('starter.controllers', [])
 
 .controller('SearchCtrl', function($scope) {
   (function(){
-     
+    $scope.search = function() {
+      var query = document.querySelector('#searchBar').value;
+      var filter = document.querySelector('#active');
+      return Events.search(query, filter)
+    }
+    $scope.events = $scope.search();
   })()
-  $scope.search = function(){
-    var searchFilter = document.querySelector('#search-bar').value;
-    
+  /*
+   * Calls the Events search function, with the value from the search bar and the 
+   */
+  $scope.searchButton = function(){
+    $scope.events = $scope.search(query, filter);
   };
 })
 .controller('DashCtrl', function($scope) {})
