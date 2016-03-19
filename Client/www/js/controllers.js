@@ -112,9 +112,9 @@ angular.module('starter.controllers', [])
       $location.path('eventdetail');
     }
   })
-  .controller('EventDetailCtrl', function ($scope, $location) {
+  .controller('EventDetailCtrl', function ($scope, $location, eventFactory) {
 
-      $scope.eventData = {
+      /*$scope.eventData = {
           Attending: false,
           Location: "CAPE TOWN, RONDEBOSH",
           Title: "Cycling in numbers",
@@ -124,9 +124,20 @@ angular.module('starter.controllers', [])
           Date: "20 November 2015",
           Summary: "Some summary of the event",
           NumberOfAttendees: "4"
-      }
+      }*/
 
+      $scope.eventData = {};
       $scope.init = function() {
+        
+      eventFactory.getEvent({id: 1}
+       , function (event) {
+         $scope.eventData = event;
+         console.log(event);
+       }
+       , function (error) {
+
+       });
+
         $scope.attendingDescription = "JOIN";
         if ($scope.eventData.attending) {
           $scope.attendingDescription = "CANCEL"
