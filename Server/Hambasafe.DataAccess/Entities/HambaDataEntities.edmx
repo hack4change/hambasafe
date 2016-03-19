@@ -1,0 +1,839 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Hambasafe.Server.Entities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="Attended" Type="bit" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AttendanceRating">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+            <PropertyRef Name="RaterUserId" />
+            <PropertyRef Name="RateeUserId" />
+          </Key>
+          <Property Name="AttendanceId" Type="int" Nullable="false" />
+          <Property Name="RaterUserId" Type="int" Nullable="false" />
+          <Property Name="RateeUserId" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BlockedUser">
+          <Key>
+            <PropertyRef Name="BlockerUserId" />
+            <PropertyRef Name="BlockedUserId" />
+          </Key>
+          <Property Name="BlockerUserId" Type="int" Nullable="false" />
+          <Property Name="BlockedUserId" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Reason" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="OwnerUserId" Type="int" Nullable="false" />
+          <Property Name="EventTypeId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateTimeStart" Type="datetime" Nullable="false" />
+          <Property Name="DateTimeEnd" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="MaxWaitingMinutes" Type="smallint" Nullable="false" />
+          <Property Name="Attributes" Type="varbinary(max)" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateUpdated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="EventTypeId" />
+          </Key>
+          <Property Name="EventTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="Description" Type="text" />
+        </EntityType>
+        <EntityType Name="Friend">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="FriendUserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="FriendUserId" Type="int" Nullable="false" />
+          <Property Name="Relationship" Type="varchar" MaxLength="90" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Invitation">
+          <Key>
+            <PropertyRef Name="InvitationId" />
+          </Key>
+          <Property Name="InvitationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvitorUserId" Type="int" />
+          <Property Name="InviteeUserId" Type="int" />
+          <Property Name="EventId" Type="int" />
+          <Property Name="OptionalEmailInvitee" Type="varchar" MaxLength="254" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="StatusReason" Type="varchar" MaxLength="250" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstNames" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="IdentityDocumentUrl" Type="varchar(max)" />
+          <Property Name="ProfilePictureUrl" Type="varchar(max)" />
+          <Property Name="Status" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="DateValidated" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Attendance_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_Attendance">
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="1" />
+          <End Role="AttendanceRating" Type="Self.AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attendance">
+              <PropertyRef Name="AttendanceId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="AttendanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AttendanceRating" Type="Self.AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="RaterUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AttendanceRating" Type="Self.AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="RateeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="BlockedUser" Type="Self.BlockedUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlockedUser">
+              <PropertyRef Name="BlockerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUser_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="BlockedUser" Type="Self.BlockedUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlockedUser">
+              <PropertyRef Name="BlockedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_EventType">
+          <End Role="EventType" Type="Self.EventType" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="EventTypeId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="OwnerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friend_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="FriendUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friend_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Invitation" Type="Self.Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Invitation" Type="Self.Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="InvitorUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_User1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Invitation" Type="Self.Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="InviteeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HambasafeServerEntitiesStoreContainer">
+          <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttendanceRating" EntityType="Self.AttendanceRating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlockedUser" EntityType="Self.BlockedUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friend" EntityType="Self.Friend" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invitation" EntityType="Self.Invitation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Attendance_Event" Association="Self.FK_Attendance_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_User" Association="Self.FK_Attendance_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_Attendance" Association="Self.FK_AttendanceRating_Attendance">
+            <End Role="Attendance" EntitySet="Attendance" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_User" Association="Self.FK_AttendanceRating_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_User1" Association="Self.FK_AttendanceRating_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUser_User" Association="Self.FK_BlockedUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="BlockedUser" EntitySet="BlockedUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUser_User1" Association="Self.FK_BlockedUser_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="BlockedUser" EntitySet="BlockedUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventType" Association="Self.FK_Event_EventType">
+            <End Role="EventType" EntitySet="EventType" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_User" Association="Self.FK_Event_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friend_User" Association="Self.FK_Friend_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Friend" EntitySet="Friend" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friend_User1" Association="Self.FK_Friend_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Friend" EntitySet="Friend" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_Event" Association="Self.FK_Invitation_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Invitation" EntitySet="Invitation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_User" Association="Self.FK_Invitation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Invitation" EntitySet="Invitation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_User1" Association="Self.FK_Invitation_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Invitation" EntitySet="Invitation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Hambasafe.Server.Entities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="Attended" Type="Boolean" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Attendance_Event" FromRole="Attendance" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Attendance_User" FromRole="Attendance" ToRole="User" />
+          <NavigationProperty Name="AttendanceRatings" Relationship="Self.FK_AttendanceRating_Attendance" FromRole="Attendance" ToRole="AttendanceRating" />
+        </EntityType>
+        <EntityType Name="AttendanceRating">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+            <PropertyRef Name="RaterUserId" />
+            <PropertyRef Name="RateeUserId" />
+          </Key>
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" />
+          <Property Name="RaterUserId" Type="Int32" Nullable="false" />
+          <Property Name="RateeUserId" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Attendance" Relationship="Self.FK_AttendanceRating_Attendance" FromRole="AttendanceRating" ToRole="Attendance" />
+          <NavigationProperty Name="User" Relationship="Self.FK_AttendanceRating_User" FromRole="AttendanceRating" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_AttendanceRating_User1" FromRole="AttendanceRating" ToRole="User" />
+        </EntityType>
+        <EntityType Name="BlockedUser">
+          <Key>
+            <PropertyRef Name="BlockerUserId" />
+            <PropertyRef Name="BlockedUserId" />
+          </Key>
+          <Property Name="BlockerUserId" Type="Int32" Nullable="false" />
+          <Property Name="BlockedUserId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Reason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_BlockedUser_User" FromRole="BlockedUser" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_BlockedUser_User1" FromRole="BlockedUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="OwnerUserId" Type="Int32" Nullable="false" />
+          <Property Name="EventTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateTimeStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateTimeEnd" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaxWaitingMinutes" Type="Int16" Nullable="false" />
+          <Property Name="Attributes" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_Event" FromRole="Event" ToRole="Attendance" />
+          <NavigationProperty Name="EventType" Relationship="Self.FK_Event_EventType" FromRole="Event" ToRole="EventType" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Event_User" FromRole="Event" ToRole="User" />
+          <NavigationProperty Name="Invitations" Relationship="Self.FK_Invitation_Event" FromRole="Event" ToRole="Invitation" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="EventTypeId" />
+          </Key>
+          <Property Name="EventTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Friend">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="FriendUserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="FriendUserId" Type="Int32" Nullable="false" />
+          <Property Name="Relationship" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Friend_User" FromRole="Friend" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_Friend_User1" FromRole="Friend" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Invitation">
+          <Key>
+            <PropertyRef Name="InvitationId" />
+          </Key>
+          <Property Name="InvitationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvitorUserId" Type="Int32" />
+          <Property Name="InviteeUserId" Type="Int32" />
+          <Property Name="EventId" Type="Int32" />
+          <Property Name="OptionalEmailInvitee" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StatusReason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_Invitation_Event" FromRole="Invitation" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Invitation_User" FromRole="Invitation" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="Self.FK_Invitation_User1" FromRole="Invitation" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstNames" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdentityDocumentUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="90" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="DateValidated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Attendances" Relationship="Self.FK_Attendance_User" FromRole="User" ToRole="Attendance" />
+          <NavigationProperty Name="AttendanceRatings" Relationship="Self.FK_AttendanceRating_User" FromRole="User" ToRole="AttendanceRating" />
+          <NavigationProperty Name="AttendanceRatings1" Relationship="Self.FK_AttendanceRating_User1" FromRole="User" ToRole="AttendanceRating" />
+          <NavigationProperty Name="BlockedUsers" Relationship="Self.FK_BlockedUser_User" FromRole="User" ToRole="BlockedUser" />
+          <NavigationProperty Name="BlockedUsers1" Relationship="Self.FK_BlockedUser_User1" FromRole="User" ToRole="BlockedUser" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Event_User" FromRole="User" ToRole="Event" />
+          <NavigationProperty Name="Friends" Relationship="Self.FK_Friend_User" FromRole="User" ToRole="Friend" />
+          <NavigationProperty Name="Friends1" Relationship="Self.FK_Friend_User1" FromRole="User" ToRole="Friend" />
+          <NavigationProperty Name="Invitations" Relationship="Self.FK_Invitation_User" FromRole="User" ToRole="Invitation" />
+          <NavigationProperty Name="Invitations1" Relationship="Self.FK_Invitation_User1" FromRole="User" ToRole="Invitation" />
+        </EntityType>
+        <Association Name="FK_Attendance_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_Attendance">
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="1" />
+          <End Role="AttendanceRating" Type="Self.AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attendance">
+              <PropertyRef Name="AttendanceId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="AttendanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AttendanceRating" Type="Self.AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="RaterUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AttendanceRating" Type="Self.AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="RateeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="BlockedUser" Type="Self.BlockedUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlockedUser">
+              <PropertyRef Name="BlockerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUser_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="BlockedUser" Type="Self.BlockedUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlockedUser">
+              <PropertyRef Name="BlockedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_EventType">
+          <End Role="EventType" Type="Self.EventType" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="EventTypeId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="OwnerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Invitation" Type="Self.Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friend_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="FriendUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friend_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Invitation" Type="Self.Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="InvitorUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_User1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Invitation" Type="Self.Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="InviteeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="hsdevdb1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Attendances" EntityType="Self.Attendance" />
+          <EntitySet Name="AttendanceRatings" EntityType="Self.AttendanceRating" />
+          <EntitySet Name="BlockedUsers" EntityType="Self.BlockedUser" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="EventTypes" EntityType="Self.EventType" />
+          <EntitySet Name="Friends" EntityType="Self.Friend" />
+          <EntitySet Name="Invitations" EntityType="Self.Invitation" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Attendance_Event" Association="Self.FK_Attendance_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_User" Association="Self.FK_Attendance_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_Attendance" Association="Self.FK_AttendanceRating_Attendance">
+            <End Role="Attendance" EntitySet="Attendances" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_User" Association="Self.FK_AttendanceRating_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_User1" Association="Self.FK_AttendanceRating_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUser_User" Association="Self.FK_BlockedUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BlockedUser" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUser_User1" Association="Self.FK_BlockedUser_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BlockedUser" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventType" Association="Self.FK_Event_EventType">
+            <End Role="EventType" EntitySet="EventTypes" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_User" Association="Self.FK_Event_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_Event" Association="Self.FK_Invitation_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Invitation" EntitySet="Invitations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friend_User" Association="Self.FK_Friend_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Friend" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friend_User1" Association="Self.FK_Friend_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Friend" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_User" Association="Self.FK_Invitation_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Invitation" EntitySet="Invitations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_User1" Association="Self.FK_Invitation_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Invitation" EntitySet="Invitations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HambasafeServerEntitiesStoreContainer" CdmEntityContainer="hsdevdb1Entities">
+          <EntitySetMapping Name="Attendances">
+            <EntityTypeMapping TypeName="Hambasafe.Server.Entities.Attendance">
+              <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Attended" ColumnName="Attended" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendanceRatings">
+            <EntityTypeMapping TypeName="Hambasafe.Server.Entities.AttendanceRating">
+              <MappingFragment StoreEntitySet="AttendanceRating">
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+                <ScalarProperty Name="RaterUserId" ColumnName="RaterUserId" />
+                <ScalarProperty Name="RateeUserId" ColumnName="RateeUserId" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlockedUsers">
+            <EntityTypeMapping TypeName="Hambasafe.Server.Entities.BlockedUser">
+              <MappingFragment StoreEntitySet="BlockedUser">
+                <ScalarProperty Name="BlockerUserId" ColumnName="BlockerUserId" />
+                <ScalarProperty Name="BlockedUserId" ColumnName="BlockedUserId" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="Hambasafe.Server.Entities.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="OwnerUserId" ColumnName="OwnerUserId" />
+                <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateTimeStart" ColumnName="DateTimeStart" />
+                <ScalarProperty Name="DateTimeEnd" ColumnName="DateTimeEnd" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MaxWaitingMinutes" ColumnName="MaxWaitingMinutes" />
+                <ScalarProperty Name="Attributes" ColumnName="Attributes" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="Hambasafe.Server.Entities.EventType">
+              <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friends">
+            <EntityTypeMapping TypeName="Hambasafe.Server.Entities.Friend">
+              <MappingFragment StoreEntitySet="Friend">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FriendUserId" ColumnName="FriendUserId" />
+                <ScalarProperty Name="Relationship" ColumnName="Relationship" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invitations">
+            <EntityTypeMapping TypeName="Hambasafe.Server.Entities.Invitation">
+              <MappingFragment StoreEntitySet="Invitation">
+                <ScalarProperty Name="InvitationId" ColumnName="InvitationId" />
+                <ScalarProperty Name="InvitorUserId" ColumnName="InvitorUserId" />
+                <ScalarProperty Name="InviteeUserId" ColumnName="InviteeUserId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="OptionalEmailInvitee" ColumnName="OptionalEmailInvitee" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StatusReason" ColumnName="StatusReason" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Hambasafe.Server.Entities.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FirstNames" ColumnName="FirstNames" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="IdentityDocumentUrl" ColumnName="IdentityDocumentUrl" />
+                <ScalarProperty Name="ProfilePictureUrl" ColumnName="ProfilePictureUrl" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateValidated" ColumnName="DateValidated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
