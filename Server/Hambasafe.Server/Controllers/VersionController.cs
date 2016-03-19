@@ -4,15 +4,36 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+//using Hambasafe.Server.Services.Configuration;
+//using Hambasafe.Server.Services.TableStorage;
 
 namespace Hambasafe.Server.Controllers
 {
-    public class VersionController : ApiController
+    public class VersionController : ApiControllerBase
     {
+      
+        //public VersionController(IConfigurationService configuration, ITableStorageService tableStorage) :
+        //    base(configuration, tableStorage)
+        //{
+         
+        //}
+
         [HttpGet]
         public string Index()
         {
-            return GetType().Assembly.GetName().Version.ToString();
+            string version = "";
+            try
+            {
+                version = GetType().Assembly.GetName().Version.ToString();
+            }
+            catch (Exception error)
+            {
+                HandleError(error);
+            }
+
+            return version;
         }
+
+
     }
 }
