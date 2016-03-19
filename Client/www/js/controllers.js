@@ -54,10 +54,10 @@ angular.module('starter.controllers', [])
       });
     };
 
-    $scope.doRegister = function(valid) {
+    $scope.doRegister = function (valid) {
       $scope.submitted = true;
 
-      if(!$scope.loginData.password) {
+      if (!$scope.loginData.password) {
         valid = false;
       } else if ($scope.loginData.password.length < 7) {
         valid = false;
@@ -96,11 +96,19 @@ angular.module('starter.controllers', [])
       enableFriends: true
     }
   })
-  .controller('HomeCtrl', function ($scope) {
-  })
-  .controller('LatestCtrl', function ($scope) {
 
-    $scope.goCreateAnEvent = function() {
+  .controller('HomeCtrl', function ($scope, eventFactory) {
+    var t = eventFactory.get();
+
+    $scope.events = [];
+
+    for (var i = 0; i < 50; i++) {
+      var event = {label: "Test " + i};
+      $scope.events.push(event)
+    }
+
+
+    $scope.goCreateAnEvent = function () {
       $location.path('registration');
     }
 
@@ -127,8 +135,36 @@ angular.module('starter.controllers', [])
     $scope.createEvent() = function(){
        
     }
-  });
+  }).controller('SearchCtrl', function ($scope) {
+    //init
+    (function(){
+    })()
+    $scope.searchEvents = function(){
+    
+    }
+    $scope.eventType = ["Walk", "Run", "Cycle"];
+    $scope.typeSelected = $scope.eventType[0];
 
-  
+    /*
+     * if given group is the selected group, deselect it
+     * else, select the given group
+     */
+    $scope.toggleGroup = function(group) {
+      if ($scope.isGroupShown(group)) {
+        $scope.shownGroup = null;
+      } else {
+        $scope.shownGroup = group;
+      }
+    };
+    $scope.isGroupShown = function(group) {
+      return $scope.shownGroup === group;
+    };
+    /*
+     * if given group is the selected group, deselect it
+     * else, select the given group
+     */
+    $scope.toggleSelection = function(selected) {
+      $scope.typeSelected = selected;
+    };
 
-
+  })
