@@ -87,6 +87,10 @@ angular.module('starter.controllers', [])
     }
   })
 
+  .controller('TermsCtrl', function ($scope) {
+    console.log('Here');
+  })
+
   .controller('AccountCtrl', function ($scope) {
     $scope.settings = {
       enableFriends: true
