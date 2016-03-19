@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hambasafe.Server", "Hambasa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hambasafe.UnitTests", "..\Hambasafe.UnitTests\Hambasafe.UnitTests.csproj", "{219065E7-CC0A-47A8-A057-45A7C1B3CBCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hambasafe.Logic", "Hambasafe.Logic\Hambasafe.Logic.csproj", "{167F2C9E-7A36-4DEE-A2F5-08D3CAFD9177}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{219065E7-CC0A-47A8-A057-45A7C1B3CBCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{219065E7-CC0A-47A8-A057-45A7C1B3CBCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{219065E7-CC0A-47A8-A057-45A7C1B3CBCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{167F2C9E-7A36-4DEE-A2F5-08D3CAFD9177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{167F2C9E-7A36-4DEE-A2F5-08D3CAFD9177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{167F2C9E-7A36-4DEE-A2F5-08D3CAFD9177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{167F2C9E-7A36-4DEE-A2F5-08D3CAFD9177}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
