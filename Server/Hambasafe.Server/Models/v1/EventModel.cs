@@ -14,6 +14,10 @@ namespace Hambasafe.Server.Models
         private EventTypeModel _eventType;
         private DateTime _eventDateTimeStart;
         private DateTime? _eventDateTimeEnd;
+        private List<string> _startAddressLines;
+        private SuburbModel _startSuburb;
+        private List<string> _endAddressLines;
+        private SuburbModel _endSuburb;
         private List<string> _addressLines;
         private SuburbModel _suburb;
         private object _attributes;
@@ -51,16 +55,28 @@ namespace Hambasafe.Server.Models
             set { _eventDateTimeEnd = value; }
         }
 
-        public List<string> AddressLines
+        public List<string> StartAddressLines
         {
-            get { return _addressLines; }
-            set { _addressLines = value; }
+            get { return _startAddressLines; }
+            set { _startAddressLines = value; }
         }
 
-        public SuburbModel Suburb
+        public SuburbModel StartSuburb
         {
-            get { return _suburb; }
-            set { _suburb = value; }
+            get { return _startSuburb; }
+            set { _startSuburb = value; }
+        }
+
+        public List<string> EndAddressLines
+        {
+            get { return _endAddressLines; }
+            set { _endAddressLines = value; }
+        }
+
+        public SuburbModel EndSuburb
+        {
+            get { return _endSuburb; }
+            set { _endSuburb = value; }
         }
 
         public object Attributes

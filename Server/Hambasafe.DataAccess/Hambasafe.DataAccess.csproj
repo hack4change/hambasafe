@@ -94,11 +94,8 @@
       <DependentUpon>HambaDataEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Event.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EntityDeploy Include="Entities\HambaDataEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
