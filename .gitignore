@@ -45,5 +45,7 @@ packages/
 *.orig
 *log.txt*
 *.DotSettings
+*.DS_Store
 *NCrunch*
 /Client/www/lib
+/Client/www/css
