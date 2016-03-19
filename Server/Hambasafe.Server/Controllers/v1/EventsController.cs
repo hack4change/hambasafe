@@ -34,7 +34,10 @@ namespace Hambasafe.Server.Controllers.v1
                     PublicEvent = true,
                     Distance = 4,
                     WaitMins = 5,
-                    Suburb = new Models.SuburbModel() { Name = "Claremont", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+                    StartAddressLines = new List<string>() { "100 Main Rd" },
+                    StartSuburb = new Models.SuburbModel() { Name = "Claremont", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+                    EndAddressLines = new List<string>() { "100 Main Rd" },
+                    EndSuburb = new Models.SuburbModel() { Name = "Claremont", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
 
                 };
                 Models.EventModel event2 = new Models.EventModel()
@@ -47,7 +50,10 @@ namespace Hambasafe.Server.Controllers.v1
                     PublicEvent = true,
                     Distance = 4,
                     WaitMins = 5,
-                    Suburb = new Models.SuburbModel() { Name = "Newlands", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+                    StartAddressLines = new List<string>() { "cnr Klipper Rd and Main Rd" },
+                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+                    EndAddressLines = new List<string>() { "cnr Woolsack Rd and Main Rd" },
+                    EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
 
                 };
                 var dummyEvents = new[]
