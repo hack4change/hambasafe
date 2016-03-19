@@ -57,6 +57,33 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
 
       // Each tab has its own nav history stack:
 
+      .state('tab.home', {
+        url: '/home',
+        views: {
+          'tab-home': {
+            templateUrl: 'templates/home.html',
+            controller: 'HomeCtrl'
+          }
+        }
+      })
+      .state('tab.latest', {
+        url: '/latest',
+        views: {
+          'tab-latest': {
+            templateUrl: 'templates/latest.html',
+            controller: 'LatestCtrl'
+          }
+        }
+      })
+      .state('tab.create', {
+        url: '/create',
+        views: {
+          'tab-create': {
+            templateUrl: 'templates/create.html',
+            controller: 'CreateCtrl'
+          }
+        }
+      })
       .state('tab.dash', {
         url: '/dash',
         views: {
@@ -94,9 +121,8 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
             controller: 'AccountCtrl'
           }
         }
-      });
+      })
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/landing');
 
   });
