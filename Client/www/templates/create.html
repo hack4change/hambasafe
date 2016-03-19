@@ -7,16 +7,23 @@
 
     <div class="has-header list">
 
-      <label class="item item-input item-select">
-        <div class="input-label">
-          Event Type
-        </div>
-        <select>
-          <option>Cycle</option>
-          <option selected>Run</option>
-          <option>Walk</option>
-        </select>
-      </label>
+    <ion-list>
+      <div>
+        <ion-item class="item-stable"
+                  ng-click="toggleGroup(group)"
+                  ng-class="{active: isGroupShown(group)}">
+          <i class="icon pull-right" style="float:right" ng-class="isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+          &nbsp;
+          <b>{{typeSelected}}</b>
+        </ion-item>
+        <ion-item class="item-accordion"
+                  ng-repeat="type in eventType"
+                  ng-show="isGroupShown(group)" style="border-top: 0px" ng-click="toggleTypeSelection(type, group)" ng-hide="isTypeSelected(type, group)">
+          <b>{{type}}</b>
+        </ion-item>
+      </div>
+    </ion-list>
+
 
       <label class="item item-input">
         <span class="input-label">Date</span>

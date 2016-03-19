@@ -151,6 +151,28 @@ angular.module('starter.controllers', [])
     //init
     (function(){
     })()
+    $scope.eventType = ["Walk", "Run", "Cycle"];
+    $scope.typeSelected = $scope.eventType[0];
+
+    $scope.toggleGroup = function(group) {
+      if ($scope.isGroupShown(group)) {
+        $scope.shownGroup = null;
+      } else {
+        $scope.shownGroup = group;
+      }
+    };
+    $scope.toggleSelection = function(selected, group) {
+      $scope.typeSelected = selected;
+      $scope.toggleGroup(group);
+    };
+
+    $scope.isGroupShown = function(group) {
+      return $scope.shownGroup === group;
+    };
+
+    $scope.isSelected = function(type) {
+      return $scope.typeSelected === type;
+    };
   }).controller('SearchCtrl', function ($scope) {
     //init
     (function(){
@@ -161,10 +183,6 @@ angular.module('starter.controllers', [])
     $scope.eventType = ["Walk", "Run", "Cycle"];
     $scope.typeSelected = $scope.eventType[0];
 
-    /*
-     * if given group is the selected group, deselect it
-     * else, select the given group
-     */
     $scope.toggleGroup = function(group) {
       if ($scope.isGroupShown(group)) {
         $scope.shownGroup = null;
@@ -172,15 +190,17 @@ angular.module('starter.controllers', [])
         $scope.shownGroup = group;
       }
     };
+    $scope.toggleSelection = function(selected, group) {
+      $scope.typeSelected = selected;
+      $scope.toggleGroup(group);
+    };
+
     $scope.isGroupShown = function(group) {
       return $scope.shownGroup === group;
     };
-    /*
-     * if given group is the selected group, deselect it
-     * else, select the given group
-     */
-    $scope.toggleSelection = function(selected) {
-      $scope.typeSelected = selected;
+
+    $scope.isTypeSelected = function(type) {
+      return $scope.typeSelected === type;
     };
 
   })
