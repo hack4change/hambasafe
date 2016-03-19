@@ -22,7 +22,7 @@ angular.module('starter.controllers', [])
     $scope.chat = Chats.get($stateParams.chatId);
   })
 
-  .controller('LandingCtrl', function ($scope, $stateParams, Facebook, LocalStorage, $location) {
+  .controller('LandingCtrl', function ($scope, $stateParams, Facebook, LocalStorage, $location, $state) {
     $scope.getLoginStatus = function () {
       Facebook.getLoginStatus(function (response) {
         if (response.status === 'connected') {
@@ -32,6 +32,15 @@ angular.module('starter.controllers', [])
           $scope.loggedIn = false;
         }
       });
+    };
+    $scope.goHome = function () {
+      $state.go('tab.home');
+    };
+    $scope.goLatest = function () {
+      $state.go('tab.latest');
+    };
+    $scope.goCreate = function () {
+      $state.go('tab.create');
     };
 
     $scope.fbLogin = function () {
@@ -95,4 +104,10 @@ angular.module('starter.controllers', [])
     $scope.settings = {
       enableFriends: true
     };
+  }).controller('HomeCtrl', function ($scope) {
+
+  }).controller('LatestCtrl', function ($scope) {
+
+  }).controller('CreateCtrl', function ($scope) {
+
   });
