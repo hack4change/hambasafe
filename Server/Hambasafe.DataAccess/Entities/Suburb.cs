@@ -17,18 +17,18 @@ namespace Hambasafe.DataAccess.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Suburb()
         {
-            this.Events = new HashSet<Event>();
+            this.EventLocations = new HashSet<EventLocation>();
         }
     
         public int SuburbId { get; set; }
-        public string Country { get; set; }
-        public string Province { get; set; }
-        public string Suburb1 { get; set; }
-        public string PostCode { get; set; }
-        public Nullable<double> Latitude { get; set; }
-        public Nullable<double> Longitude { get; set; }
+        public int ProvinceId { get; set; }
+        public string PostalCode { get; set; }
+        public string Name { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<EventLocation> EventLocations { get; set; }
+        public virtual Province Province { get; set; }
     }
 }

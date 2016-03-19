@@ -12,23 +12,25 @@ namespace Hambasafe.DataAccess.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Attendance
+    public partial class EventLocation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Attendance()
+        public EventLocation()
         {
-            this.AttendanceRatings = new HashSet<AttendanceRating>();
+            this.Events = new HashSet<Event>();
+            this.Events1 = new HashSet<Event>();
         }
     
-        public int AttendanceId { get; set; }
-        public int UserId { get; set; }
-        public int EventId { get; set; }
-        public Nullable<bool> HasAttended { get; set; }
-        public System.DateTime DateCreated { get; set; }
+        public int EventLocationId { get; set; }
+        public int SuburbId { get; set; }
+        public string Address { get; set; }
+        public Nullable<double> Latitude { get; set; }
+        public Nullable<double> Longitude { get; set; }
     
-        public virtual Event Event { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AttendanceRating> AttendanceRatings { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Event> Events1 { get; set; }
+        public virtual Suburb Suburb { get; set; }
     }
 }

@@ -12,10 +12,10 @@ namespace Hambasafe.DataAccess.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Friend
+    public partial class Connection
     {
         public int UserId { get; set; }
-        public int FriendUserId { get; set; }
+        public int ConnectionUserId { get; set; }
         public string Relationship { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
     

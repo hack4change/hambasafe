@@ -22,17 +22,15 @@ namespace Hambasafe.DataAccess.Entities
         }
     
         public int EventId { get; set; }
+        public Nullable<int> StartEventLocationId { get; set; }
+        public Nullable<int> EndEventLocationId { get; set; }
         public int OwnerUserId { get; set; }
         public int EventTypeId { get; set; }
-        public Nullable<int> SuburbId { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
-        public Nullable<double> Lattitude { get; set; }
-        public Nullable<double> Longitude { get; set; }
         public System.DateTime DateTimeStart { get; set; }
         public Nullable<System.DateTime> DateTimeEnd { get; set; }
         public string Description { get; set; }
-        public Nullable<bool> PublicEvent { get; set; }
+        public Nullable<bool> IsPublic { get; set; }
         public short MaxWaitingMinutes { get; set; }
         public string Attributes { get; set; }
         public System.DateTime DateCreated { get; set; }
@@ -40,8 +38,9 @@ namespace Hambasafe.DataAccess.Entities
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance> Attendances { get; set; }
+        public virtual EventLocation EventLocation { get; set; }
+        public virtual EventLocation EventLocation1 { get; set; }
         public virtual EventType EventType { get; set; }
-        public virtual Suburb Suburb { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Invitation> Invitations { get; set; }

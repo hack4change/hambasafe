@@ -12,23 +12,19 @@ namespace Hambasafe.DataAccess.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Attendance
+    public partial class Country
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Attendance()
+        public Country()
         {
-            this.AttendanceRatings = new HashSet<AttendanceRating>();
+            this.Provinces = new HashSet<Province>();
         }
     
-        public int AttendanceId { get; set; }
-        public int UserId { get; set; }
-        public int EventId { get; set; }
-        public Nullable<bool> HasAttended { get; set; }
-        public System.DateTime DateCreated { get; set; }
+        public int CountryId { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
     
-        public virtual Event Event { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AttendanceRating> AttendanceRatings { get; set; }
+        public virtual ICollection<Province> Provinces { get; set; }
     }
 }

@@ -13,10 +13,10 @@ namespace Hambasafe.DataAccess.Entities
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class hsdevdb1Entities : DbContext
+    public partial class hambasafeEntities : DbContext
     {
-        public hsdevdb1Entities()
-            : base("name=hsdevdb1Entities")
+        public hambasafeEntities()
+            : base("name=hambasafeEntities")
         {
         }
     
@@ -28,10 +28,13 @@ namespace Hambasafe.DataAccess.Entities
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<AttendanceRating> AttendanceRatings { get; set; }
         public virtual DbSet<BlockedUser> BlockedUsers { get; set; }
+        public virtual DbSet<Connection> Connections { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<EventLocation> EventLocations { get; set; }
         public virtual DbSet<EventType> EventTypes { get; set; }
-        public virtual DbSet<Friend> Friends { get; set; }
         public virtual DbSet<Invitation> Invitations { get; set; }
+        public virtual DbSet<Province> Provinces { get; set; }
         public virtual DbSet<Suburb> Suburbs { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

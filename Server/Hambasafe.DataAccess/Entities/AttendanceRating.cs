@@ -17,7 +17,7 @@ namespace Hambasafe.DataAccess.Entities
         public int AttendanceId { get; set; }
         public int RaterUserId { get; set; }
         public int RateeUserId { get; set; }
-        public Nullable<int> Rating { get; set; }
+        public Nullable<byte> Rating { get; set; }
         public string Comment { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
     
