@@ -88,11 +88,7 @@ angular.module('starter.controllers', [])
   })
 
   .controller('TermsCtrl', function ($scope) {
-
-  })
-
-  .controller('AboutUsCtrl', function ($scope) {
-
+    console.log('Here');
   })
 
   .controller('AccountCtrl', function ($scope) {
@@ -110,47 +106,46 @@ angular.module('starter.controllers', [])
 
     $scope.goHambaSafe = function() {
       $location.path('eventdetail');
-    }
+    } 
   })
   .controller('EventDetailCtrl', function ($scope, $location) {
-
+      
       $scope.eventData = {
-          Attending: false,
-          Location: "CAPE TOWN, RONDEBOSH",
-          Title: "Cycling in numbers",
-          Type: "CYCLE",
-          Distance: "5KM",
-          Level: "NOVICE",
-          Date: "20 November 2015",
-          Summary: "Some summary of the event",
-          NumberOfAttendees: "4"
+          attending: false,
+          location: "CAPE TOWN, RONDEBOSH",
+          title: "Cycling in numbers",
+          type: "CYCLE",
+          distance: "5KM",
+          level: "NOVICE",
+          date: "20 November 2015",
+          summary: "This is a 'Facebook' styled Card. The header is created from a Thumbnail List item,        the content is from a card-body consisting of an image and paragraph text. The footer consists of tabs, icons aligned left, within the card-footer.",
+          numberOfAttendees: "4"
       }
 
       $scope.init = function() {
         $scope.attendingDescription = "JOIN";
         if ($scope.eventData.attending) {
           $scope.attendingDescription = "CANCEL"
-        }
+        }  
       }
-
+      
       $scope.doAttend = function() {
         $scope.eventData.attending = !$scope.eventData.attending;
         $scope.attendingDescription = "JOIN";
         if ($scope.eventData.attending) {
           $scope.attendingDescription = "CANCEL"
-        }
+        }  
       }
-
+ 
   })
   .controller('HomeCtrl', function ($scope, eventFactory) {
-    $scope.init = function () {
-      eventFactory.getAllEvents({}
-        , function (events) {
-          $scope.events = events;
-        }
-        , function (error) {
+    var t = eventFactory.get();
 
-        });
+    $scope.events = [];
+
+    for (var i = 0; i < 50; i++) {
+      var event = {label: "Test " + i};
+      $scope.events.push(event)
     }
   }).controller('CreateCtrl', function ($scope) {
     //init
@@ -181,9 +176,10 @@ angular.module('starter.controllers', [])
   }).controller('SearchCtrl', function ($scope) {
     //init
     (function(){
+        $scope.shownGroup = null;
     })()
     $scope.searchEvents = function(){
-
+    
     }
     $scope.eventType = ["Walk", "Run", "Cycle"];
     $scope.typeSelected = $scope.eventType[0];
@@ -200,12 +196,10 @@ angular.module('starter.controllers', [])
       $scope.toggleGroup(group);
     };
 
-    $scope.isGroupShown = function(group) {
-      return $scope.shownGroup === group;
+    $scope.isGroupShown = function(type, group) {
+      return $scope.shownGroup === group && $scope.typeSelected !== type;
     };
-
-    $scope.isTypeSelected = function(type) {
-      return $scope.typeSelected === type;
+    $scope.isShown = function(type, group) {
+      return $scope.shownGroup === group && $scope.typeSelected !== type;
     };
-
   })

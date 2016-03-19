@@ -16,7 +16,7 @@
         </ion-item>
         <ion-item class="item-accordion"
                   ng-repeat="type in eventType"
-                  ng-show="isGroupShown(group)" style="border-top: 0px" ng-click="toggleSelection(type, group)" ng-hide="isTypeSelected(type, group)">
+                    ng-show="isShown(type, group)" style="border-top: 0px" ng-click="toggleSelection(type, group)" >
           <b>{{type}}</b>
         </ion-item>
       </div>
