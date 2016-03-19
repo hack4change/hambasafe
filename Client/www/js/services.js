@@ -97,5 +97,4 @@ angular.module('starter.services', [])
       });
     }
   ]);
-
 ;
