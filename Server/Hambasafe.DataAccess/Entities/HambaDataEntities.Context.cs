@@ -25,5 +25,14 @@ namespace Hambasafe.DataAccess.Entities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Attendance> Attendances { get; set; }
+        public virtual DbSet<AttendanceRating> AttendanceRatings { get; set; }
+        public virtual DbSet<BlockedUser> BlockedUsers { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<EventType> EventTypes { get; set; }
+        public virtual DbSet<Friend> Friends { get; set; }
+        public virtual DbSet<Invitation> Invitations { get; set; }
+        public virtual DbSet<Suburb> Suburbs { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

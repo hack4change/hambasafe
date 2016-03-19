@@ -5,7 +5,31 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b50e14cb159b4204b2d4f605ba1822ba" Name="Diagram1">
-        </Diagram>
+        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Attendance" Width="1.5" PointX="5.25" PointY="8.875" />
+        <EntityTypeShape EntityType="Hambasafe.Server.Entities.AttendanceRating" Width="1.5" PointX="7.5" PointY="7.375" />
+        <EntityTypeShape EntityType="Hambasafe.Server.Entities.BlockedUser" Width="1.5" PointX="3" PointY="18.25" />
+        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Event" Width="1.5" PointX="3" PointY="9.25" />
+        <EntityTypeShape EntityType="Hambasafe.Server.Entities.EventType" Width="1.5" PointX="0.75" PointY="13.25" />
+        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Friend" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Invitation" Width="1.5" PointX="8.25" PointY="11.5" />
+        <EntityTypeShape EntityType="Hambasafe.Server.Entities.Suburb" Width="1.5" PointX="0.75" PointY="15.75" />
+        <EntityTypeShape EntityType="Hambasafe.Server.Entities.User" Width="1.5" PointX="0.75" PointY="6" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Attendance_Event" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Attendance_User" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_AttendanceRating_Attendance" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_AttendanceRating_User" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_AttendanceRating_User1" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_BlockedUser_User" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_BlockedUser_User1" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Event_EventType" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Event_Suburb" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Event_User" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Invitation_Event" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Friend_User" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Friend_User1" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Invitation_User" />
+        <AssociationConnector Association="Hambasafe.Server.Entities.FK_Invitation_User1" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
