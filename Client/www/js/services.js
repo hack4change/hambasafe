@@ -1,4 +1,6 @@
+var API_ROOT = location.origin+'/api/1';
 angular.module('starter.services', [])
+
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
@@ -49,12 +51,50 @@ angular.module('starter.services', [])
   };
 })
 .factory('Events', ['$http', '$q', function($http, $q){
+  var eventList = [{
+    id: 0,
+  }, {
+    id: 1,
+  }, {
+    id: 2,
+  }, {
+    id: 3,
+  }, {
+    id: 4,
+  }];
   return {
-    search: function(query){
-         
+    search: function(query, filter){
+      var config = {
+        headers : {
+        
+        } 
+      }
+      var data = {
+        query   : query,
+        filter  : filter
+      }
+      return $http.post(API_ROOT+'/event/search', data, config)
+      .then(function success(response){
+        return response.data;
+      }, function error(response) {
+        return $q.reject(response.data);
+      })
     },
-    join: function(){
-    
+    join: function(eventId){
+      var config = {
+        headers : {
+        
+        } 
+      }
+      var data = {
+        event: eventId
+      }
+      return $http.post(API_ROOT+'/event/join', data, config)
+      .then(function success(response){
+        return response.data;
+      }, function error(response) {
+        return $q.reject(response.data);
+      })
     }
   }
 }]);

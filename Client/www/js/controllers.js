@@ -4,9 +4,13 @@ angular.module('starter.controllers', [])
   (function(){
      
   })()
+  /*
+   * Calls the Events search function, with the value from the search bar and the 
+   */
   $scope.search = function(){
-    var searchFilter = document.querySelector('#search-bar').value;
-    
+    var query = document.querySelector('#searchBar').value;
+    var filter = document.querySelector('#active');
+    Events.search(query, filter)
   };
 })
 .controller('DashCtrl', function($scope) {})
