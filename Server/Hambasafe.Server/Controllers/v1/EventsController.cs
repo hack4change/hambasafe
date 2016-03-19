@@ -173,7 +173,7 @@ namespace Hambasafe.Server.Controllers.v1
 
         [AllowAnonymous]
         [Route("eventsGPS"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsGPS(GeoCoordinate coord, int radius)
+        public async Task<HttpResponseMessage> GetEventsGPS(double latitude, double longitude, int radius)
         {
             try
             {
