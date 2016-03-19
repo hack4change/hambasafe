@@ -46,3 +46,4 @@ packages/
 *log.txt*
 *.DotSettings
 *NCrunch*
+/Client/www/lib
