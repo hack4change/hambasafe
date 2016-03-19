@@ -1,7 +1,22 @@
+<ion-nav-bar class="bar-stable"></ion-nav-bar>
 <ion-view view-title="Home">
-  <ion-content class="padding">
-
-    HO
-
+  <div class="tabs-top tabs-background-positive tabs-color-light">
+    <div class="tabs">
+      <a class="tab-item active" href="#">
+        <i class="icon ion-home"></i>
+      </a>
+      <a class="tab-item" href="#">
+        <i class="icon ion-star"></i>
+      </a>
+    </div>
+  </div>
+  <ion-content>
+    <div class="list">
+      <div class="item" collection-repeat="event in events"
+           collection-item-width="'100%'"
+           collection-item-height="150">
+        {{event.label}}
+      </div>
+    </div>
   </ion-content>
 </ion-view>

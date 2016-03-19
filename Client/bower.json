@@ -7,6 +7,10 @@
   "dependencies": {
     "ng-cordova-oauth": "~0.2.3",
     "angular-facebook": "^0.2.3",
-    "ng-facebook": "^0.1.6"
+    "ng-facebook": "^0.1.6",
+    "angular-resource": "^1.5.2"
+  },
+  "resolutions": {
+    "angular": "1.5.2"
   }
 }
