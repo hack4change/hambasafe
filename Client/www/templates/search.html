@@ -10,13 +10,13 @@
         <ion-item class="item-stable"
                   ng-click="toggleGroup(group)"
                   ng-class="{active: isGroupShown(group)}">
-          <i class="icon pull-right" style="float:right" ng-class="isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+          <i class="icon pull-right"  ng-class="isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
           &nbsp;
           <b>{{typeSelected}}</b>
         </ion-item>
         <ion-item class="item-accordion"
                   ng-repeat="type in eventType"
-                  ng-show="isGroupShown(group)" style="border-top: 0px" ng-click="toggleSelection(type)">
+                  ng-show="isGroupShown(group)" style="border-top: 0px" ng-click="toggleSelection(type, group)" ng-hide="isTypeSelected(type, group)">
           <b>{{type}}</b>
         </ion-item>
       </div>

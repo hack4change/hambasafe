@@ -1,0 +1,28 @@
+<ion-view ng-init="init()" ng-title="">
+  <ion-content class="padding">
+
+
+		<div class="item item-avatar">
+			<img src="mcfly.jpg">
+			<h4 style="float: left">{{eventData.Location}}</h4>
+			<h4 style="text-align: right; ">{{eventData.Date}}</h4>
+			<h2 style="display: block">{{eventData.Name}}</h2>
+			<h5>{{eventData.EventType.Name}}.{{eventData.Distance}}.{{eventData.Level}}</h5>
+		</div>
+
+		<div class="item item-body">
+			<p>
+				{{eventData.Summary}}
+	    	</p>
+	    	<p>
+	      		<div class="subdued" style="text-align: center;" >{{eventData.NumberOfAttendees}} Hambros have joined</div>
+	    	</p>
+	  	</div>
+
+
+	<button class="button button-full " ng-class="{'button-positive': !eventData.attending}" ng-click="doAttend()">
+  		{{attendingDescription}}
+	</button>
+
+  </ion-content>
+</ion-view>

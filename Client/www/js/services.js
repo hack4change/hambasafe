@@ -90,6 +90,11 @@ angular.module('starter.services', [])
           url: config.baseServiceURL + '/v1/events/all',
           isArray: true
         }
+      ,
+        getEvent: {
+          method: 'GET',
+          url: config.baseServiceURL + '/v1/event'
+        }
       });
     }
   ]);

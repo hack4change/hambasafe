@@ -112,21 +112,32 @@ angular.module('starter.controllers', [])
       $location.path('eventdetail');
     }
   })
-  .controller('EventDetailCtrl', function ($scope, $location) {
+  .controller('EventDetailCtrl', function ($scope, $location, eventFactory) {
 
-      $scope.eventData = {
-          attending: false,
-          location: "CAPE TOWN, RONDEBOSH",
-          title: "Cycling in numbers",
-          type: "CYCLE",
-          distance: "5KM",
-          level: "NOVICE",
-          date: "20 November 2015",
-          summary: "This is a 'Facebook' styled Card. The header is created from a Thumbnail List item,        the content is from a card-body consisting of an image and paragraph text. The footer consists of tabs, icons aligned left, within the card-footer.",
-          numberOfAttendees: "4"
-      }
+      /*$scope.eventData = {
+          Attending: false,
+          Location: "CAPE TOWN, RONDEBOSH",
+          Title: "Cycling in numbers",
+          Type: "CYCLE",
+          Distance: "5KM",
+          Level: "NOVICE",
+          Date: "20 November 2015",
+          Summary: "Some summary of the event",
+          NumberOfAttendees: "4"
+      }*/
 
+      $scope.eventData = {};
       $scope.init = function() {
+        
+      eventFactory.getEvent({id: 1}
+       , function (event) {
+         $scope.eventData = event;
+         console.log(event);
+       }
+       , function (error) {
+
+       });
+
         $scope.attendingDescription = "JOIN";
         if ($scope.eventData.attending) {
           $scope.attendingDescription = "CANCEL"
@@ -156,6 +167,28 @@ angular.module('starter.controllers', [])
     //init
     (function(){
     })()
+    $scope.eventType = ["Walk", "Run", "Cycle"];
+    $scope.typeSelected = $scope.eventType[0];
+
+    $scope.toggleGroup = function(group) {
+      if ($scope.isGroupShown(group)) {
+        $scope.shownGroup = null;
+      } else {
+        $scope.shownGroup = group;
+      }
+    };
+    $scope.toggleSelection = function(selected, group) {
+      $scope.typeSelected = selected;
+      $scope.toggleGroup(group);
+    };
+
+    $scope.isGroupShown = function(group) {
+      return $scope.shownGroup === group;
+    };
+
+    $scope.isSelected = function(type) {
+      return $scope.typeSelected === type;
+    };
   }).controller('SearchCtrl', function ($scope) {
     //init
     (function(){
@@ -166,10 +199,6 @@ angular.module('starter.controllers', [])
     $scope.eventType = ["Walk", "Run", "Cycle"];
     $scope.typeSelected = $scope.eventType[0];
 
-    /*
-     * if given group is the selected group, deselect it
-     * else, select the given group
-     */
     $scope.toggleGroup = function(group) {
       if ($scope.isGroupShown(group)) {
         $scope.shownGroup = null;
@@ -177,15 +206,17 @@ angular.module('starter.controllers', [])
         $scope.shownGroup = group;
       }
     };
+    $scope.toggleSelection = function(selected, group) {
+      $scope.typeSelected = selected;
+      $scope.toggleGroup(group);
+    };
+
     $scope.isGroupShown = function(group) {
       return $scope.shownGroup === group;
     };
-    /*
-     * if given group is the selected group, deselect it
-     * else, select the given group
-     */
-    $scope.toggleSelection = function(selected) {
-      $scope.typeSelected = selected;
+
+    $scope.isTypeSelected = function(type) {
+      return $scope.typeSelected === type;
     };
 
   })
