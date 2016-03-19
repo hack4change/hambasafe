@@ -88,13 +88,17 @@ angular.module('starter.controllers', [])
   })
 
   .controller('TermsCtrl', function ($scope) {
-    console.log('Here');
+
+  })
+
+  .controller('AboutUsCtrl', function ($scope) {
+
   })
 
   .controller('AccountCtrl', function ($scope) {
     $scope.settings = {
       enableFriends: true
-    };
+    }
   })
   .controller('LatestCtrl', function ($scope, $location) {
 
@@ -106,10 +110,10 @@ angular.module('starter.controllers', [])
 
     $scope.goHambaSafe = function() {
       $location.path('eventdetail');
-    } 
+    }
   })
   .controller('EventDetailCtrl', function ($scope, $location) {
-      
+
       $scope.eventData = {
           Attending: false,
           Location: "CAPE TOWN, RONDEBOSH",
@@ -126,28 +130,62 @@ angular.module('starter.controllers', [])
         $scope.attendingDescription = "JOIN";
         if ($scope.eventData.attending) {
           $scope.attendingDescription = "CANCEL"
-        }  
+        }
       }
-      
+
       $scope.doAttend = function() {
         $scope.eventData.attending = !$scope.eventData.attending;
         $scope.attendingDescription = "JOIN";
         if ($scope.eventData.attending) {
           $scope.attendingDescription = "CANCEL"
-        }  
+        }
       }
- 
+
   })
   .controller('HomeCtrl', function ($scope, eventFactory) {
-    var t = eventFactory.get();
+    $scope.init = function () {
+      eventFactory.getAllEvents({}
+        , function (events) {
+          $scope.events = events;
+        }
+        , function (error) {
 
-    $scope.events = [];
-
-    for (var i = 0; i < 50; i++) {
-      var event = {label: "Test " + i};
-      $scope.events.push(event)
+        });
     }
-  })
-  .controller('CreateCtrl', function ($scope) {
-  });
+  }).controller('CreateCtrl', function ($scope) {
+    //init
+    (function(){
+    })()
+  }).controller('SearchCtrl', function ($scope) {
+    //init
+    (function(){
+    })()
+    $scope.searchEvents = function(){
 
+    }
+    $scope.eventType = ["Walk", "Run", "Cycle"];
+    $scope.typeSelected = $scope.eventType[0];
+
+    /*
+     * if given group is the selected group, deselect it
+     * else, select the given group
+     */
+    $scope.toggleGroup = function(group) {
+      if ($scope.isGroupShown(group)) {
+        $scope.shownGroup = null;
+      } else {
+        $scope.shownGroup = group;
+      }
+    };
+    $scope.isGroupShown = function(group) {
+      return $scope.shownGroup === group;
+    };
+    /*
+     * if given group is the selected group, deselect it
+     * else, select the given group
+     */
+    $scope.toggleSelection = function(selected) {
+      $scope.typeSelected = selected;
+    };
+
+  })

@@ -49,6 +49,13 @@ angular.module('starter.services', [])
     };
   })
 
+  .factory('Event', function(){
+    return {
+      createEvent: function(data) {
+         
+      }
+    } 
+  })
   .factory("LocalStorage", ['$window',
     function ($window) {
       var _facebookAuth = null
@@ -77,7 +84,13 @@ angular.module('starter.services', [])
 
   .factory('eventFactory', ['$resource', 'config',
     function ($resource, config) {
-      return $resource(config.baseServiceURL + '/users/profileConstants');
+      return $resource(config.baseServiceURL + '/v1/events',{},{
+        getAllEvents: {
+          method: 'GET',
+          url: config.baseServiceURL + '/v1/events/all',
+          isArray: true
+        }
+      });
     }
   ]);
 

@@ -45,3 +45,15 @@
 	border-radius: 70px;
 }
 /* End Sign Up Page Styles */
+
+/* Start about us Page Styles */
+.app-logo
+{
+	text-align: center;
+}
+.app-logo > img
+{
+	border-radius: 50%;
+	height: 150px;
+}
+/* End about us Page Styles */

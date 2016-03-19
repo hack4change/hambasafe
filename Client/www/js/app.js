@@ -8,8 +8,8 @@
 angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.services', 'facebook', 'ngResource'])
 
   .constant('config', {
-    //baseServiceURL: "http://hambasafedev.azurewebsites.net"
-    baseServiceURL: "http://api.emguidance.com/openmed/api"
+    baseServiceURL: "http://hambasafedev.azurewebsites.net"
+    //baseServiceURL: "http://api.emguidance.com/openmed/api"
   })
 
   .run(function ($ionicPlatform) {
@@ -66,6 +66,12 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         controller: 'TermsCtrl'
       })
 
+      .state('about-us', {
+        url: '/about-us',
+        templateUrl: 'templates/about-us.html',
+        controller: 'AboutUsCtrl'
+      })
+
       .state('tab', {
         url: '/tab',
         abstract: true,
@@ -88,6 +94,12 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         url: '/create',
         templateUrl: 'templates/create.html',
         controller: 'CreateCtrl'
+      })
+
+      .state('search', {
+        url: '/search',
+        templateUrl: 'templates/search.html',
+        controller: 'SearchCtrl'
       })
 
       .state('tab.dash', {
