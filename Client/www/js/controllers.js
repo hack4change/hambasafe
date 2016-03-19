@@ -21,7 +21,7 @@ angular.module('starter.controllers', [])
   .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
     $scope.chat = Chats.get($stateParams.chatId);
   })
-  .controller('LandingCtrl', function ($scope, $stateParams, Facebook, LocalStorage, $location, $state) {
+
   .controller('LandingCtrl', function ($scope, $stateParams, Facebook, LocalStorage, $location) {
     $scope.getLoginStatus = function () {
       Facebook.getLoginStatus(function (response) {
@@ -54,10 +54,10 @@ angular.module('starter.controllers', [])
       });
     };
 
-    $scope.doRegister = function(valid) {
+    $scope.doRegister = function (valid) {
       $scope.submitted = true;
 
-      if(!$scope.loginData.password) {
+      if (!$scope.loginData.password) {
         valid = false;
       } else if ($scope.loginData.password.length < 7) {
         valid = false;
@@ -95,25 +95,29 @@ angular.module('starter.controllers', [])
     $scope.settings = {
       enableFriends: true
     };
-  }).controller('HomeCtrl', function ($scope, eventFactory) {
+  })
+
+  .controller('HomeCtrl', function ($scope, eventFactory) {
     var t = eventFactory.get();
 
     $scope.events = [];
 
-    for(var i = 0 ; i < 50 ; i++) {
-      var event = {label : "Test " + i};
+    for (var i = 0; i < 50; i++) {
+      var event = {label: "Test " + i};
       $scope.events.push(event)
     }
 
 
-    $scope.goCreateAnEvent = function() {
+    $scope.goCreateAnEvent = function () {
       $location.path('registration');
     }
 
-    $scope.goHambaSafe = function() {
+    $scope.goHambaSafe = function () {
       $location.path('tab.home');
     }
-  }).controller('CreateCtrl', function ($scope) {
+  })
+
+  .controller('CreateCtrl', function ($scope) {
   });
 
 
