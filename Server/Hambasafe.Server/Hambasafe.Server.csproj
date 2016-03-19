@@ -258,6 +258,7 @@
     <Compile Include="Attributes\GeneralExceptionFilterAttribute.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\v1\EventsController.cs" />
     <Compile Include="Controllers\v1\UsersController.cs" />
     <Compile Include="Controllers\VersionController.cs" />
     <Compile Include="Global.asax.cs">
@@ -306,7 +307,9 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <None Include="Properties\PublishProfiles\HambasafeDev - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev.pubxml" />
     <None Include="Properties\PublishProfiles\hsdevapi1 - FTP.pubxml" />
