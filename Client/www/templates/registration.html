@@ -10,13 +10,26 @@
           <input type="text" placeholder="Last Name" ng-model="user.last_name">
         </label>
         <label class="item item-input">
-          <input type="text" placeholder="Cell Number">
+          <input type="date" placeholder="Date of Birth" ng-model="user.dateOfBirth">
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label" >
+            Gender
+          </div>
+          <select prompt="gender">
+            <option>Male</option>
+            <option selected>Female</option>
+            <option>Other</option>
+          </select>
         </label>
         <label class="item item-input">
-          <input type="text" placeholder="Gender" ng-model="user.gender">
+          <input type="tel" placeholder="Cell Number">
+        </label>
+        <label class="item item-input">
+          <input type="email" placeholder="Email" ng-model="user.email">
         </label>
         <div class="row">
-          <button class="button" type="submit">Done</button>
+          <button class="button button-positive" type="submit">Sign Up</button>
         </div>
       </div>
     </form>

@@ -20,26 +20,6 @@ starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $sta
     }
     $scope.searchEvents();
 
-    // $scope.eventsToList = [
-    //   {
-    //     id        : "andnadand",
-    //     title     : "FUCK",
-    //     date      : (new Date(Date.now())).toUTCString(),
-    //     type      : "Run",
-    //     intensity : "Intense",
-    //     location  : "Far, far away",
-    //     distance  : "89km"
-    //   }, {
-    //     id        : "edefsfsf",
-    //     title     : "Hey",
-    //     date      : (new Date(Date.now())).toUTCString(),
-    //     type      : "Cycle",
-    //     intensity : "Beginner",
-    //     location  : "Claremont, Cape Town",
-    //     distance  : "2km"
-    //   }
-    // ]
-
     $scope.toggleGroup = function(group){
       if ($scope.isGroupShown(group)) {
         $scope.shownGroup = null;
