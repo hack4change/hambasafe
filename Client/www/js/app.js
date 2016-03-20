@@ -226,7 +226,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
       }
     }
   })
-
+  
   .state('app.userInvite', {
     url: '/user-invite',
     views: {
@@ -236,4 +236,6 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
       }
     }
   })
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/app/landing');
 });
