@@ -101,6 +101,12 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         controller: 'CreateCtrl'
       })
 
+      .state('rating', {
+        url: '/rating',
+        templateUrl: 'templates/rating.html',
+        controller: 'RatingCtrl'
+      })
+
       .state('search', {
         url: '/search',
         templateUrl: 'templates/search.html',
