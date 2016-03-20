@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.ComponentModel;
 using System.Net;
 using System.Net.Http;
@@ -10,7 +10,6 @@ using Hambasafe.Server.Services.TableStorage;
 using Hambasafe.DataAccess.Entities;
 using System.Text;
 using System.Security.Cryptography;
-using Hambasafe.Server.Attributes;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -65,39 +64,5 @@ namespace Hambasafe.Server.Controllers.v1
                 return HandleError(error);
             }
         }
-        [AllowAnonymous]
-        [Route("login"), HttpGet]
-        public Object Login(UserModel user)
-        {
-            var id = 1;
-            
-         
-            
-            var token = new TokenPayload()
-            {
-                CreatedOn = DateTime.Now,
-                ExpireOn = DateTime.Now.AddMinutes(15),
-                TokenId = Guid.NewGuid(),
-                UserId = id
-            };
-
-            var tokenString = UserTokenService.Instance.GetToken(token);
-
-            var c=
-                new  { 
-                Data = new LoginResponse()
-                {
-                    ClientToken = tokenString
-                },
-               
-            };
-            return c;
-        }
-
-        public class LoginResponse
-        {
-            public string ClientToken { get; set; }
-        }
     }
 }
-

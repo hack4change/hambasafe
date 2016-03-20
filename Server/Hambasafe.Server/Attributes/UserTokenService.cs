@@ -45,7 +45,7 @@ namespace Hambasafe.Server.Attributes
         }
 
         public bool ValidateUserToken(string token)
-        {   
+        {
             return TokenProvider.Validate(token, _secret);
         }
     }
@@ -54,7 +54,7 @@ namespace Hambasafe.Server.Attributes
     {
         public Guid TokenId { get; set; }
 
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         public DateTime ExpireOn { get; set; }
 
