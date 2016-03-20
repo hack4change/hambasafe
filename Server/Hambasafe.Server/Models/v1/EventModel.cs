@@ -1,4 +1,4 @@
-﻿﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,6 +20,9 @@ namespace Hambasafe.Server.Models.v1
             Attributes = dbEvent.Attributes;
             WaitMins = dbEvent.MaxWaitingMinutes;
             PublicEvent = dbEvent.IsPublic;
+            StartLocation = new EventLocation(dbEvent.EventLocation);
+            EndLocation = dbEvent.EventLocation1 == null ? null : new EventLocation(dbEvent.EventLocation1);
+            OwnerUser = new UserModel(dbEvent.User);
         }
 
         public EventModel()
@@ -38,10 +41,16 @@ namespace Hambasafe.Server.Models.v1
 
         public DateTime? EventDateTimeEnd { get; set; }
 
-        public object Attributes { get; set; }
+        public string Attributes { get; set; }
 
-        public int WaitMins { get; set; }
+        public short WaitMins { get; set; }
 
         public bool? PublicEvent { get; set; }
+
+        public EventLocation StartLocation { get; set; }
+
+        public EventLocation EndLocation { get; set; }
+
+        public UserModel OwnerUser { get; set; }
     }
 }
