@@ -137,6 +137,15 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
           }
         }
       })
+      .state('app.profile', {
+        url: '/profile',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/profile.html',
+            controller: 'SearchCtrl'
+          }
+        }
+      })
       .state('tab.dash', {
         url: '/dash',
         views: {
