@@ -1,12 +1,15 @@
 starterControllers.controller('HomeCtrl', function ($scope, $location, EventFactory) {
-    var t = EventFactory.getAllEvents();
-
+  (function(){
     $scope.events = [];
-
-    for (var i = 0; i < 50; i++) {
-      var event = {label: "Test " + i};
-      $scope.events.push(event)
-    }
-
+  })()
+  $scope.refreshEvents = function(){
+    EventFactory.getAllEvents().then(function(response) {
+      console.log(response);
+      $scope.events = response.data;
+    }, function(err){
+      console.log(err);
+    });
+  }
+  $scope.refreshEvents();
 
   });
