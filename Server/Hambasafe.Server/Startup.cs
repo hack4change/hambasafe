@@ -13,7 +13,6 @@ namespace Hambasafe.Server
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            ObjectMappings.SetupMappings();
         }
     }
 }
