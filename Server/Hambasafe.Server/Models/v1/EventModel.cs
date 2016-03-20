@@ -7,7 +7,6 @@ using Entities = Hambasafe.DataAccess.Entities;
 
 namespace Hambasafe.Server.Models.v1
 {
-    [RoutePrefix("v1")]
     public class EventModel
     {
         public EventModel(Entities.Event dbEvent)
