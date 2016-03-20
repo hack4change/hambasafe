@@ -20,9 +20,8 @@ namespace Hambasafe.Server.Controllers.v1
         {
         }
 
-
         [AllowAnonymous]
-        [Route("createuser"), HttpPost]
+        [Route("create-user"), HttpPost]
         public async Task<HttpResponseMessage> CreateUser(UserModel newUser)
         {
             try
