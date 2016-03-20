@@ -142,7 +142,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         views: {
           'menuContent': {
             templateUrl: 'templates/profile.html',
-            controller: 'SearchCtrl'
+            controller: 'ProfileCtrl'
           }
         }
       })
