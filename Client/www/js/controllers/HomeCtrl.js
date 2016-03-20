@@ -8,8 +8,5 @@ starterControllers.controller('HomeCtrl', function ($scope, $location, EventFact
       $scope.events.push(event)
     }
 
-    $scope.goCreate = function() {
-    	console.log("here")
-    	$location.path("create");
-    }
+
   });
