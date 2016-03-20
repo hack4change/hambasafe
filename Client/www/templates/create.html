@@ -1,62 +1,70 @@
-<ion-view view-title="Create" ng-init="">
-  <ion-content class="padding">
+<ion-side-menus>
+<side-menu></side-menu>
 
-    <div class="bar bar-header bar-positive">
+  <ion-side-menu-content>
+
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+      </ion-nav-buttons>
+      <ion-nav-view>
+        <ion-nav-title>
+        </ion-nav-title>
+      </ion-nav-view>
+    </ion-nav-bar>
+
+    <ion-content class="padding has-header">
       <h1 class="title">CREATE AN EVENT</h1>
-    </div>
+     
+      <div class="list">
+        <ion-list>
+          <div>
+            <ion-item class="item-stable"
+                      ng-click="toggleGroup(group)"
+                      ng-class="{active: isGroupShown(group)}">
+              <i class="icon pull-right" style="float:right" ng-class="isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+              &nbsp;
+              <b>{{typeSelected}}</b>
+            </ion-item>
+            <ion-item class="item-accordion"
+                      ng-repeat="type in eventType"
+                      ng-show="isShown(type, group)" style="border-top: 0px" ng-click="toggleSelection(type, group)">
+              <b>{{type}}</b>
+            </ion-item>
+            <ion-item class="item-accordion"
+                      ng-repeat="type in eventType"
+                      ng-show="isShown(type, group)" style="border-top: 0px" ng-click="toggleSelection(type, group)">
+              <b>{{type}}</b>
+            </ion-item>
+          </div>
+        </ion-list>
+        <label class="item item-input">
+          <span class="input-label">Date</span>
+          <input type="date">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Start time</span>
+          <input type="time">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">End time</span>
+          <input type="time">
+        </label>
+        <label class="item item-input">
+          <textarea placeholder="Description"></textarea>
+        </label>
+        <label>
+          <input type="radio" name="Public" value="Public"> Public
+        </label>
+        <label>
+          <input type="radio" name="Public" value="Private"> Private
+        </label>
 
-    <div class="has-header list">
-
-    <ion-list>
-      <div>
-        <ion-item class="item-stable"
-                  ng-click="toggleGroup(group)"
-                  ng-class="{active: isGroupShown(group)}">
-          <i class="icon pull-right" style="float:right" ng-class="isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
-          &nbsp;
-          <b>{{typeSelected}}</b>
-        </ion-item>
-        <ion-item class="item-accordion"
-                  ng-repeat="type in eventType"
-                    ng-show="isShown(type, group)" style="border-top: 0px" ng-click="toggleSelection(type, group)" >
-          <b>{{type}}</b>
-        </ion-item>
-        <ion-item class="item-accordion"
-                  ng-repeat="type in eventType"
-                    ng-show="isShown(type, group)" style="border-top: 0px" ng-click="toggleSelection(type, group)" >
-          <b>{{type}}</b>
-        </ion-item>
+        <div>
+          <input type="submit" value="Submit">
+        </div>
       </div>
-    </ion-list>
+    </ion-content>
 
-
-      <label class="item item-input">
-        <span class="input-label">Date</span>
-        <input type="date">
-      </label>
-
-      <label class="item item-input">
-        <span class="input-label">Start time</span>
-        <input type="time">
-      </label>
-
-      <label class="item item-input">
-        <span class="input-label">End time</span>
-        <input type="time">
-      </label>
-
-      <label class="item item-input">
-        <textarea placeholder="Description"></textarea>
-      </label>
-
-      <label>
-        <input type="radio" name="Public" value="Public"> Public</label>
-      <label>
-        <input type="radio" name="Public" value="Private"> Private</label>
-
-      <div>
-        <input type="submit" value="Submit">
-      </div>
-    </div>
-  </ion-content>
-</ion-view>
+  </ion-side-menu-content>
+</ion-side-menus>
