@@ -35,4 +35,4 @@ starterControllers.controller('CreateCtrl', function ($scope) {
     $scope.isShown = function(type, group) {
       return $scope.shownGroup === group && $scope.typeSelected !== type;
     };
-  }));
+  });
