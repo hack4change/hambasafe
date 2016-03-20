@@ -50,6 +50,15 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         templateUrl: "templates/menu.html",
         // controller: 'AppCtrl'
       })
+      .state('app.map', {
+        url: '/map',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/map.html',
+            controller: 'MapCtrl'
+          }
+        }
+      })
       .state('app.landing', {
         url: '/landing',
         views: {
