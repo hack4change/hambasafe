@@ -514,7 +514,7 @@
             Implemented
             </summary>
         </member>
-        <member name="M:Hambasafe.Server.Controllers.v1.LocationController.GetLocationsBySuburb(System.Int32)">
+        <member name="M:Hambasafe.Server.Controllers.v1.LocationController.GetLocationsBySuburb(System.String)">
             <summary>
             Implemented
             </summary>
@@ -560,11 +560,6 @@
             </summary>
         </member>
         <member name="M:Hambasafe.Server.Controllers.v1.UsersController.GetUser(System.Int32)">
-            <summary>
-            Implemented
-            </summary>
-        </member>
-        <member name="M:Hambasafe.Server.Controllers.v1.UsersController.GetProfile(System.Int32)">
             <summary>
             Implemented
             </summary>
