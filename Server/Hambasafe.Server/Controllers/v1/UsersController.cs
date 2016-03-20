@@ -110,34 +110,5 @@ namespace Hambasafe.Server.Controllers.v1
                 return HandleError(error);
             }
         }
-
-        /// <summary>
-        /// Implemented
-        /// </summary>
-        [AllowAnonymous]
-        [Route("profile"), HttpGet]
-        public async Task<HttpResponseMessage> GetProfile(int id)
-        {
-            try
-            {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
-
-                var userEntity = context.Users.Where(e => e.UserId == id)
-                                              .FirstOrDefault();
-
-                if (userEntity == null)
-                {
-                    return Request.CreateResponse(HttpStatusCode.NotFound, $"Profile was not found for id:{id}");
-                }
-
-                var user = new UserModel(userEntity);
-
-                return Request.CreateResponse(HttpStatusCode.OK, user);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
     }
 }
