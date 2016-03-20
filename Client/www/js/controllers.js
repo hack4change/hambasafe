@@ -108,36 +108,19 @@ angular.module('starter.controllers', [])
       $location.path('eventdetail');
     } 
   })
-<<<<<<< HEAD
-  .controller('EventDetailCtrl', function ($scope, $location) {
-      
-      $scope.eventData = {
-          attending: false,
-          location: "CAPE TOWN, RONDEBOSH",
-          title: "Cycling in numbers",
-          type: "CYCLE",
-          distance: "5KM",
-          level: "NOVICE",
-          date: "20 November 2015",
-          summary: "This is a 'Facebook' styled Card. The header is created from a Thumbnail List item,        the content is from a card-body consisting of an image and paragraph text. The footer consists of tabs, icons aligned left, within the card-footer.",
-          numberOfAttendees: "4"
-      }
-=======
   .controller('EventDetailCtrl', function ($scope, $location, eventFactory) {
-
-      /*$scope.eventData = {
-          Attending: false,
-          Location: "CAPE TOWN, RONDEBOSH",
-          Title: "Cycling in numbers",
-          Type: "CYCLE",
-          Distance: "5KM",
-          Level: "NOVICE",
-          Date: "20 November 2015",
-          Summary: "Some summary of the event",
-          NumberOfAttendees: "4"
-      }*/
->>>>>>> 423a582824511f73f0a99b05814ec7b36ef076dc
-
+      
+      // $scope.eventData = {
+      //     attending: false,
+      //     location: "CAPE TOWN, RONDEBOSH",
+      //     title: "Cycling in numbers",
+      //     type: "CYCLE",
+      //     distance: "5KM",
+      //     level: "NOVICE",
+      //     date: "20 November 2015",
+      //     summary: "This is a 'Facebook' styled Card. The header is created from a Thumbnail List item,        the content is from a card-body consisting of an image and paragraph text. The footer consists of tabs, icons aligned left, within the card-footer.",
+      //     numberOfAttendees: "4"
+      // }
       $scope.eventData = {};
       $scope.init = function() {
         
@@ -215,7 +198,6 @@ angular.module('starter.controllers', [])
     $scope.eventType = ["Walk", "Run", "Cycle"];
     $scope.typeSelected = $scope.eventType[0];
 
-
     $scope.eventsToList = [
       {
         id        : "andnadand",
@@ -225,8 +207,7 @@ angular.module('starter.controllers', [])
         intensity : "Intense",
         location  : "Far, far away",
         distance  : "89km" 
-      },
-      {
+      }, {
         id        : "edefsfsf",
         title     : "Hey",
         date      : (new Date(Date.now())).toUTCString(),
