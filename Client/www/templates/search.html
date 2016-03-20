@@ -1,10 +1,10 @@
-<ion-view view-title="Search">
+<ion-view>
   <ion-content>
 
     <div class="button-bar bar-positive">
       <a class="button" ng-click="searchEvents()"><b>SEARCH</b></a>
     </div>
-
+    
     <ion-list>
       <div>
         <ion-item class="item-stable"
@@ -15,7 +15,7 @@
           <b>{{typeSelected}}</b>
         </ion-item>
         <ion-item class="item-accordion"
-                  ng-repeat="type in eventType"
+                  ng-repeat="type in eventTypes"
                     ng-show="isShown(type, group)" style="border-top: 0px" ng-click="toggleSelection(type, group)" >
           <b>{{type}}</b>
         </ion-item>
@@ -32,7 +32,7 @@
 	</div>
   <div class="tiled-list">
     <div class="list">
-      <a class="item item-avatar" href="/#/eventdetail/{{event.id}}" ng-class="" collection-repeat="event in eventsToList">
+      <a class="item item-avatar" href="/#/eventdetail/{{event.EventId}}" ng-class="" collection-repeat="event in eventsToList | orderBy: 'EventDateTimeStart'| filter: filterResults">
         <img src="http://ionicframework.com/img/docs/stantz.jpg">
         <div>
           <h2>{{event.Name}}</h2>

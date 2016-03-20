@@ -10,19 +10,22 @@ starterServices.service('EventService', ['$http', 'config',
         getEvent: function(id){
           return $http.get(config.baseServiceURL + '/v1/event?id='+id, config)
         },
+        getEventTypes: function(){
+          return $http.get(config.baseServiceURL + '/v1/event-types', config)
+        },
         getEventByUser: function(id){
-          return $http.get(config.baseServiceURL + '/v1/eventsbyuser', config)
+          return $http.get(config.baseServiceURL + '/v1/events-by-user', config)
         },
         getEventByAttendee: function(data){
           var param = Object.keys(data);
-          return $http.get(config.baseServiceURL + '/v1/eventsbyattendee?'+param+"="+data.param, config)
+          return $http.get(config.baseServiceURL + '/v1/events-by-attendee?'+param+"="+data.param, config)
         },
         getEventBySuburb: function(data){
           var param = Object.keys(data);
-          return $http.get(config.baseServiceURL + '/v1/eventsbysuburb?'+param+"="+data.param, config)
+          return $http.get(config.baseServiceURL + '/v1/events-by-suburb?'+param+"="+data.param, config)
         },
         getEventByCoords: function(latitude, longitude, radius){
-          return $http.get(config.baseServiceURL + '/v1/eventsbycoordinates?latitude='+latitude+'&longitude='+longitude+'&radius='+radius, config)
+          return $http.get(config.baseServiceURL + '/v1/events-by-coordinates?latitude='+latitude+'&longitude='+longitude+'&radius='+radius, config)
         }
       };
     }
