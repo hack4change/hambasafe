@@ -8,7 +8,7 @@
 angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.directives', 'starter.services', 'facebook', 'ngResource'])
 
   .constant('config', {
-    baseServiceURL: "//hsdevapi1.azurewebsites.net"
+    baseServiceURL: "http://hambasafedev.azurewebsites.net"
     //baseServiceURL: "http://api.emguidance.com/openmed/api"
   })
 
@@ -49,32 +49,52 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         templateUrl: 'templates/landing.html',
         controller: 'LandingCtrl'
       })
+      .state('app', {
+        url: "/app",
+        abstract: true,
+        templateUrl: "templates/menu.html",
+        // controller: 'AppCtrl'
+      })
+      .state('app.emergency', {
+        url: "/emergency",
+        views: {
+          'menuContent': {
+            templateUrl: "templates/emergency.html",
+          
+          }
+        }
+      })
       .state('registration', {
         url: '/registration',
         templateUrl: 'templates/registration.html',
         controller: 'RegistrationCtrl'
       })
-      .state('home', {
+      .state('app.home', {
         url: '/home',
-        templateUrl: 'templates/home.html',
-        controller: 'HomeCtrl'
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/home.html',
+            controller: 'HomeCtrl'
+          }
+        }
       })
-      .state('map', {
-        url: '/map',
-        templateUrl: 'templates/map.html',
-        controller: 'MapCtrl'
-      })
-
-      .state('terms', {
+      .state('app.terms', {
         url: '/terms',
-        templateUrl: 'templates/terms.html',
-        controller: 'TermsCtrl'
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/terms.html',
+            controller: 'TermsCtrl'
+          }
+        }
       })
-
-      .state('about-us', {
+      .state('app.about-us', {
         url: '/about-us',
-        templateUrl: 'templates/about-us.html',
-        controller: 'AboutUsCtrl'
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/about-us.html',
+            controller: 'AboutUsCtrl'
+          }
+        }
       })
 
       .state('tab', {
@@ -89,24 +109,34 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         controller: 'LatestCtrl'
       })
 
-      .state('eventdetail', {
+      .state('app.eventdetail', {
         url: '/eventdetail/:id',
-        templateUrl: 'templates/event-detail.html',
-        controller: 'EventDetailCtrl'
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/event-detail.html',
+            controller: 'EventDetailCtrl'
+          }
+        }
       })
-
-      .state('create', {
+      .state('app.create', {
         url: '/create',
-        templateUrl: 'templates/create.html',
-        controller: 'CreateCtrl'
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/create.html',
+            controller: 'CreateCtrl'
+          }
+        }
       })
 
-      .state('search', {
+      .state('app.search', {
         url: '/search',
-        templateUrl: 'templates/search.html',
-        controller: 'SearchCtrl'
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/search.html',
+            controller: 'SearchCtrl'
+          }
+        }
       })
-
       .state('tab.dash', {
         url: '/dash',
         views: {
@@ -146,20 +176,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
           }
         }
       })
-
-      .state('emergency', {
-        url: '/emergency',
-        templateUrl: 'templates/emergency.html',
-        //controller: 'EventDetailCtrl'
-      })
-
-      .state('eventrating', {
-        url: '/eventrating',
-        templateUrl: 'templates/event-rating.html',
-        //controller: 'EventDetailCtrl'
-      })
+    ;
 
 
-      // if none of the above states are matched, use this as the fallback
-      $urlRouterProvider.otherwise('/landing');
   });
