@@ -7,6 +7,7 @@ using System.Web.Http;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
 using Hambasafe.DataAccess.Entities;
+using models = Hambasafe.Server.Models.v1;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -18,6 +19,9 @@ namespace Hambasafe.Server.Controllers.v1
         {
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("locations"), HttpGet]
         public async Task<HttpResponseMessage> GetAllLocations()
@@ -25,22 +29,7 @@ namespace Hambasafe.Server.Controllers.v1
             try
             {
                 var dataContext = new HambasafeDataContext();
-                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToArray());
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }     
-
-        [AllowAnonymous]
-        [Route("locationsbysuburb"), HttpGet]
-        public async Task<HttpResponseMessage> GetLocationsBySuburb(int suburbId)
-        {
-            try
-            {
-                var dataContext = new HambasafeDataContext();
-                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.Where(l=>l.SuburbId==suburbId).ToArray());
+                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList().Select(l=>new models.EventLocation(l)));
             }
             catch (Exception error)
             {
@@ -48,6 +37,28 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
+        [AllowAnonymous]
+        [Route("locationsbysuburb"), HttpGet]
+        public async Task<HttpResponseMessage> GetLocationsBySuburb(int suburbId)
+        {
+            try
+            {
+                var dataContext = new HambasafeDataContext();
+                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList()
+                                                                            .Where(l=>l.SuburbId==suburbId));
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("location"), HttpGet]
         public async Task<HttpResponseMessage> GetLocation(int id)
@@ -55,7 +66,8 @@ namespace Hambasafe.Server.Controllers.v1
             try
             {
                 var dataContext = new HambasafeDataContext();
-                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.Where(l => l.EventLocationId == id).ToArray());
+                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList()
+                                                                                           .Where(l => l.EventLocationId == id));
             }
             catch (Exception error)
             {

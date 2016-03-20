@@ -21,6 +21,9 @@ namespace Hambasafe.Server.Controllers.v1
         {
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("eventtypes"), HttpGet]
         public async Task<HttpResponseMessage> GetEventTypes()
@@ -28,7 +31,7 @@ namespace Hambasafe.Server.Controllers.v1
             HambasafeDataContext context = new HambasafeDataContext();
             try
             {
-                var eventTypes = context.EventTypes.Select(et => new EventTypeModel(et)).ToArray();
+                var eventTypes = context.EventTypes.ToList().Select(et => new EventTypeModel(et));
 
                 return Request.CreateResponse(HttpStatusCode.OK, eventTypes);
             }

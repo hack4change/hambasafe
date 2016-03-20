@@ -39,5 +39,22 @@ namespace Hambasafe.Server.Models.v1
         public string MobileNumber { get; set; }
 
         public string EmailAddress { get; set; }
+<<<<<<< HEAD
+=======
+
+        public UserModel()
+        {
+
+        }
+        public UserModel(Entities.User user)
+        {
+            Status = user.Status;
+        }
+
+        //public static Entities.User BuildUser(UserModel user)
+        //{
+        //    AutoMapper.Mapper
+        //}
+>>>>>>> 7a5cc68ec118fbb0353fb70700f56767f1dd4fc9
     }
 }
