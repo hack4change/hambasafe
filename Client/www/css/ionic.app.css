@@ -1,80 +1,4 @@
 @charset "UTF-8";
-.sign-up {
-  text-align: center;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  z-index: 99999999999999999999999999999;
-  background: #8E8E8E; }
-
-.sign-up ion-content {
-  top: 100px;
-  display: block; }
-
-.sign-up ion-content p {
-  padding-top: 30px; }
-
-.sign-up ion-content button {
-  margin-top: 20px !important; }
-
-.sign-up ion-content p,
-.conditions a {
-  color: #ffffff; }
-
-.conditions {
-  position: relative;
-  top: 70px; }
-
-.conditions a:hover {
-  text-decoration: underline;
-  line-height: 20px; }
-
-.sign-up img.profile {
-  height: 130px;
-  width: 138px;
-  border-radius: 70px; }
-
-.pull-right {
-  float: right !important; }
-
-.pull-left {
-  float: left !important; }
-
-.hide {
-  display: none !important; }
-
-.show {
-  display: block !important; }
-
-.invisible {
-  visibility: hidden; }
-
-.icon-l {
-  font-size: 32px !important; }
-
-.facebook-color {
-  color: #3b5998; }
-
-.linkedin-color {
-  color: #007bb5; }
-
-.app-logo {
-  text-align: center; }
-
-.app-logo > img {
-  border-radius: 50%;
-  height: 150px; }
-
-.landing {
-  background: url(/img/landing.jpg) no-repeat;
-  background-size: cover; }
-
-.login-button i::before {
-  width: 42px; }
-
-.login-button span {
-  margin-left: -42px; }
-
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -9790,3 +9714,85 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.sign-up {
+  text-align: center;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 99999999999999999999999999999;
+  background: #8E8E8E; }
+
+.sign-up ion-content {
+  top: 100px;
+  display: block; }
+
+.sign-up ion-content p {
+  padding-top: 30px; }
+
+.sign-up ion-content button {
+  margin-top: 20px !important; }
+
+.sign-up ion-content p,
+.conditions a {
+  color: #ffffff; }
+
+.conditions {
+  position: relative;
+  top: 70px; }
+
+.conditions a:hover {
+  text-decoration: underline;
+  line-height: 20px; }
+
+.sign-up img.profile {
+  height: 130px;
+  width: 138px;
+  border-radius: 70px; }
+
+.pull-right {
+  float: right !important; }
+
+.pull-left {
+  float: left !important; }
+
+.hide {
+  display: none !important; }
+
+.show {
+  display: block !important; }
+
+.invisible {
+  visibility: hidden; }
+
+.icon-l {
+  font-size: 32px !important; }
+
+.facebook-color {
+  color: #3b5998; }
+
+.linkedin-color {
+  color: #007bb5; }
+
+.app-logo {
+  text-align: center; }
+
+.app-logo > img {
+  border-radius: 50%;
+  height: 150px; }
+
+.landing {
+  background: url(/img/landing.jpg) no-repeat;
+  background-size: cover; }
+
+.login-button i::before {
+  width: 42px; }
+
+.login-button span {
+  margin-left: -42px; }
+
+.ion-android-add-circle {
+  position: absolute !important;
+  right: 20px;
+  bottom: 20px;
+  font-size: 50px; }
