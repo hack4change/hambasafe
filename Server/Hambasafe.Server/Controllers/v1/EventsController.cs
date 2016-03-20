@@ -157,7 +157,7 @@ namespace Hambasafe.Server.Controllers.v1
                 var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
                                                 .Select(a => new EventModel(a.Event))
                                                 .ToArray();
-                                
+
                 return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
@@ -174,28 +174,8 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var context = new HambasafeDataContext();
 
-                var events = context.Events.Where(a => 
-                    a.EventLocation.Suburb.Name.ToUpper().Contains(suburbname.ToUpper())).Select(a => new EventModel(a))
-                                                .ToArray();
-
-                return Request.CreateResponse(HttpStatusCode.OK, events);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
-
-        [AllowAnonymous]
-        [Route("events-by-suburb"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsBySuburb(int suburbid)
-        {
-            try
-            {
-                var context = new HambasafeDataContext();
-
                 var events = context.Events.Where(a =>
-                    a.EventLocation.Suburb.SuburbId == suburbid).Select(a => new EventModel(a))
+                    a.EventLocation.Suburb.ToUpper().Contains(suburbname.ToUpper())).Select(a => new EventModel(a))
                                                 .ToArray();
 
                 return Request.CreateResponse(HttpStatusCode.OK, events);
@@ -205,7 +185,7 @@ namespace Hambasafe.Server.Controllers.v1
                 return HandleError(error);
             }
         }
-
+        
         [AllowAnonymous]
         [Route("events-by-coordinates"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByCoordinates(double latitude, double longitude, int radius)
@@ -214,15 +194,15 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var context = new HambasafeDataContext();
 
-                var suburbIds = context.Suburbs.Where(a => GetDistance(latitude, longitude, a.Latitude, a.Longitude) <= radius)
-                                        .Select(e => e.SuburbId)
-                                        .ToArray();
+                ////var suburbIds = context.Suburbs.Where(a => GetDistance(latitude, longitude, a.Latitude, a.Longitude) <= radius)
+                ////                        .Select(e => e.SuburbId)
+                ////                        .ToArray();
 
-                var events = context.Events.Where(a => suburbIds.Contains(
-                    a.EventLocation.Suburb.SuburbId)).Select(a => new EventModel(a))
-                                                .ToArray();
+                ////var events = context.Events.Where(a => suburbIds.Contains(
+                ////    a.EventLocation.Suburb.SuburbId)).Select(a => new EventModel(a))
+                ////                                .ToArray();
 
-                return Request.CreateResponse(HttpStatusCode.OK, events);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception error)
             {
