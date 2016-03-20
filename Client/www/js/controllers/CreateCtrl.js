@@ -1,10 +1,10 @@
-starterControllers.controller('CreateCtrl', function ($scope) {
+starterControllers.controller('CreateCtrl', function ($scope, EventFactory) {
     //init
     (function(){
         $scope.shownGroup = null;
     })()
     $scope.searchEvents = function(){
-      eventFactory.getAllEvents(
+      EventFactory.getAllEvents(
         {id: 1},
         function (event) {
           $scope.eventData = event;
@@ -35,4 +35,4 @@ starterControllers.controller('CreateCtrl', function ($scope) {
     $scope.isShown = function(type, group) {
       return $scope.shownGroup === group && $scope.typeSelected !== type;
     };
-  }));
+  });

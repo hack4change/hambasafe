@@ -1,5 +1,5 @@
-starterControllers.controller('HomeCtrl', function ($scope, eventFactory) {
-    var t = eventFactory.get();
+starterControllers.controller('HomeCtrl', function ($scope, EventFactory) {
+    var t = EventFactory.get();
 
     $scope.events = [];
 

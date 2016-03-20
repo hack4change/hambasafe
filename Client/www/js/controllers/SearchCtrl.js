@@ -1,4 +1,4 @@
-starterControllers.controller('SearchCtrl', function ($scope, eventFactory) {
+starterControllers.controller('SearchCtrl', function ($scope, EventFactory) {
     //init
     (function(){
       $scope.eventType = ["Walk", "Run", "Cycle"];
@@ -7,14 +7,7 @@ starterControllers.controller('SearchCtrl', function ($scope, eventFactory) {
     })()
     $scope.searchEvents = function(){
       var searchBy = $scope.selectedSearch;
-      eventFactory.getSearchedEvents({id: 3}
-       , function (event) {
-         $scope.eventsToList = event;
-         console.log(event);
-       }
-       , function (error) {
 
-       });
     }
 
     $scope.eventsToList = [
@@ -25,7 +18,7 @@ starterControllers.controller('SearchCtrl', function ($scope, eventFactory) {
         type      : "Run",
         intensity : "Intense",
         location  : "Far, far away",
-        distance  : "89km" 
+        distance  : "89km"
       }, {
         id        : "edefsfsf",
         title     : "Hey",
@@ -33,7 +26,7 @@ starterControllers.controller('SearchCtrl', function ($scope, eventFactory) {
         type      : "Cycle",
         intensity : "Beginner",
         location  : "Claremont, Cape Town",
-        distance  : "2km" 
+        distance  : "2km"
       }
     ]
     $scope.toggleGroup = function(group) {
