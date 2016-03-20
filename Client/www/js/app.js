@@ -204,6 +204,15 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         controller: 'AccountCtrl'
       }
     }
-  });
+  })
 
+  .state('app.eventInvite', {
+    url: '/event-invite:id',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/event-invite.html',
+        controller: ''
+      }
+    }
+  })
 });
