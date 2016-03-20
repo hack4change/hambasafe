@@ -19,21 +19,21 @@
   		<a class="button" >
           <i class="icon ion-ios-people" ></i>
       </a>
-	</div>
-  <div class="tiled-list">
+   </div>
+   <div class="tiled-list">
     <div class="list">
-      <a class="item item-avatar" href="/#/app/event-detail/{{event.id}}" ng-class="" collection-repeat="event in events">
+      <a class="item item-avatar" ng-click = click(event) ng-class="" collection-repeat = "event in events">
         <img src="http://ionicframework.com/img/docs/stantz.jpg">
         <div class="right">
           <h3>{{event.Name}}</h3>
           <h3>{{event.Description}}</h3>
           <h3>{{event.Distance}}km</h3>
+          <h3>{{event.EventDateTimeEnd}}</h3>
           <h3 ng-show="event.PublicEvent">Public Event</h3>
           <h3 ng-show="!event.PublicEvent">Private Event</h3>
         </div>
       </a>
     </div>
-  </div>
     <!-- <div class="list">
       <div class="item" collection-repeat="event in events"
            collection-item-width="'100%'"

@@ -225,6 +225,17 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         controller: 'AccountCtrl'
       }
     }
-  });
-
+  })
+  
+  .state('app.userInvite', {
+    url: '/user-invite',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/user-invite.html',
+        controller: ''
+      }
+    }
+  })
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/app/landing');
 });
