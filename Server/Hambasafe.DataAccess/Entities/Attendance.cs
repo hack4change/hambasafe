@@ -26,9 +26,9 @@ namespace Hambasafe.DataAccess.Entities
         public Nullable<bool> HasAttended { get; set; }
         public System.DateTime DateCreated { get; set; }
     
-        public virtual Event Event { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AttendanceRating> AttendanceRatings { get; set; }
+        public virtual Event Event { get; set; }
+        public virtual User User { get; set; }
     }
 }

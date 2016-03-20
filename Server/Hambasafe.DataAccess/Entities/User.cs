@@ -30,21 +30,20 @@ namespace Hambasafe.DataAccess.Entities
         }
     
         public int UserId { get; set; }
+        public string Token { get; set; }
         public string FirstNames { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
         public System.DateTime DateOfBirth { get; set; }
         public string IdentityDocumentUrl { get; set; }
-        public string ProfilePictureUrl { get; set; }
+        public Nullable<int> PictureImageResourceId { get; set; }
         public string Status { get; set; }
         public string MobileNumber { get; set; }
         public string EmailAddress { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public Nullable<System.DateTime> DateValidated { get; set; }
-        public string Token { get; set; }
         public Nullable<System.DateTime> DateLastLogin { get; set; }
-        public Nullable<int> PictureImageResourceId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance> Attendances { get; set; }
@@ -62,6 +61,7 @@ namespace Hambasafe.DataAccess.Entities
         public virtual ICollection<Connection> Connections1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ImageResource ImageResource { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Invitation> Invitations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

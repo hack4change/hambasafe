@@ -10,32 +10,34 @@
         <EntityTypeShape EntityType="HambasafeDataModel.BlockedUser" Width="1.5" PointX="3" PointY="9.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HambasafeDataModel.Connection" Width="1.5" PointX="3" PointY="12.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HambasafeDataModel.Country" Width="1.5" PointX="1.5" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="HambasafeDataModel.Event" Width="1.5" PointX="6" PointY="6.25" IsExpanded="true" />
         <EntityTypeShape EntityType="HambasafeDataModel.EventLocation" Width="1.5" PointX="3.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="HambasafeDataModel.EventType" Width="1.5" PointX="3.75" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HambasafeDataModel.Invitation" Width="1.5" PointX="11.25" PointY="7" IsExpanded="true" />
         <EntityTypeShape EntityType="HambasafeDataModel.Province" Width="1.5" PointX="1.5" PointY="15.375" IsExpanded="true" />
         <EntityTypeShape EntityType="HambasafeDataModel.Suburb" Width="1.5" PointX="1.5" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HambasafeDataModel.User" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Attendance_Event" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Attendance_User" ManuallyRouted="false" />
         <AssociationConnector Association="HambasafeDataModel.FK_AttendanceRating_Attendance" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_AttendanceRating_User" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_AttendanceRating_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_BlockedUser_User" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_BlockedUser_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Connection_User" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Connection_User1" ManuallyRouted="false" />
         <AssociationConnector Association="HambasafeDataModel.FK_Province_Country" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Event_EventLocation" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Event_EventLocation1" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Event_EventType" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Event_User" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Invitation_Event" ManuallyRouted="false" />
         <AssociationConnector Association="HambasafeDataModel.FK_EventLocation_Suburb" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Invitation_User" ManuallyRouted="false" />
-        <AssociationConnector Association="HambasafeDataModel.FK_Invitation_User1" ManuallyRouted="false" />
         <AssociationConnector Association="HambasafeDataModel.FK_Suburb_Province" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="HambasafeDataModel.Event" Width="1.5" PointX="6" PointY="6.75" />
+        <EntityTypeShape EntityType="HambasafeDataModel.ImageResource" Width="1.5" PointX="0.75" PointY="21.125" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Attendance_Event" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Event_EventLocation" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Event_EventLocation1" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Event_EventType" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Invitation_Event" />
+        <EntityTypeShape EntityType="HambasafeDataModel.User" Width="1.5" PointX="3" PointY="22" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Attendance_User" />
+        <AssociationConnector Association="HambasafeDataModel.FK_AttendanceRating_User" />
+        <AssociationConnector Association="HambasafeDataModel.FK_AttendanceRating_User1" />
+        <AssociationConnector Association="HambasafeDataModel.FK_BlockedUser_User" />
+        <AssociationConnector Association="HambasafeDataModel.FK_BlockedUser_User1" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Connection_User" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Connection_User1" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Event_User" />
+        <AssociationConnector Association="HambasafeDataModel.FK_User_ImageResource" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Invitation_User" />
+        <AssociationConnector Association="HambasafeDataModel.FK_Invitation_User1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

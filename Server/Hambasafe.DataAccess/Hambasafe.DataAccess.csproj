@@ -90,6 +90,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HambasafeModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\ImageResource.cs">
+      <DependentUpon>HambasafeModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Invitation.cs">
       <DependentUpon>HambasafeModel.tt</DependentUpon>
     </Compile>

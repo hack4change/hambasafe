@@ -47,13 +47,13 @@ namespace Hambasafe.Server.Controllers.v1
                 var key = Encoding.UTF8.GetBytes(registerModel.Password.ToUpper());
                 string hashString;
 
-                using (var hmac = new HMACSHA256(key))
-                {
-                    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes());
-                    hashString = Convert.ToBase64String(hash);
-                }
+                //using (var hmac = new HMACSHA256(key))
+                //{
+                //    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes());
+                //    hashString = Convert.ToBase64String(hash);
+                //}
 
-                return hashString;
+                //return hashString;
 
 
 
