@@ -87,8 +87,9 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                var dataContext = new HambasafeDataContext();
-                var events = dataContext.Events.ToList().Select(e => new EventModel(e));
+                var context = new HambasafeDataContext();
+
+                var events = context.Events.Select(e => new EventModel(e));
 
                 return Request.CreateResponse(HttpStatusCode.OK, events);
             }
@@ -139,8 +140,18 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                //TODO implement
-                return Request.CreateResponse(HttpStatusCode.OK);
+                var context = new HambasafeDataContext();
+
+                var userIds = context.Users.Where(a => a.FirstNames.ToUpper().Contains(attendeename.ToUpper()) ||
+                                                       a.LastName.ToUpper().Contains(attendeename.ToUpper()))
+                                        .Select(e => e.UserId)
+                                        .ToArray();
+
+                var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
+                                                .Select(a => new EventModel(a.Event))
+                                                .ToArray();
+                                
+                return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
             {
