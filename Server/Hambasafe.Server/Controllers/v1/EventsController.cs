@@ -162,7 +162,7 @@ namespace Hambasafe.Server.Controllers.v1
                 var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
                                                 .Select(a => new EventModel(a.Event))
                                                 .ToArray();
-
+                                
                 return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
@@ -179,7 +179,7 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var context = new HambasafeDataContext();
 
-                var events = context.Events.Where(a =>
+                var events = context.Events.Where(a => 
                     a.EventLocation.Suburb.ToUpper().Contains(suburbname.ToUpper())).Select(a => new EventModel(a))
                                                 .ToArray();
 
