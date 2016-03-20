@@ -3,7 +3,7 @@ starterControllers.controller('LandingCtrl', function ($scope, $stateParams, Fac
     Facebook.getLoginStatus(function (response) {
       if (response.status === 'connected') {
         $scope.loggedIn = true;
-        $location.path('registration');
+      $location.path('app/registration');
       } else {
         $scope.loggedIn = false;
       }
@@ -16,7 +16,7 @@ starterControllers.controller('LandingCtrl', function ($scope, $stateParams, Fac
       // Do something with response.
       console.log(response);
       LocalStorage.facebookAuth = response;
-      $location.path('registration');
+      $location.path('app/registration');
     });
   };
 });

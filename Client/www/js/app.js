@@ -45,19 +45,19 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
 
   // setup an abstract state for the tabs directive
     .state('landing', {
-      url: '/landing',
-      templateUrl: 'templates/landing.html',
-      controller: 'LandingCtrl'
-    })
+    url: '/landing',
+    templateUrl: 'templates/landing.html',
+    controller: 'LandingCtrl'
+  })
 
-    .state('app', {
-      url: "/app",
-      abstract: true,
-      templateUrl: "templates/menu.html",
-      // controller: 'AppCtrl'
-    })
+  .state('app', {
+    url: "/app",
+    abstract: true,
+    templateUrl: "templates/menu.html",
+    // controller: 'AppCtrl'
+  })
 
-    .state('app.emergency', {
+  .state('app.emergency', {
       url: "/emergency",
       views: {
         'menuContent': {
@@ -71,35 +71,35 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
       controller: 'RegistrationCtrl'
     })
 
-    .state('app.home', {
-      url: '/home',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/home.html',
-          controller: 'HomeCtrl'
-        }
+  .state('app.home', {
+    url: '/home',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/home.html',
+        controller: 'HomeCtrl'
       }
-    })
+    }
+  })
 
-    .state('app.terms', {
-      url: '/terms',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/terms.html',
-          controller: 'TermsCtrl'
-        }
+  .state('app.terms', {
+    url: '/terms',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/terms.html',
+        controller: 'TermsCtrl'
       }
-    })
+    }
+  })
 
-    .state('app.about-us', {
-      url: '/about-us',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/about-us.html',
-          controller: 'AboutUsCtrl'
-        }
+  .state('app.about-us', {
+    url: '/about-us',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/about-us.html',
+        controller: 'AboutUsCtrl'
       }
-    })
+    }
+  })
 
   .state('tab', {
     url: '/tab',
@@ -162,15 +162,15 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
       }
     })
 
-    .state('tab.dash', {
-      url: '/dash',
-      views: {
-        'tab-dash': {
-          templateUrl: 'templates/tab-dash.html',
-          controller: 'DashCtrl'
-        }
+  .state('tab.dash', {
+    url: '/dash',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/tab-dash.html',
+        controller: 'DashCtrl'
       }
-    })
+    }
+  })
 
   .state('tab.chats', {
     url: '/chats',
