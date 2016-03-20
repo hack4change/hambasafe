@@ -31,20 +31,20 @@ starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state,
               navigator.geolocation.getCurrentPosition(function(pos) {
                 console.log(pos);
                 $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-                var gCoords = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-                var marker = new google.maps.Marker({
-                  position: gCoords,
-                  map: map,
+                $scope.gCoords = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+                $scope.marker = new google.maps.Marker({
+                  position: $scope.gCoords,
+                  map: $scope.map,
                   title: 'Uluru (Ayers Rock)'
                 });
-                var locationCircle = new google.maps.Circle({
+                $scope.locationCircle = new google.maps.Circle({
                   strokeColor: '#FF0000',
                   strokeOpacity: 0.8,
                   strokeWeight: 2,
                   fillColor: '#FF0000',
                   fillOpacity: 0.35,
-                  map: map,
-                  center:  gCoords,
+                  map: $scope.map,
+                  center:  $scope.gCoords,
                   radius: $scope.sliderDistance*1000
                 });
                 $ionicLoading.hide();
@@ -54,17 +54,10 @@ starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state,
       }
       google.maps.event.addDomListener(window, 'load', initialize);
       $scope.$watch('sliderDistance', function (newValue, oldValue) {
-        var locationCircle = new google.maps.Circle({
-          strokeColor: '#FF0000',
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: '#FF0000',
-          fillOpacity: 0.35,
-          map: $scope.map,
-          center:  gCoords,
+        console.log($scope.map)
+        $scope.locationCircle.setOptions({
           radius: $scope.sliderDistance*1000
         });
         //do something
       });
-
 });
