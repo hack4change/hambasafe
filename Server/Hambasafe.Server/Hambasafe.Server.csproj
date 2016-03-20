@@ -337,7 +337,6 @@
     <None Include="Properties\PublishProfiles\HambasafeDev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\HambasafeDev.pubxml" />
     <None Include="Properties\PublishProfiles\hsdevapi1 - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\hsdevapi1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
