@@ -21,7 +21,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         /// <summary>
-        /// Not implemented
+        /// Implemented
         /// </summary>
         [AllowAnonymous]
         [Route("create-event"), HttpPost]
@@ -29,27 +29,36 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                var dataContext = new HambasafeDataContext();
-
-                var eventEntity = new Event()
+                using (var dataContext = new HambasafeDataContext())
                 {
-                    Name = eventModel.Name,
-                    Description = eventModel.Description,
-                    DateTimeStart = eventModel.EventDateTimeStart,
-                    DateTimeEnd = eventModel.EventDateTimeEnd,
-                    IsPublic = eventModel.PublicEvent,
-                    MaxWaitingMinutes = eventModel.WaitMins,
-                    StartEventLocationId = eventModel.StartLocation.EventLocationId,
-                    EndEventLocationId = eventModel.EndLocation == null ? (int?)null : eventModel.EndLocation.EventLocationId,
-                    OwnerUserId = eventModel.OwnerUser.UserId,
-                    Attributes = eventModel.Attributes,
-                    DateCreated = DateTime.Now
-                };
+                    EventLocation startLocation = InsertLocation(dataContext, eventModel.StartLocation);
+                    EventLocation endLocation = null;
+                    if (eventModel.EndLocation != null)
+                    {
+                        endLocation = InsertLocation(dataContext, eventModel.EndLocation);
+                    }
+                    
+                    var eventEntity = new Event()
+                    {
+                        Name = eventModel.Name,
+                        Description = eventModel.Description,
+                        EventTypeId = eventModel.EventType.EventTypeId,
+                        DateTimeStart = eventModel.EventDateTimeStart,
+                        DateTimeEnd = eventModel.EventDateTimeEnd,
+                        IsPublic = eventModel.PublicEvent,
+                        MaxWaitingMinutes = eventModel.WaitMins,
+                        StartEventLocationId = startLocation.EventLocationId,
+                        EndEventLocationId = endLocation?.EventLocationId,
+                        OwnerUserId = eventModel.OwnerUser.UserId,
+                        Attributes = eventModel.Attributes,
+                        DateCreated = DateTime.Now
+                    };
 
-                dataContext.Events.Add(eventEntity);
-                dataContext.SaveChanges();
+                    dataContext.Events.Add(eventEntity);
+                    dataContext.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK, new EventModel(eventEntity));
+                    return Request.CreateResponse(HttpStatusCode.OK, new EventModel(eventEntity));
+                }
             }
             catch (Exception error)
             {
@@ -162,7 +171,7 @@ namespace Hambasafe.Server.Controllers.v1
                 var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
                                                 .Select(a => new EventModel(a.Event))
                                                 .ToArray();
-                                
+
                 return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
@@ -179,7 +188,7 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var context = new HambasafeDataContext();
 
-                var events = context.Events.Where(a => 
+                var events = context.Events.Where(a =>
                     a.EventLocation.Suburb.ToUpper().Contains(suburbname.ToUpper())).Select(a => new EventModel(a))
                                                 .ToArray();
 
@@ -190,7 +199,7 @@ namespace Hambasafe.Server.Controllers.v1
                 return HandleError(error);
             }
         }
-        
+
         [AllowAnonymous]
         [Route("events-by-coordinates"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByCoordinates(double latitude, double longitude, int radius)
@@ -215,12 +224,29 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
-        public double GetDistance(double latitude1, double longitude1, double latitude2, double longitude2)
+        private double GetDistance(double latitude1, double longitude1, double latitude2, double longitude2)
         {
             GeoCoordinate coord1 = new GeoCoordinate(latitude1, longitude1);
             GeoCoordinate coord2 = new GeoCoordinate(latitude2, longitude2);
 
             return coord1.GetDistanceTo(coord2);
+        }
+        
+        private EventLocation InsertLocation(HambasafeDataContext dataContext, EventLocationModel locationModel)
+        {
+            var location = dataContext.EventLocations.Add(new EventLocation()
+            {
+                Address = locationModel.Address,
+                Country = locationModel.Country,
+                Latitude = locationModel.Latitude,
+                Longitude = locationModel.Longitude,
+                PostCode = locationModel.PostCode,
+                Province = locationModel.Province,
+                Suburb = locationModel.Suburb
+            });
+            dataContext.SaveChanges();
+
+            return location;
         }
     }
 }
