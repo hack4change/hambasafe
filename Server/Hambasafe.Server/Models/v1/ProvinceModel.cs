@@ -11,39 +11,22 @@ namespace Hambasafe.Server.Models.v1
     [RoutePrefix("v1")]
     public class ProvinceModel
     {
-        private int _provinceID;
-        private string _name;
-        private CountryModel _country;
+        public ProvinceModel(Entities.Province province)
+        {
+            ProvinceId = province.ProvinceId;
+            Name = province.Name;
+            Country = new CountryModel(province.Country);
+        }
 
         public ProvinceModel()
         {
-
         }
 
-        public ProvinceModel(Entities.Province province)
-        {
-            _provinceID = province.ProvinceId;
-            _name = province.Name;
-            _country = new CountryModel(province.Country);
-        }
+        public int ProvinceId { get; set; }
 
-        public int ProvinceID
-        {
-            get { return _provinceID; }
-            set { _provinceID = value; }
-        }
+        public string Name { get; set; }
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-
-        public CountryModel Country
-        {
-            get { return _country; }
-            set { _country = value; }
-        }
+        public CountryModel Country { get; set; }
 
     }
 }
