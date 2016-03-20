@@ -1,4 +1,4 @@
-<ion-view view-title="Search">
+<ion-view>
   <ion-content>
 
     <div>
@@ -9,11 +9,11 @@
       </div>
     </div>
     <div>
-      <span class="ion-ios-star icon-l"></span>
-      <span class="ion-ios-star icon-l"></span>
-      <span class="ion-ios-star icon-l"></span>
-      <span class="ion-ios-star icon-l"></span>
-      <span class="ion-ios-star icon-l"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>0}" ng-click = "setRate(1)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>1}" ng-click = "setRate(2)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>2}" ng-click = "setRate(3)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>3}" ng-click = "setRate(4)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>4}" ng-click = "setRate(5)"></span>
     </div>
 
     <div>Rate</div>
