@@ -6,10 +6,10 @@ using Hambasafe.DataAccess;
 
 namespace Hambasafe.Server.Models.v1
 {
-    public class EventLocation
+    public class EventLocationModel
     {
-        public EventLocation() { }
-        public EventLocation(DataAccess.Entities.EventLocation location)
+        public EventLocationModel() { }
+        public EventLocationModel(DataAccess.Entities.EventLocation location)
         {
             Id = location.EventLocationId;
             SuburbId = location.SuburbId;

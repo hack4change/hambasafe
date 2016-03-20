@@ -27,7 +27,15 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                //TODO add this 
+                if (newUser.UserId.HasValue)
+                    throw (new ApplicationException("Cannot create a user who already has an UserId assigned."));
+
+                using (var dataContext = new Entities.HambasafeDataContext())
+                {
+                    var user = newUser.MapToUserEntity();
+                    dataContext.Users.Add(user);
+                    dataContext.SaveChanges();
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -46,10 +54,11 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
-
-                var users = context.Users.ToList().Select(e => new UserModel(e));
-                return Request.CreateResponse(HttpStatusCode.OK, users);
+                using (var dataContext = new Entities.HambasafeDataContext())
+                {
+                    var users = dataContext.Users.ToList().Select(e => UserModel.Create(e));
+                    return Request.CreateResponse(HttpStatusCode.OK, users);
+                }
             }
             catch (Exception error)
             {
@@ -66,11 +75,10 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
-
-                var users = context.Users.ToList().Where(a=>
+                var dataContext = new Entities.HambasafeDataContext();
+                var users = dataContext.Users.ToList().Where(a=>
                                 a.FirstNames.ToUpper().Contains(username.ToUpper()) 
-                                || a.LastName.ToUpper().Contains(username.ToUpper())).Select(e => new UserModel(e));
+                                || a.LastName.ToUpper().Contains(username.ToUpper())).Select(e => UserModel.Create(e));
 
                 return Request.CreateResponse(HttpStatusCode.OK, users);
             }
@@ -89,9 +97,8 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
-
-                UserModel user = new UserModel(context.Users.ToList().Where(e => e.UserId == id) as Entities.User);
+                var dataContext = new Entities.HambasafeDataContext();
+                var user = UserModel.Create(dataContext.Users.ToList().Where(e => e.UserId == id).First());
 
                 return Request.CreateResponse(HttpStatusCode.OK, user);
             }
@@ -110,9 +117,8 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
-
-                UserModel user = new UserModel(context.Users.ToList().Where(e => e.UserId == id) as Entities.User);
+                var dataContext = new Entities.HambasafeDataContext();
+                var user = UserModel.Create(dataContext.Users.ToList().Where(e => e.UserId == id).First());
 
                 return Request.CreateResponse(HttpStatusCode.OK, user);
             }

@@ -509,17 +509,17 @@
             http://localhost/help
             </summary>
         </member>
-        <member name="M:Hambasafe.Server.Controllers.v1.LocationController.GetAllLocations">
+        <member name="M:Hambasafe.Server.Controllers.v1.EventLocationController.GetAllLocations">
             <summary>
             Implemented
             </summary>
         </member>
-        <member name="M:Hambasafe.Server.Controllers.v1.LocationController.GetLocationsBySuburb(System.Int32)">
+        <member name="M:Hambasafe.Server.Controllers.v1.EventLocationController.GetLocationsBySuburb(System.Int32)">
             <summary>
             Implemented
             </summary>
         </member>
-        <member name="M:Hambasafe.Server.Controllers.v1.LocationController.GetLocation(System.Int32)">
+        <member name="M:Hambasafe.Server.Controllers.v1.EventLocationController.GetLocation(System.Int32)">
             <summary>
             Implemented
             </summary>

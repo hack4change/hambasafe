@@ -12,9 +12,9 @@ using models = Hambasafe.Server.Models.v1;
 namespace Hambasafe.Server.Controllers.v1
 {
     [RoutePrefix("v1")]
-    public class LocationController : ApiControllerBase
+    public class EventLocationController : ApiControllerBase
     {
-        public LocationController(IConfigurationService configuration, ITableStorageService tableStorage) :
+        public EventLocationController(IConfigurationService configuration, ITableStorageService tableStorage) :
             base(configuration, tableStorage)
         {
         }
@@ -29,7 +29,7 @@ namespace Hambasafe.Server.Controllers.v1
             try
             {
                 var dataContext = new HambasafeDataContext();
-                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList().Select(l=>new models.EventLocation(l)));
+                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList().Select(l=>new models.EventLocationModel(l)));
             }
             catch (Exception error)
             {
@@ -67,7 +67,8 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var dataContext = new HambasafeDataContext();
                 return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList()
-                                                                                           .Where(l => l.EventLocationId == id));
+                                                                                           .Where(l => l.EventLocationId == id)
+                                                                                           .First());
             }
             catch (Exception error)
             {
