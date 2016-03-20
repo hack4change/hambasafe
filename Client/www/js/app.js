@@ -148,6 +148,13 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         //controller: 'EventDetailCtrl'
       })
 
+      .state('eventrating', {
+        url: '/eventrating',
+        templateUrl: 'templates/event-rating.html',
+        //controller: 'EventDetailCtrl'
+      })
+
+
       // if none of the above states are matched, use this as the fallback
       $urlRouterProvider.otherwise('/landing');
   });

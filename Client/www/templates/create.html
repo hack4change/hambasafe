@@ -32,30 +32,34 @@
 
       <label class="item item-input">
         <span class="input-label">Date</span>
-        <input type="date">
+        <input type="date" ng-model="eventData.EventDate">
       </label>
 
       <label class="item item-input">
         <span class="input-label">Start time</span>
-        <input type="time">
+        <input type="time" ng-model="eventData.EventDateTimeStart">
       </label>
 
       <label class="item item-input">
         <span class="input-label">End time</span>
-        <input type="time">
+        <input type="time" ng-model="eventData.EventDateTimeEnd">
       </label>
 
       <label class="item item-input">
-        <textarea placeholder="Description"></textarea>
+        <textarea placeholder="Description" ng-model="eventData.Description"></textarea>
       </label>
 
       <label>
-        <input type="radio" name="Public" value="Public"> Public</label>
+        
+        <ion-checkbox ng-model="filter.blue" style="" >Private</ion-checkbox>
+        
       <label>
-        <input type="radio" name="Public" value="Private"> Private</label>
+
 
       <div>
-        <input type="submit" value="Submit">
+        <button class="button button-block button-positive">
+          CREATE
+        </button>
       </div>
     </div>
   </ion-content>
