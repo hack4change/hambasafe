@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
 using Hambasafe.Server.Models.v1;
-using Entities = Hambasafe.DataAccess.Entities;
+using Hambasafe.DataAccess.Entities;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -20,12 +20,18 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("createevent"), HttpPost]
-        public async Task<HttpResponseMessage> CreateEvent(EventModel newEvent)
+        [Route("create-event"), HttpPost]
+        public async Task<HttpResponseMessage> CreateEvent(EventModel eventModel)
         {
             try
             {
-                //TODO add this 
+                var dataContext = new HambasafeDataContext();
+
+                var eventEntity = new Event()
+                {
+                    Name = eventModel.Name,
+                    
+                };
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -44,7 +50,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                var dataContext = new Entities.HambasafeDataContext();
+                var dataContext = new HambasafeDataContext();
                 var evnt = dataContext.Events.ToList().Where(e => e.EventId == id)
                                                       .Select(e => new EventModel(e))
                                                       .First();
@@ -66,7 +72,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                var dataContext = new Entities.HambasafeDataContext();
+                var dataContext = new HambasafeDataContext();
                 var events = dataContext.Events.ToList().Select(e => new EventModel(e));
 
                 return Request.CreateResponse(HttpStatusCode.OK, events);
@@ -81,12 +87,12 @@ namespace Hambasafe.Server.Controllers.v1
         /// Implemented
         /// </summary>
         [AllowAnonymous]
-        [Route("eventsbyuser"), HttpGet]
+        [Route("events-by-user"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByUser(int userid)
         {
             try
             {
-                var dataContext = new Entities.HambasafeDataContext();
+                var dataContext = new HambasafeDataContext();
                 var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
 
                 return Request.CreateResponse(HttpStatusCode.OK, events);
@@ -98,7 +104,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("eventsbyattendee"), HttpGet]
+        [Route("events-by-attendee"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
         {
             try
@@ -113,7 +119,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("eventsbyattendee"), HttpGet]
+        [Route("events-by-attendee"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
         {
             try
@@ -128,7 +134,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("eventsbysuburb"), HttpGet]
+        [Route("events-by-suburb"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsBySuburb(string suburbname)
         {
             try
@@ -143,7 +149,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("eventsbysuburb"), HttpGet]
+        [Route("events-by-suburb"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsBySuburb(int suburbid)
         {
             try
@@ -158,12 +164,12 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("eventsbycoordinates"), HttpGet]
+        [Route("events-by-coordinates"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByCoordinates(double latitude, double longitude, int radius)
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
+                HambasafeDataContext context = new HambasafeDataContext();
 
                 //TODO implement
                 //var matchingLocations = context.Location
