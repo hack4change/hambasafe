@@ -1,4 +1,4 @@
-starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $state) {
+starterControllers.controller('SearchCtrl', function ($scope, EventService, $state, $location) {
     //init
     (function(){
       $scope.eventType = ["Walk", "Run", "Cycle"];
@@ -8,9 +8,10 @@ starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $sta
     })()
     $scope.searchEvents = function(){
       var searchBy = $scope.selectedSearch;
-      EventFactory.getAllEvents().then(function(response) {
+      EventService.getAllEvents().then(function(response) {
         console.log(response);
-      }, function(response){
+        $scope.eventsToList = response.data;
+      }, function(err){
 
       });
     }
@@ -41,6 +42,6 @@ starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $sta
       return $scope.selectedSearch === selection;
     }
     $scope.goMap = function(){
-      $state.go('map');
+      $location.path('app/map');
     }
   });
