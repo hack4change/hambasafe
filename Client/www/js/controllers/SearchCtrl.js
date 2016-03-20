@@ -1,4 +1,4 @@
-starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $state) {
+starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $state, $location) {
     //init
     (function(){
       $scope.eventType = ["Walk", "Run", "Cycle"];
@@ -42,6 +42,6 @@ starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $sta
       return $scope.selectedSearch === selection;
     }
     $scope.goMap = function(){
-      $state.go('map');
+      $location.path('app/map');
     }
   });
