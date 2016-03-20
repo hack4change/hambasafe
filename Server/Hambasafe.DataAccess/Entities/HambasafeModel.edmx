@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HambasafeDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HambasafeDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Attendance">
           <Key>
             <PropertyRef Name="AttendanceId" />
@@ -131,18 +131,20 @@
             <PropertyRef Name="UserId" />
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="50" />
           <Property Name="FirstNames" Type="varchar" MaxLength="90" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="90" Nullable="false" />
           <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
           <Property Name="IdentityDocumentUrl" Type="varchar(max)" />
-          <Property Name="ProfilePictureUrl" Type="varchar(max)" />
+          <Property Name="PictureImageResourceId" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="90" Nullable="false" />
           <Property Name="MobileNumber" Type="varchar" MaxLength="13" Nullable="false" />
           <Property Name="EmailAddress" Type="varchar" MaxLength="254" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="DateValidated" Type="datetime" />
+          <Property Name="DateLastLogin" Type="datetime" />
         </EntityType>
         <Association Name="FK_Attendance_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
@@ -462,8 +464,7 @@
             <End Role="Suburb" EntitySet="Suburb" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HambasafeDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -643,6 +644,9 @@
           <NavigationProperty Name="Events" Relationship="Self.FK_Event_User" FromRole="User" ToRole="Event" />
           <NavigationProperty Name="Invitations" Relationship="Self.FK_Invitation_User" FromRole="User" ToRole="Invitation" />
           <NavigationProperty Name="Invitations1" Relationship="Self.FK_Invitation_User1" FromRole="User" ToRole="Invitation" />
+          <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateLastLogin" Type="DateTime" Precision="3" />
+          <Property Name="PictureImageResourceId" Type="Int32" />
         </EntityType>
         <Association Name="FK_Attendance_Event">
           <End Role="Event" Type="Self.Event" Multiplicity="1" />
@@ -1099,13 +1103,15 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="HambasafeDataModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="PictureImageResourceId" ColumnName="PictureImageResourceId" />
+                <ScalarProperty Name="DateLastLogin" ColumnName="DateLastLogin" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="FirstNames" ColumnName="FirstNames" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
                 <ScalarProperty Name="IdentityDocumentUrl" ColumnName="IdentityDocumentUrl" />
-                <ScalarProperty Name="ProfilePictureUrl" ColumnName="ProfilePictureUrl" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />

@@ -11,42 +11,30 @@ namespace Hambasafe.Server.Models.v1
     [RoutePrefix("v1")]
     public class SuburbModel
     {
-        private int _suburbID;
-        private string _name;
-        private GeoCoordinate _coord;
-        private ProvinceModel _province;
-        private string _postalCode;
+        public SuburbModel(Entities.Suburb suburb)
+        {
+            SuburbId = suburb.SuburbId;
+            Name = suburb.Name;
+            Latitude = suburb.Latitude;
+            Longitude = suburb.Longitude;
+            PostalCode = suburb.PostalCode;
+            Province = new ProvinceModel(suburb.Province);
+        }
 
         public SuburbModel()
         {
-            
         }
 
-        public SuburbModel(Entities.Suburb suburb)
-        {
-            _suburbID = suburb.SuburbId;
-            _name = suburb.Name;
-            _coord = new GeoCoordinate(suburb.Latitude, suburb.Longitude);
-            _postalCode = suburb.PostalCode;
-            _province = new ProvinceModel(suburb.Province);
-        }
+        public int SuburbId { get; set; }
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        public string Name { get; set; }
 
-        public GeoCoordinate Coord
-        {
-            get { return _coord; }
-            set { _coord = value; }
-        }
+        public double Latitude { get; set; }
 
-        public ProvinceModel Province
-        {
-            get { return _province; }
-            set { _province = value; }
-        }
+        public double Longitude { get; set; }
+
+        public string PostalCode { get; set; }
+
+        public ProvinceModel Province { get; set; }
     }
 }

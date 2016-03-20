@@ -42,6 +42,9 @@ namespace Hambasafe.DataAccess.Entities
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public Nullable<System.DateTime> DateValidated { get; set; }
+        public string Token { get; set; }
+        public Nullable<System.DateTime> DateLastLogin { get; set; }
+        public Nullable<int> PictureImageResourceId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance> Attendances { get; set; }

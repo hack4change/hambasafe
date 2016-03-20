@@ -9,24 +9,24 @@ using Entities = Hambasafe.DataAccess.Entities;
 namespace Hambasafe.Server.Models.v1
 {
     [RoutePrefix("v1")]
-    public class ProvinceModel
+    public class ProfilePictureModel
     {
-        public ProvinceModel(Entities.Province province)
+        public ProfilePictureModel(Entities.Country country)
         {
-            ProvinceId = province.ProvinceId;
-            Name = province.Name;
-            Country = new CountryModel(province.Country);
+            CountryId = country.CountryId;
+            Name = country.Name;
+            Code = country.Code;
         }
 
-        public ProvinceModel()
+        public ProfilePictureModel()
         {
         }
 
-        public int ProvinceId { get; set; }
+        public int CountryId { get; set; }
 
         public string Name { get; set; }
 
-        public CountryModel Country { get; set; }
+        public string Code { get; set; }
 
     }
 }
