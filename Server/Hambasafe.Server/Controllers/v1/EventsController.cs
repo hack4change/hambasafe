@@ -132,8 +132,13 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                //TODO implement
-                return Request.CreateResponse(HttpStatusCode.OK);
+                var context = new HambasafeDataContext();
+
+                var events = context.Attendances.Where(a => a.UserId == attendeeid)
+                                                .Select(a => new EventModel(a.Event))
+                                                .ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
             {
@@ -194,13 +199,13 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var context = new HambasafeDataContext();
 
-                ////var suburbIds = context.Suburbs.Where(a => GetDistance(latitude, longitude, a.Latitude, a.Longitude) <= radius)
-                ////                        .Select(e => e.SuburbId)
-                ////                        .ToArray();
+                var locationids = context.EventLocations.Where(a => a.Latitude != null && a.Longitude != null && GetDistance(latitude, longitude, a.Latitude.Value, a.Longitude.Value) <= radius)
+                                        .Select(e => e.EventLocationId)
+                                        .ToArray();
 
-                ////var events = context.Events.Where(a => suburbIds.Contains(
-                ////    a.EventLocation.Suburb.SuburbId)).Select(a => new EventModel(a))
-                ////                                .ToArray();
+                var events = context.Events.Where(a => locationids.Contains(
+                    a.EventLocation.EventLocationId)).Select(a => new EventModel(a))
+                                                .ToArray();
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
