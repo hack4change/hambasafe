@@ -62,9 +62,9 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
-                var events = context.Events.Select(e => new EventModel(e)).ToArray();
+                //var events = context.Events.Select(e => new EventModel(e)).ToArray();
 
-                return Request.CreateResponse(HttpStatusCode.OK, events);
+                return Request.CreateResponse(HttpStatusCode.OK, context.Events.ToArray());
             }
             catch (Exception error)
             {
