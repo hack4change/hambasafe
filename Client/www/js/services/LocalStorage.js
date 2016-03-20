@@ -1,7 +1,7 @@
 starterServices.factory("LocalStorage", ['$window',
   function ($window) {
     var _facebookAuth = null
-
+    var _profileId = 1;
     return {
 
       set justSignedIn(value) {
