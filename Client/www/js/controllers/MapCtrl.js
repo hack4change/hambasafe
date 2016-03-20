@@ -1,4 +1,4 @@
-starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state, $compile) {
+starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state, $compile, $ionicLoading) {
       (function(){
         $scope.sliderDistance = 16;
      })()
@@ -7,7 +7,6 @@ starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state,
           showBackdrop: false
         });
 
-      };
       function initialize() {
 
               
@@ -48,19 +47,24 @@ starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state,
                   center:  gCoords,
                   radius: $scope.sliderDistance*1000
                 });
-                $scope.loading.hide();
+                $ionicLoading.hide();
               }, function(error) {
                 alert('Unable to get location: ' + error.message);
               });
       }
       google.maps.event.addDomListener(window, 'load', initialize);
       $scope.$watch('sliderDistance', function (newValue, oldValue) {
-        console.log('oldValue=' + oldValue);
-        console.log('newValue=' + newValue);
+        var locationCircle = new google.maps.Circle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: '#FF0000',
+          fillOpacity: 0.35,
+          map: $scope.map,
+          center:  gCoords,
+          radius: $scope.sliderDistance*1000
+        });
         //do something
       });
-      $scope.changeDistance(){
-        console.log($scope.sliderDistance);
-      }
 
 });
