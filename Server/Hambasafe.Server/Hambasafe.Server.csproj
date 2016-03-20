@@ -35,6 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
+    <NoWarn>1591;</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -272,6 +273,8 @@
     <Compile Include="Attributes\GeneralExceptionFilterAttribute.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\v1\AuthenticationController.cs" />
+    <Compile Include="Controllers\v1\InvitationsController.cs" />
     <Compile Include="Controllers\v1\LocationController.cs" />
     <Compile Include="Controllers\v1\EventTypeController.cs" />
     <Compile Include="Controllers\v1\EventsController.cs" />
@@ -284,6 +287,8 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ErrorReport.cs" />
+    <Compile Include="Models\v1\InvitationModel.cs" />
+    <Compile Include="Models\v1\ProfilePictureModel.cs" />
     <Compile Include="Models\v1\CountryModel.cs" />
     <Compile Include="Models\v1\EventLocation.cs" />
     <Compile Include="Models\v1\EventModel.cs" />
@@ -291,8 +296,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\v1\ProvinceModel.cs" />
     <Compile Include="Models\v1\SuburbModel.cs" />
+    <Compile Include="Models\v1\RegisterModel.cs" />
     <Compile Include="Models\v1\UserModel.cs" />
-    <Compile Include="ObjectMappings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -345,7 +350,9 @@
     <None Include="Properties\PublishProfiles\HambasafeDev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\hsdevapi1 - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\hsdevapi1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\hsdevapi1 - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\hsdevapi1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

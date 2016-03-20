@@ -13,10 +13,6 @@ namespace Hambasafe.Server.Models.v1
 
         }
 
-        public string Password { get; set; }
-
-        //public ProfilePicture ProfilePicture { get; set; }
-
         public string FirstNames { get; set; }
 
         public string LastName { get; set; }
@@ -28,5 +24,9 @@ namespace Hambasafe.Server.Models.v1
         public string MobileNumber { get; set; }
 
         public string EmailAddress { get; set; }
+
+        public string Password { get; set; }
+
+        public ProfilePictureModel ProfilePicture { get; set; }
     }
 }

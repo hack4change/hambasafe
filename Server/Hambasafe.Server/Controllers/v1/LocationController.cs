@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -41,7 +41,7 @@ namespace Hambasafe.Server.Controllers.v1
         /// Implemented
         /// </summary>
         [AllowAnonymous]
-        [Route("locationsbysuburb"), HttpGet]
+        [Route("locations-by-suburb"), HttpGet]
         public async Task<HttpResponseMessage> GetLocationsBySuburb(int suburbId)
         {
             try

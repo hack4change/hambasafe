@@ -41,8 +41,8 @@ namespace Hambasafe.DataAccess.Entities
         public virtual EventLocation EventLocation { get; set; }
         public virtual EventLocation EventLocation1 { get; set; }
         public virtual EventType EventType { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Invitation> Invitations { get; set; }
+        public virtual User User { get; set; }
     }
 }
