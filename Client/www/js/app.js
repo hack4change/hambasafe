@@ -44,10 +44,14 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
   $stateProvider
 
   // setup an abstract state for the tabs directive
-    .state('landing', {
+    .state('app.landing', {
     url: '/landing',
-    templateUrl: 'templates/landing.html',
-    controller: 'LandingCtrl'
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/landing.html',
+          controller: 'LandingCtrl'
+        }
+      }
   })
 
   .state('app', {
