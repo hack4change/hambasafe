@@ -19,6 +19,9 @@ namespace Hambasafe.Server.Controllers.v1
         {
         }
 
+        /// <summary>
+        /// Not implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("create-event"), HttpPost]
         public async Task<HttpResponseMessage> CreateEvent(EventModel eventModel)
@@ -30,10 +33,22 @@ namespace Hambasafe.Server.Controllers.v1
                 var eventEntity = new Event()
                 {
                     Name = eventModel.Name,
-                    
+                    Description = eventModel.Description,
+                    DateTimeStart = eventModel.EventDateTimeStart,
+                    DateTimeEnd = eventModel.EventDateTimeEnd,
+                    IsPublic = eventModel.PublicEvent,
+                    MaxWaitingMinutes = eventModel.WaitMins,
+                    StartEventLocationId = eventModel.StartLocation.Id,
+                    EndEventLocationId = eventModel.EndLocation == null ? null : eventModel.EndLocation.Id,
+                    OwnerUserId = eventModel.OwnerUser.UserId,
+                    Attributes = eventModel.Attributes,
+                    DateCreated = DateTime.Now
                 };
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                dataContext.Events.Add(eventEntity);
+                dataContext.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK, new EventModel(eventEntity));
             }
             catch (Exception error)
             {
