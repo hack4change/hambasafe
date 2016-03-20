@@ -8,7 +8,7 @@
 angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.directives', 'starter.services', 'facebook', 'ngResource'])
 
   .constant('config', {
-    baseServiceURL: "http://hambasafedev.azurewebsites.net"
+    baseServiceURL: "http://hsdevapi1.azurewebsites.net"
     //baseServiceURL: "http://api.emguidance.com/openmed/api"
   })
 

@@ -1,4 +1,4 @@
-starterServices.factory('EventFactory', ['$http', 'config',
+starterServices.service('EventFactory', ['$http', 'config',
     function ($http, config) {
       return {
         getAllEvents: function(id){
