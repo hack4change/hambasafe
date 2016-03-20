@@ -1,9 +1,5 @@
-
-
-
-
 <ion-side-menus>
-<side-menu></side-menu>
+  <side-menu></side-menu>
 
   <ion-side-menu-content>
     <ion-nav-bar class="bar-positive">
@@ -30,46 +26,50 @@
               <ion-item class="item-accordion"
                         ng-repeat="type in eventType"
                         ng-show="isShown(type, group)" style="border-top: 0px" ng-click="toggleSelection(type, group)" >
-                <b>{{type}}</b>
+                        <b>{{type}}</b>
               </ion-item>
               <ion-item class="item-accordion"
                         ng-repeat="type in eventType"
                         ng-show="isShown(type, group)" style="border-top: 0px" ng-click="toggleSelection(type, group)" >
-                <b>{{type}}</b>
+                        <b>{{type}}</b>
               </ion-item>
             </div>
           </ion-list>
-         <label class="item item-input">
-        <span class="input-label">Date</span>
-        <input type="date" ng-model="eventData.EventDate">
-      </label>
+          <label class="item item-input">
+            <span class="input-label">Date</span>
+            <input type="date" ng-model="eventData.EventDate">
+          </label>
 
-      <label class="item item-input">
-        <span class="input-label">Start time</span>
-        <input type="time" ng-model="eventData.EventDateTimeStart">
-      </label>
+          <label class="item item-input">
+            <span class="input-label">Start time</span>
+            <input type="time" ng-model="eventData.EventDateTimeStart">
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Start time</span>
+            <input type="time" ng-model="eventData.EventDateTimeStart">
+          </label>
 
-      <label class="item item-input">
-        <span class="input-label">End time</span>
-        <input type="time" ng-model="eventData.EventDateTimeEnd">
-      </label>
+          <label class="item item-input">
+            <span class="input-label">End time</span>
+            <input type="time" ng-model="eventData.EventDateTimeEnd">
+          </label>
 
-      <label class="item item-input">
-        <textarea placeholder="Description" ng-model="eventData.Description"></textarea>
-      </label>
+          <label class="item item-input">
+            <textarea placeholder="Description" ng-model="eventData.Description"></textarea>
+          </label>
 
-      <label>
+          <label>
 
-        <ion-checkbox ng-model="filter.blue" style="" >Private</ion-checkbox>
+            <ion-checkbox ng-model="filter.blue" style="" >Private</ion-checkbox>
 
-      </label>
+          </label>
 
 
-      <div>
-        <button class="button button-block button-positive">
-          CREATE
-        </button>
-  </div>
+          <div>
+            <button class="button button-block button-positive">
+              CREATE
+            </button>
+          </div>
       </ion-nav-view>
     </ion-nav-bar>
   </ion-side-menu-content>
