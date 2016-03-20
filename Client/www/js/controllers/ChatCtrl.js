@@ -11,4 +11,4 @@ starterControllers.controller('ChatsCtrl', function ($scope, Chats) {
   $scope.remove = function (chat) {
     Chats.remove(chat);
   };
-})
+});

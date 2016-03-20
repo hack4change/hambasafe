@@ -1,5 +1,5 @@
-starterControllers.controller('EventDetailCtrl', function ($scope, $location, eventFactory) {
-      
+starterControllers.controller('EventDetailCtrl', function ($scope, $location, EventFactory) {
+
       // $scope.eventData = {
       //     attending: false,
       //     location: "CAPE TOWN, RONDEBOSH",
@@ -13,8 +13,8 @@ starterControllers.controller('EventDetailCtrl', function ($scope, $location, ev
       // }
       $scope.eventData = {};
       $scope.init = function() {
-        
-      eventFactory.getEvent({id: 3}
+
+      EventFactory.getEvent({id: 3}
        , function (event) {
          $scope.eventData = event;
          console.log(event);
@@ -26,15 +26,15 @@ starterControllers.controller('EventDetailCtrl', function ($scope, $location, ev
         $scope.attendingDescription = "JOIN";
         if ($scope.eventData.attending) {
           $scope.attendingDescription = "CANCEL"
-        }  
+        }
       }
-      
+
       $scope.doAttend = function() {
         $scope.eventData.attending = !$scope.eventData.attending;
         $scope.attendingDescription = "JOIN";
         if ($scope.eventData.attending) {
           $scope.attendingDescription = "CANCEL"
-        }  
+        }
       }
- 
+
   });
