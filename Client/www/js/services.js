@@ -52,9 +52,9 @@ angular.module('starter.services', [])
   .factory('Event', function(){
     return {
       createEvent: function(data) {
-         
+
       }
-    } 
+    }
   })
   .factory("LocalStorage", ['$window',
     function ($window) {
@@ -87,11 +87,14 @@ angular.module('starter.services', [])
       return $resource(config.baseServiceURL + '/v1/events',{},{
         getAllEvents: {
           method: 'GET',
-          url: config.baseServiceURL + '/v1/events/all',
           isArray: true
+        }
+      ,
+        getEvent: {
+          method: 'GET',
+          url: config.baseServiceURL + '/v1/event'
         }
       });
     }
   ]);
-
 ;

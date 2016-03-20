@@ -108,6 +108,7 @@ angular.module('starter.controllers', [])
       $location.path('eventdetail');
     } 
   })
+<<<<<<< HEAD
   .controller('EventDetailCtrl', function ($scope, $location) {
       
       $scope.eventData = {
@@ -121,8 +122,34 @@ angular.module('starter.controllers', [])
           summary: "This is a 'Facebook' styled Card. The header is created from a Thumbnail List item,        the content is from a card-body consisting of an image and paragraph text. The footer consists of tabs, icons aligned left, within the card-footer.",
           numberOfAttendees: "4"
       }
+=======
+  .controller('EventDetailCtrl', function ($scope, $location, eventFactory) {
 
+      /*$scope.eventData = {
+          Attending: false,
+          Location: "CAPE TOWN, RONDEBOSH",
+          Title: "Cycling in numbers",
+          Type: "CYCLE",
+          Distance: "5KM",
+          Level: "NOVICE",
+          Date: "20 November 2015",
+          Summary: "Some summary of the event",
+          NumberOfAttendees: "4"
+      }*/
+>>>>>>> 423a582824511f73f0a99b05814ec7b36ef076dc
+
+      $scope.eventData = {};
       $scope.init = function() {
+        
+      eventFactory.getEvent({id: 1}
+       , function (event) {
+         $scope.eventData = event;
+         console.log(event);
+       }
+       , function (error) {
+
+       });
+
         $scope.attendingDescription = "JOIN";
         if ($scope.eventData.attending) {
           $scope.attendingDescription = "CANCEL"
