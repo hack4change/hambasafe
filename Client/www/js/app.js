@@ -5,10 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.services', 'facebook', 'ngResource'])
+angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.directives', 'starter.services', 'facebook', 'ngResource'])
 
   .constant('config', {
-    baseServiceURL: "http://hambasafedev.azurewebsites.net"
+    baseServiceURL: "//hsdevapi1.azurewebsites.net"
     //baseServiceURL: "http://api.emguidance.com/openmed/api"
   })
 
@@ -58,6 +58,11 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         url: '/home',
         templateUrl: 'templates/home.html',
         controller: 'HomeCtrl'
+      })
+      .state('map', {
+        url: '/map',
+        templateUrl: 'templates/map.html',
+        controller: 'MapCtrl'
       })
 
       .state('terms', {

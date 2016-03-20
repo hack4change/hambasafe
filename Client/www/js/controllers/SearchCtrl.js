@@ -1,43 +1,52 @@
-starterControllers.controller('SearchCtrl', function ($scope, EventFactory) {
+starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $state) {
     //init
     (function(){
+      $scope.eventType = ["Walk", "Run", "Cycle"];
+      $scope.typeSelected = $scope.eventType[0];
+      $scope.selectedSearch = 0;
+      $scope.eventsToList = []
     })()
     $scope.searchEvents = function(){
+      var searchBy = $scope.selectedSearch;
+      EventFactory.getAllEvents({}
+       , function (event) {
+     console.log(event);
+         $scope.eventsToList = event;
+         console.log(event);
+       }
+       , function (error) {
 
+       });
     }
-    $scope.getEvents = function(){
+    $scope.searchEvents();
 
-    }
-    $scope.eventType = ["Walk", "Run", "Cycle"];
-    $scope.typeSelected = $scope.eventType[0];
+    // $scope.eventsToList = [
+    //   {
+    //     id        : "andnadand",
+    //     title     : "FUCK",
+    //     date      : (new Date(Date.now())).toUTCString(),
+    //     type      : "Run",
+    //     intensity : "Intense",
+    //     location  : "Far, far away",
+    //     distance  : "89km"
+    //   }, {
+    //     id        : "edefsfsf",
+    //     title     : "Hey",
+    //     date      : (new Date(Date.now())).toUTCString(),
+    //     type      : "Cycle",
+    //     intensity : "Beginner",
+    //     location  : "Claremont, Cape Town",
+    //     distance  : "2km"
+    //   }
+    // ]
 
-    $scope.eventsToList = [
-      {
-        id        : "andnadand",
-        title     : "FUCK",
-        date      : (new Date(Date.now())).toUTCString(),
-        type      : "Run",
-        intensity : "Intense",
-        location  : "Far, far away",
-        distance  : "89km"
-      }, {
-        id        : "edefsfsf",
-        title     : "Hey",
-        date      : (new Date(Date.now())).toUTCString(),
-        type      : "Cycle",
-        intensity : "Beginner",
-        location  : "Claremont, Cape Town",
-        distance  : "2km"
-      }
-    ]
-    $scope.toggleGroup = function(group) {
+    $scope.toggleGroup = function(group){
       if ($scope.isGroupShown(group)) {
         $scope.shownGroup = null;
       } else {
         $scope.shownGroup = group;
       }
     };
-    $scope.selectedSearch = 0;
     $scope.toggleSelection = function(selected, group) {
       $scope.typeSelected = selected;
       $scope.toggleGroup(group);
@@ -54,5 +63,8 @@ starterControllers.controller('SearchCtrl', function ($scope, EventFactory) {
     }
     $scope.activeSearch = function(selection){
       return $scope.selectedSearch === selection;
+    }
+    $scope.goMap = function(){
+      $state.go('map');
     }
   });

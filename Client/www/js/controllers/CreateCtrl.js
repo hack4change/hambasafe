@@ -1,4 +1,4 @@
-starterControllers.controller('CreateCtrl', function ($scope) {
+starterControllers.controller('CreateCtrl', function ($scope, EventFactory) {
     //init
     (function(){
         $scope.shownGroup = null;
@@ -6,7 +6,9 @@ starterControllers.controller('CreateCtrl', function ($scope) {
 
 
     $scope.searchEvents = function(){
-      eventFactory.create(
+
+      EventFactory.create(
+
         {id: 1},
         function (event) {
           $scope.eventData = event;
