@@ -11,6 +11,7 @@ namespace Hambasafe.Server.Models.v1
         public UserModel(Entities.User user)
         {
             UserId = user.UserId;
+            Token = user.Token;
             FirstNames = user.FirstNames;
             LastName = user.LastName;
             Gender = user.Gender;
@@ -25,6 +26,10 @@ namespace Hambasafe.Server.Models.v1
         }
 
         public int UserId { get; set; }
+
+        public string Token { get; set; }
+
+        public string ProfilePicture { get; set; }
 
         public string FirstNames { get; set; }
 
