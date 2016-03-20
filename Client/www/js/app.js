@@ -219,11 +219,11 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
     }
   })
 
-  .state('app.eventInvite', {
-    url: '/event-invite',
+  .state('app.userInvite', {
+    url: '/user-invite',
     views: {
       'menuContent': {
-        templateUrl: 'templates/event-invite.html',
+        templateUrl: 'templates/user-invite.html',
         controller: ''
       }
     }
