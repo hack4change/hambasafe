@@ -1,21 +1,37 @@
-starterControllers.controller('SearchCtrl', function ($scope, EventService, $state, $location) {
+starterControllers.controller('SearchCtrl', function ($scope, EventService, $location) {
     //init
     (function(){
-      $scope.eventType = ["Walk", "Run", "Cycle"];
-      $scope.typeSelected = $scope.eventType[0];
-      $scope.selectedSearch = 0;
-      $scope.eventsToList = []
     })()
+    $scope.eventType = ["Event Type"];
+    $scope.typeSelected = $scope.eventType[0];
+    $scope.selectedSearch = 0;
+    $scope.eventsToList = []
     $scope.searchEvents = function(){
       var searchBy = $scope.selectedSearch;
       EventService.getAllEvents().then(function(response) {
-        console.log(response);
         $scope.eventsToList = response.data;
-      }, function(err){
+        console.elog
+        console.log(response);
+      }, function(response){
 
       });
     }
     $scope.searchEvents();
+    $scope.getTypes=function(){
+
+      EventService.getEventTypes().then(function(response) {
+
+        $scope.eventTypes = [];
+        for(var i = 0; i < response.data.length; i++){
+          $scope.eventTypes.push(response.data[i].Name);
+        }
+        console.log($scope.eventTypes)
+      }, function(response){
+        console.log("error");
+        console.log(response);
+      });
+    }
+       $scope.getTypes();
 
     $scope.toggleGroup = function(group){
       if ($scope.isGroupShown(group)) {
@@ -40,6 +56,17 @@ starterControllers.controller('SearchCtrl', function ($scope, EventService, $sta
     }
     $scope.activeSearch = function(selection){
       return $scope.selectedSearch === selection;
+    }
+    $scope.filterResults = function(eventObject){
+      if($scope.typeSelected == "Event Type"){
+        return true;
+      } else {
+        if($scope.typeSelected == eventObject.EventType.Name){
+          return true;
+        } else {
+          return false;
+        }
+      }
     }
     $scope.goMap = function(){
       $location.path('app/map');
