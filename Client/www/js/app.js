@@ -220,7 +220,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
   })
 
   .state('app.eventInvite', {
-    url: '/event-invite:id',
+    url: '/event-invite',
     views: {
       'menuContent': {
         templateUrl: 'templates/event-invite.html',
