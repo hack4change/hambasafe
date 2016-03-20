@@ -1,15 +1,21 @@
 starterControllers.controller('SearchCtrl', function ($scope, eventFactory) {
     //init
     (function(){
+      $scope.eventType = ["Walk", "Run", "Cycle"];
+      $scope.typeSelected = $scope.eventType[0];
+      $scope.selectedSearch = 0;
     })()
     $scope.searchEvents = function(){
-    
+      var searchBy = $scope.selectedSearch;
+      eventFactory.getSearchedEvents({id: 3}
+       , function (event) {
+         $scope.eventsToList = event;
+         console.log(event);
+       }
+       , function (error) {
+
+       });
     }
-    $scope.getEvents = function(){
-    
-    }
-    $scope.eventType = ["Walk", "Run", "Cycle"];
-    $scope.typeSelected = $scope.eventType[0];
 
     $scope.eventsToList = [
       {
@@ -37,7 +43,6 @@ starterControllers.controller('SearchCtrl', function ($scope, eventFactory) {
         $scope.shownGroup = group;
       }
     };
-    $scope.selectedSearch = 0;
     $scope.toggleSelection = function(selected, group) {
       $scope.typeSelected = selected;
       $scope.toggleGroup(group);

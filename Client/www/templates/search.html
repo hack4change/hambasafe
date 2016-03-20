@@ -1,5 +1,5 @@
 <ion-view view-title="Search">
-  <ion-content class="padding">
+  <ion-content >
 
     <div class="button-bar bar-positive">
       <a class="button" ng-click="searchEvents()"><b>SEARCH</b></a>
@@ -35,7 +35,6 @@
       <a class="item item-avatar" href="/#/eventdetail/{{event.id}}" ng-class="" collection-repeat="event in eventsToList">
         <img src="http://ionicframework.com/img/docs/stantz.jpg">
         <div>
-          <h2>{{event.id}}</h2>
           <h2>{{event.title}}</h2>
           <h3>{{event.date}}</h3>
           <h3>{{event.type}}</h3>
