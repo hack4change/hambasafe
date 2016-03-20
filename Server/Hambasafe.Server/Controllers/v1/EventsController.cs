@@ -8,6 +8,7 @@ using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
 using Hambasafe.Server.Models.v1;
 using Hambasafe.DataAccess.Entities;
+using System.Device.Location;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -165,8 +166,13 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                //TODO implement
-                return Request.CreateResponse(HttpStatusCode.OK);
+                var context = new HambasafeDataContext();
+
+                var events = context.Events.Where(a => 
+                    a.EventLocation.Suburb.Name.ToUpper().Contains(suburbname.ToUpper())).Select(a => new EventModel(a))
+                                                .ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
             {
@@ -180,8 +186,13 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                //TODO implement
-                return Request.CreateResponse(HttpStatusCode.OK);
+                var context = new HambasafeDataContext();
+
+                var events = context.Events.Where(a =>
+                    a.EventLocation.Suburb.SuburbId == suburbid).Select(a => new EventModel(a))
+                                                .ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
             {
@@ -195,17 +206,30 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                HambasafeDataContext context = new HambasafeDataContext();
+                var context = new HambasafeDataContext();
 
-                //TODO implement
-                //var matchingLocations = context.Location
+                var suburbIds = context.Suburbs.Where(a => GetDistance(latitude, longitude, a.Latitude, a.Longitude) <= radius)
+                                        .Select(e => e.SuburbId)
+                                        .ToArray();
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                var events = context.Events.Where(a => suburbIds.Contains(
+                    a.EventLocation.Suburb.SuburbId)).Select(a => new EventModel(a))
+                                                .ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
             {
                 return HandleError(error);
             }
+        }
+
+        public double GetDistance(double latitude1, double longitude1, double latitude2, double longitude2)
+        {
+            GeoCoordinate coord1 = new GeoCoordinate(latitude1, longitude1);
+            GeoCoordinate coord2 = new GeoCoordinate(latitude2, longitude2);
+
+            return coord1.GetDistanceTo(coord2);
         }
     }
 }
