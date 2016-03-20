@@ -7,6 +7,9 @@ starterControllers.controller('MapCtrl', function ($scope, EventService, $state,
           showBackdrop: false
         });
 
+        $scope.searchByLocation = function(){
+          
+        }
       $scope.init = function() {
 
               
