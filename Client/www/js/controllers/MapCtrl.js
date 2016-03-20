@@ -1,6 +1,6 @@
 starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state, $compile, $ionicLoading) {
       (function(){
-        $scope.sliderDistance = 16;
+        $scope.sliderDistance = 10;
      })()
         $scope.loading = $ionicLoading.show({
           content: 'Getting current location...',

@@ -1,14 +1,17 @@
-starterServices.factory('EventFactory', ['$resource', 'config',
-    function ($resource, config) {
-      return $resource(config.baseServiceURL + '/v1/events', {}, {
-        getAllEvents: {
-          method: 'GET',
-          isArray: true
+starterServices.service('EventFactory', ['$http', 'config',
+    function ($http, config) {
+      return {
+        getAllEvents: function(id){
+          return $http.get(config.baseServiceURL + '/v1/events', config)
         },
-        getEvent: {
-          method: 'GET',
-          url: config.baseServiceURL + '/v1/event'
+        getEvent: function(id){
+          return $http.get(config.baseServiceURL + '/v1/event?id='+id, config)
+          .then(function success(result){
+c
+          }, function error(err){
+
+          })
         }
-      });
+      };
     }
 ]);
