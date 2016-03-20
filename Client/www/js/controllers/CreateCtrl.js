@@ -3,12 +3,15 @@ starterControllers.controller('CreateCtrl', function ($scope, EventFactory) {
     (function(){
         $scope.shownGroup = null;
     })()
+
+
     $scope.searchEvents = function(){
-      EventFactory.getAllEvents(
+
+      EventFactory.create(
+
         {id: 1},
         function (event) {
           $scope.eventData = event;
-          console.log(event);
         },
         function (error) {
 
@@ -32,6 +35,7 @@ starterControllers.controller('CreateCtrl', function ($scope, EventFactory) {
     $scope.isGroupShown = function(type, group) {
       return $scope.shownGroup === group && $scope.typeSelected !== type;
     };
+
     $scope.isShown = function(type, group) {
       return $scope.shownGroup === group && $scope.typeSelected !== type;
     };
