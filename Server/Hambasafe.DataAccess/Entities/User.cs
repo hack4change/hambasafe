@@ -22,26 +22,28 @@ namespace Hambasafe.DataAccess.Entities
             this.AttendanceRatings1 = new HashSet<AttendanceRating>();
             this.BlockedUsers = new HashSet<BlockedUser>();
             this.BlockedUsers1 = new HashSet<BlockedUser>();
+            this.Connections = new HashSet<Connection>();
+            this.Connections1 = new HashSet<Connection>();
             this.Events = new HashSet<Event>();
-            this.Friends = new HashSet<Friend>();
-            this.Friends1 = new HashSet<Friend>();
             this.Invitations = new HashSet<Invitation>();
             this.Invitations1 = new HashSet<Invitation>();
         }
     
         public int UserId { get; set; }
+        public string Token { get; set; }
         public string FirstNames { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
         public System.DateTime DateOfBirth { get; set; }
         public string IdentityDocumentUrl { get; set; }
-        public string ProfilePictureUrl { get; set; }
+        public Nullable<int> PictureImageResourceId { get; set; }
         public string Status { get; set; }
         public string MobileNumber { get; set; }
         public string EmailAddress { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public Nullable<System.DateTime> DateValidated { get; set; }
+        public Nullable<System.DateTime> DateLastLogin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attendance> Attendances { get; set; }
@@ -54,11 +56,12 @@ namespace Hambasafe.DataAccess.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlockedUser> BlockedUsers1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Connection> Connections { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Connection> Connections1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Friend> Friends { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Friend> Friends1 { get; set; }
+        public virtual ImageResource ImageResource { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Invitation> Invitations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -34,6 +34,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
+    <NoWarn>1591;</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,6 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -264,9 +270,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Attributes\Eas.cs" />
+    <Compile Include="Attributes\JwtTokenProvider.cs" />
+    <Compile Include="Attributes\ClientTokenSecurityAttribute.cs" />
     <Compile Include="Attributes\GeneralExceptionFilterAttribute.cs" />
+    <Compile Include="Attributes\UserTokenService.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\v1\AuthenticationController.cs" />
+    <Compile Include="Controllers\v1\InvitationsController.cs" />
     <Compile Include="Controllers\v1\LocationController.cs" />
     <Compile Include="Controllers\v1\EventTypeController.cs" />
     <Compile Include="Controllers\v1\EventsController.cs" />
@@ -278,13 +290,13 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\v1\CityModel.cs" />
     <Compile Include="Models\ErrorReport.cs" />
+    <Compile Include="Models\v1\EventLocationModel.cs" />
+    <Compile Include="Models\v1\InvitationModel.cs" />
     <Compile Include="Models\v1\EventModel.cs" />
     <Compile Include="Models\v1\EventTypeModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\v1\ProvinceModel.cs" />
-    <Compile Include="Models\v1\SuburbModel.cs" />
+    <Compile Include="Models\v1\RegisterModel.cs" />
     <Compile Include="Models\v1\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -298,6 +310,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\XmlDocument.xml" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -337,8 +350,9 @@
     <None Include="Properties\PublishProfiles\HambasafeDev - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\HambasafeDev - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\HambasafeDev.pubxml" />
+    <None Include="Properties\PublishProfiles\hsdevapi1 - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\hsdevapi1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\hsdevapi1 - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\hsdevapi1 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -367,9 +381,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
@@ -377,6 +389,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hambasafe.DataAccess\Hambasafe.DataAccess.csproj">
+      <Project>{ce1e56a3-f9c9-45e4-aac2-7125591febce}</Project>
+      <Name>Hambasafe.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

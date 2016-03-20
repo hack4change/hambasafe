@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,7 +6,8 @@ using System.Web.Http;
 using System.Threading.Tasks;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
-using Hambasafe.Server.Models;
+using Hambasafe.Server.Models.v1;
+using Hambasafe.DataAccess.Entities;
 using System.Device.Location;
 
 namespace Hambasafe.Server.Controllers.v1
@@ -20,14 +20,201 @@ namespace Hambasafe.Server.Controllers.v1
         {
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
-        [Route("event"), HttpPost]
-        /// Create a new event
-        public async Task<HttpResponseMessage> NewEvent(EventModel newEvent)
+        [Route("create-event"), HttpPost]
+        public async Task<HttpResponseMessage> CreateEvent(EventModel eventModel)
         {
             try
             {
-                //TODO add this 
+                using (var dataContext = new HambasafeDataContext())
+                {
+                    EventLocation startLocation = InsertLocation(dataContext, eventModel.StartLocation);
+                    EventLocation endLocation = null;
+                    if (eventModel.EndLocation != null)
+                    {
+                        endLocation = InsertLocation(dataContext, eventModel.EndLocation);
+                    }
+                    
+                    var eventEntity = new Event()
+                    {
+                        Name = eventModel.Name,
+                        Description = eventModel.Description,
+                        EventTypeId = eventModel.EventType.EventTypeId,
+                        DateTimeStart = eventModel.EventDateTimeStart,
+                        DateTimeEnd = eventModel.EventDateTimeEnd,
+                        IsPublic = eventModel.PublicEvent,
+                        MaxWaitingMinutes = eventModel.WaitMins,
+                        StartEventLocationId = startLocation.EventLocationId,
+                        EndEventLocationId = endLocation?.EventLocationId,
+                        OwnerUserId = eventModel.OwnerUser.UserId,
+                        Attributes = eventModel.Attributes,
+                        DateCreated = DateTime.Now
+                    };
+
+                    dataContext.Events.Add(eventEntity);
+                    dataContext.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new EventModel(eventEntity));
+                }
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        /// <summary>
+        /// Implemented
+        /// </summary>
+        [AllowAnonymous]
+        [Route("event"), HttpGet]
+        public async Task<HttpResponseMessage> GetEvent(int id)
+        {
+            try
+            {
+                var dataContext = new HambasafeDataContext();
+                var evnt = dataContext.Events.ToList().Where(e => e.EventId == id)
+                                                      .Select(e => new EventModel(e))
+                                                      .First();
+
+                return Request.CreateResponse(HttpStatusCode.OK, evnt);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        /// <summary>
+        /// Implemented
+        /// </summary>
+        [AllowAnonymous]
+        [Route("events"), HttpGet]
+        public async Task<HttpResponseMessage> GetEvents()
+        {
+            try
+            {
+                var context = new HambasafeDataContext();
+
+                var entities = context.Events
+                                      .Include("EventType")
+                                      .Include("EventLocation")
+                                      .Include("EventLocation1")
+                                      .ToArray();
+
+                var events = entities.Select(e => new EventModel(e));
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        /// <summary>
+        /// Implemented
+        /// </summary>
+        [AllowAnonymous]
+        [Route("events-by-user"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByUser(int userid)
+        {
+            try
+            {
+                var dataContext = new HambasafeDataContext();
+                var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("events-by-attendee"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
+        {
+            try
+            {
+                var context = new HambasafeDataContext();
+
+                var events = context.Attendances.Where(a => a.UserId == attendeeid)
+                                                .Select(a => new EventModel(a.Event))
+                                                .ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("events-by-attendee"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
+        {
+            try
+            {
+                var context = new HambasafeDataContext();
+
+                var userIds = context.Users.Where(a => a.FirstNames.ToUpper().Contains(attendeename.ToUpper()) ||
+                                                       a.LastName.ToUpper().Contains(attendeename.ToUpper()))
+                                        .Select(e => e.UserId)
+                                        .ToArray();
+
+                var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
+                                                .Select(a => new EventModel(a.Event))
+                                                .ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("events-by-suburb"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsBySuburb(string suburbname)
+        {
+            try
+            {
+                var context = new HambasafeDataContext();
+
+                var events = context.Events.Where(a =>
+                    a.EventLocation.Suburb.ToUpper().Contains(suburbname.ToUpper())).Select(a => new EventModel(a))
+                                                .ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("events-by-coordinates"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByCoordinates(double latitude, double longitude, int radius)
+        {
+            try
+            {
+                var context = new HambasafeDataContext();
+
+                var locationids = context.EventLocations.Where(a => a.Latitude != null && a.Longitude != null && GetDistance(latitude, longitude, a.Latitude.Value, a.Longitude.Value) <= radius)
+                                        .Select(e => e.EventLocationId)
+                                        .ToArray();
+
+                var events = context.Events.Where(a => locationids.Contains(
+                    a.EventLocation.EventLocationId)).Select(a => new EventModel(a))
+                                                .ToArray();
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -37,336 +224,29 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
-        [AllowAnonymous]
-        [Route("events"), HttpGet]
-        public async Task<HttpResponseMessage> GetEvent(int id)
+        private double GetDistance(double latitude1, double longitude1, double latitude2, double longitude2)
         {
-            try
-            {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
+            GeoCoordinate coord1 = new GeoCoordinate(latitude1, longitude1);
+            GeoCoordinate coord2 = new GeoCoordinate(latitude2, longitude2);
 
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, event1);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
+            return coord1.GetDistanceTo(coord2);
         }
-
-        [AllowAnonymous]
-        [Route("events"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsByCreator(int userid)
+        
+        private EventLocation InsertLocation(HambasafeDataContext dataContext, EventLocationModel locationModel)
         {
-            try
+            var location = dataContext.EventLocations.Add(new EventLocation()
             {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
+                Address = locationModel.Address,
+                Country = locationModel.Country,
+                Latitude = locationModel.Latitude,
+                Longitude = locationModel.Longitude,
+                PostCode = locationModel.PostCode,
+                Province = locationModel.Province,
+                Suburb = locationModel.Suburb
+            });
+            dataContext.SaveChanges();
 
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, event1);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-        }
-        }
-
-        [AllowAnonymous]
-        [Route("events"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
-        {
-            try
-            {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, event1);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
-
-        [AllowAnonymous]
-        [Route("events"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
-        {
-            try
-            {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, event1);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
-
-        [AllowAnonymous]
-        [Route("events/all"), HttpGet]
-        public async Task<HttpResponseMessage> GetEvents()
-        {
-            try
-            {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-
-                };
-                Models.EventModel event2 = new Models.EventModel()
-                {
-                    Name = "Event 2",
-                    Description = "Event 2 Description",
-                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "cnr Klipper Rd and Main Rd" },
-                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", Province = new Models.ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "cnr Woolsack Rd and Main Rd" },
-                    EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", Province = new Models.ProvinceModel() { Name = "Western Cape" } }
-
-                };
-                var dummyEvents = new[]
-                {
-                    event1,
-                    event2
-                };
-
-                return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
-
-        [AllowAnonymous]
-        [Route("events"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsBySuburbName(string suburbname)
-        {
-            try
-            {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Newlands", Province = new ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-
-                };
-                Models.EventModel event2 = new Models.EventModel()
-                {
-                    Name = "Event 2",
-                    Description = "Event 2 Description",
-                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "cnr Klipper Rd and Main Rd" },
-                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", Province = new Models.ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "cnr Woolsack Rd and Main Rd" },
-                    EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", Province = new Models.ProvinceModel() { Name = "Western Cape" } }
-
-                };
-
-                var dummyEvents = new[]
-                {
-                    event1,
-                    event2
-                };
-                return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
-
-        [AllowAnonymous]
-        [Route("events"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsBySuburb(int suburbid)
-        {
-            try
-            {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Newlands", Province = new ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-
-                };
-                Models.EventModel event2 = new Models.EventModel()
-                {
-                    Name = "Event 2",
-                    Description = "Event 2 Description",
-                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "cnr Klipper Rd and Main Rd" },
-                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", Province = new Models.ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "cnr Woolsack Rd and Main Rd" },
-                    EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", Province = new Models.ProvinceModel() { Name = "Western Cape" } }
-
-                };
-
-                var dummyEvents = new[]
-                {
-                    event1,
-                    event2
-                };
-                return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
-
-        [AllowAnonymous]
-        [Route("events"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsGPS(double latitude, double longitude, int radius)
-        {
-            try
-            {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Newlands", Province = new ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", Province = new ProvinceModel() { Name = "Western Cape" } },
-
-                };
-                Models.EventModel event2 = new Models.EventModel()
-                {
-                    Name = "Event 2",
-                    Description = "Event 2 Description",
-                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "cnr Klipper Rd and Main Rd" },
-                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", Province = new Models.ProvinceModel() { Name = "Western Cape" } },
-                    EndAddressLines = new List<string>() { "cnr Woolsack Rd and Main Rd" },
-                    EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", Province = new Models.ProvinceModel() { Name = "Western Cape" } }
-
-                };
-
-                var dummyEvents = new[]
-                {
-                    event1,
-                    event2
-                };
-                return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
+            return location;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
+using Hambasafe.DataAccess.Entities;
+using Hambasafe.Server.Models.v1;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -19,19 +21,19 @@ namespace Hambasafe.Server.Controllers.v1
         {
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
-        [Route("eventTypes/all"), HttpGet]
+        [Route("event-types"), HttpGet]
         public async Task<HttpResponseMessage> GetEventTypes()
         {
+            HambasafeDataContext context = new HambasafeDataContext();
             try
             {
-                var dummyEventTypes = new[]
-                {
-                    new { EventTypeId = 101, Name = "Recreational Walk", Description = "A recreational walk" },
-                    new { EventTypeId = 102, Name = "Road Ride", Description = "A recreational road ride" }
-                };
+                var eventTypes = context.EventTypes.ToList().Select(et => new EventTypeModel(et));
 
-                return Request.CreateResponse(HttpStatusCode.OK, dummyEventTypes);
+                return Request.CreateResponse(HttpStatusCode.OK, eventTypes);
             }
             catch (Exception error)
             {

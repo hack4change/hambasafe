@@ -23,7 +23,7 @@ namespace Hambasafe.DataAccess.Entities
         public int AttendanceId { get; set; }
         public int UserId { get; set; }
         public int EventId { get; set; }
-        public Nullable<bool> Attended { get; set; }
+        public Nullable<bool> HasAttended { get; set; }
         public System.DateTime DateCreated { get; set; }
     
         public virtual Event Event { get; set; }

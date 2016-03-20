@@ -1,106 +1,56 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Entities = Hambasafe.DataAccess.Entities;
 
-namespace Hambasafe.Server.Models
+namespace Hambasafe.Server.Models.v1
 {
-    [RoutePrefix("v1")]
     public class EventModel
     {
-        private string _name;
-        private string _description;
-        private EventTypeModel _eventType;
-        private DateTime _eventDateTimeStart;
-        private DateTime? _eventDateTimeEnd;
-        private List<string> _startAddressLines;
-        private SuburbModel _startSuburb;
-        private List<string> _endAddressLines;
-        private SuburbModel _endSuburb;
-        private List<string> _addressLines;
-        private SuburbModel _suburb;
-        private object _attributes;
-        private double _distance;
-        private int _waitMins;
-        private bool _publicEvent;
-
-        public string Name
+        public EventModel(Entities.Event dbEvent)
         {
-            get { return _name; }
-            set { _name = value; }
+            EventId = dbEvent.EventId;
+            Name = dbEvent.Name;
+            Description = dbEvent.Description;
+            EventType = dbEvent.EventType == null ? null : new EventTypeModel(dbEvent.EventType);
+            EventDateTimeStart = dbEvent.DateTimeStart;
+            EventDateTimeEnd = dbEvent.DateTimeEnd;
+            Attributes = dbEvent.Attributes;
+            WaitMins = dbEvent.MaxWaitingMinutes;
+            PublicEvent = dbEvent.IsPublic;
+            StartLocation = dbEvent.EventLocation == null ? null :  new EventLocationModel(dbEvent.EventLocation);
+            EndLocation = dbEvent.EventLocation1 == null ? null : new EventLocationModel(dbEvent.EventLocation1);
+            OwnerUser = dbEvent.User == null ? null : new UserModel(dbEvent.User);
         }
 
-        public string Description
+        public EventModel()
         {
-            get { return _description; }
-            set { _description = value; }
         }
 
-        public EventTypeModel EventType
-        {
-            get { return _eventType; }
-            set { _eventType = value; }
-        }
+        public int EventId { get; set; }
 
-        public DateTime EventDateTimeStart
-        {
-            get { return _eventDateTimeStart; }
-            set { _eventDateTimeStart = value; }
-        }
+        public string Name { get; set; }
 
-        public DateTime? EventDateTimeEnd
-        {
-            get { return _eventDateTimeEnd; }
-            set { _eventDateTimeEnd = value; }
-        }
+        public string Description { get; set; }
 
-        public List<string> StartAddressLines
-        {
-            get { return _startAddressLines; }
-            set { _startAddressLines = value; }
-        }
+        public EventTypeModel EventType { get; set; }
 
-        public SuburbModel StartSuburb
-        {
-            get { return _startSuburb; }
-            set { _startSuburb = value; }
-        }
+        public DateTime EventDateTimeStart { get; set; }
 
-        public List<string> EndAddressLines
-        {
-            get { return _endAddressLines; }
-            set { _endAddressLines = value; }
-        }
+        public DateTime? EventDateTimeEnd { get; set; }
 
-        public SuburbModel EndSuburb
-        {
-            get { return _endSuburb; }
-            set { _endSuburb = value; }
-        }
+        public string Attributes { get; set; }
 
-        public object Attributes
-        {
-            get { return _attributes; }
-            set { _attributes = value; }
-        }
+        public short WaitMins { get; set; }
 
-        public double Distance
-        {
-            get { return _distance; }
-            set { _distance = value; }
-        }
+        public bool? PublicEvent { get; set; }
 
-        public int WaitMins
-        {
-            get { return _waitMins; }
-            set { _waitMins = value; }
-        }
+        public EventLocationModel StartLocation { get; set; }
 
-        public bool PublicEvent
-        {
-            get { return _publicEvent; }
-            set { _publicEvent = value; }
-        }
+        public EventLocationModel EndLocation { get; set; }
+
+        public UserModel OwnerUser { get; set; }
     }
 }

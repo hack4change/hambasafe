@@ -1,0 +1,35 @@
+.app-logo {
+  text-align: center;
+}
+
+.app-logo > img {
+  border-radius: 50%;
+  height: 150px;
+}
+
+.landing {
+  background: url(/img/landing.jpg) no-repeat;
+  background-size: cover;
+}
+
+$landing-icon-width: 42px;
+
+.login-button {
+  i::before {
+    width: $landing-icon-width;
+  }
+
+  span {
+    margin-left: -$landing-icon-width;
+  }
+}
+
+.ion-android-add-circle {
+  position: absolute !important;
+  right: 20px;
+  bottom: 20px;
+  font-size: 50px;
+}
+.star-filled{
+  color:gold;
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using System.Web.Http;
 using Hambasafe.Server.Models.v1;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
+using Entities = Hambasafe.DataAccess.Entities;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -19,40 +21,34 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
+        [Route("create-user"), HttpPost]
+        public async Task<HttpResponseMessage> CreateUser(UserModel newUser)
+        {
+            try
+            {
+                //TODO add this 
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        /// <summary>
+        /// Implemented
+        /// </summary>
+        [AllowAnonymous]
         [Route("users"), HttpGet]
         public async Task<HttpResponseMessage> GetAllUsers()
         {
             try
             {
-                var users = new UserModel[]
-                {
-                    new UserModel
-                    {
-                        UserId = 1,
-                        FirstNames = "Foo",
-                        LastName = "Bar",
-                        DateOfBirth = DateTime.Now.AddYears(-21),
-                        EmailAddress = "Foo@Bar.co.za",
-                        Gender = "M",
-                        IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                        MobileNumber = "123456789",
-                        ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                        Status = "Verified"
-                    },
-                    new UserModel
-                    {
-                        UserId = 2,
-                        FirstNames = "Hum",
-                        LastName = "Bug",
-                        DateOfBirth = DateTime.Now.AddYears(-75),
-                        EmailAddress = "Hum@Bug.co.za",
-                        Gender = "M",
-                        IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                        MobileNumber = "987654321",
-                        ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                        Status = "Unverified"
-                    }
-                };
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
+
+                var users = context.Users.Select(e => new UserModel(e))
+                                         .ToArray();
 
                 return Request.CreateResponse(HttpStatusCode.OK, users);
             }
@@ -62,41 +58,21 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("users"), HttpGet]
         public async Task<HttpResponseMessage> GetUsers(string username)
         {
             try
             {
-                var users = new UserModel[]
-                {
-                    new UserModel
-                    {
-                        UserId = 1,
-                        FirstNames = $"Foo{username}",
-                        LastName = "Bar",
-                        DateOfBirth = DateTime.Now.AddYears(-21),
-                        EmailAddress = "Foo@Bar.co.za",
-                        Gender = "M",
-                        IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                        MobileNumber = "123456789",
-                        ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                        Status = "Verified"
-                    },
-                    new UserModel
-                    {
-                        UserId = 2,
-                        FirstNames = "Hum",
-                        LastName = $"Bug{username}",
-                        DateOfBirth = DateTime.Now.AddYears(-75),
-                        EmailAddress = "Hum@Bug.co.za",
-                        Gender = "M",
-                        IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                        MobileNumber = "987654321",
-                        ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                        Status = "Unverified"
-                    }
-                };
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
+
+                var users = context.Users.Where(a => a.FirstNames.ToUpper().Contains(username.ToUpper()) || 
+                                                     a.LastName.ToUpper().Contains(username.ToUpper()))
+                                         .Select(e => new UserModel(e))
+                                         .ToArray();
 
                 return Request.CreateResponse(HttpStatusCode.OK, users);
             }
@@ -106,53 +82,26 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("user"), HttpGet]
         public async Task<HttpResponseMessage> GetUser(int id)
         {
             try
             {
-                var user = new UserModel
-                {
-                    UserId = id,
-                    FirstNames = "Foo",
-                    LastName = "Bar",
-                    DateOfBirth = DateTime.Now.AddYears(-21),
-                    EmailAddress = "Foo@Bar.co.za",
-                    Gender = "M",
-                    IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                    MobileNumber = "123456789",
-                    ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                    Status = "Verified"
-                };
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
-                return Request.CreateResponse(HttpStatusCode.OK, user);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
+                var userEntity = context.Users.Where(e => e.UserId == id)
+                                              .FirstOrDefault();
 
-        [AllowAnonymous]
-        [Route("profile"), HttpGet]
-        public async Task<HttpResponseMessage> GetProfile(int id)
-        {
-            try
-            {
-                var user = new UserModel
+                if (userEntity == null)
                 {
-                    UserId = id,
-                    FirstNames = "Foo",
-                    LastName = "Bar",
-                    DateOfBirth = DateTime.Now.AddYears(-21),
-                    EmailAddress = "Foo@Bar.co.za",
-                    Gender = "M",
-                    IdentityDocumentUrl = "http://www.google.com?IdentityDocument",
-                    MobileNumber = "123456789",
-                    ProfilePictureUrl = "http://www.google.com?ProfilePicture",
-                    Status = "Verified"
-                };
+                    return Request.CreateResponse(HttpStatusCode.NotFound, $"User was not found for id:{id}");
+                }
+
+                var user = new UserModel(userEntity);
 
                 return Request.CreateResponse(HttpStatusCode.OK, user);
             }

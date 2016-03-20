@@ -1,0 +1,1057 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HambasafeDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="HasAttended" Type="bit" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AttendanceRating">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+            <PropertyRef Name="RaterUserId" />
+            <PropertyRef Name="RateeUserId" />
+          </Key>
+          <Property Name="AttendanceId" Type="int" Nullable="false" />
+          <Property Name="RaterUserId" Type="int" Nullable="false" />
+          <Property Name="RateeUserId" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="tinyint" />
+          <Property Name="Comment" Type="varchar(max)" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BlockedUser">
+          <Key>
+            <PropertyRef Name="BlockerUserId" />
+            <PropertyRef Name="BlockedUserId" />
+          </Key>
+          <Property Name="BlockerUserId" Type="int" Nullable="false" />
+          <Property Name="BlockedUserId" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Reason" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Connection">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ConnectionUserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ConnectionUserId" Type="int" Nullable="false" />
+          <Property Name="Relationship" Type="varchar" MaxLength="90" />
+          <Property Name="DateCreated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartEventLocationId" Type="int" />
+          <Property Name="EndEventLocationId" Type="int" />
+          <Property Name="OwnerUserId" Type="int" Nullable="false" />
+          <Property Name="EventTypeId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="DateTimeStart" Type="datetime" Nullable="false" />
+          <Property Name="DateTimeEnd" Type="datetime" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsPublic" Type="bit" />
+          <Property Name="MaxWaitingMinutes" Type="smallint" Nullable="false" />
+          <Property Name="Attributes" Type="nvarchar(max)" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="EventLocation">
+          <Key>
+            <PropertyRef Name="EventLocationId" />
+          </Key>
+          <Property Name="EventLocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="100" />
+          <Property Name="Province" Type="varchar" MaxLength="100" />
+          <Property Name="Suburb" Type="varchar" MaxLength="100" />
+          <Property Name="PostCode" Type="varchar" MaxLength="10" />
+          <Property Name="Address" Type="varchar(max)" Nullable="false" />
+          <Property Name="Latitude" Type="float" />
+          <Property Name="Longitude" Type="float" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="EventTypeId" />
+          </Key>
+          <Property Name="EventTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="Description" Type="text" />
+        </EntityType>
+        <EntityType Name="ImageResource">
+          <Key>
+            <PropertyRef Name="ImageResourceId" />
+          </Key>
+          <Property Name="ImageResourceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageData" Type="varbinary(max)" Nullable="false" />
+          <Property Name="MimeType" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invitation">
+          <Key>
+            <PropertyRef Name="InvitationId" />
+          </Key>
+          <Property Name="InvitationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvitorUserId" Type="int" />
+          <Property Name="InviteeUserId" Type="int" />
+          <Property Name="EventId" Type="int" />
+          <Property Name="OptionalEmailInvitee" Type="varchar" MaxLength="254" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+          <Property Name="Comment" Type="varchar" MaxLength="250" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LogName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LogDescription" Type="varchar" MaxLength="2000" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="50" />
+          <Property Name="FirstNames" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="IdentityDocumentUrl" Type="varchar(max)" />
+          <Property Name="PictureImageResourceId" Type="int" />
+          <Property Name="Status" Type="varchar" MaxLength="90" Nullable="false" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="DateValidated" Type="datetime" />
+          <Property Name="DateLastLogin" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_Attendance_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_Attendance">
+          <End Role="Attendance" Type="Self.Attendance" Multiplicity="1" />
+          <End Role="AttendanceRating" Type="Self.AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attendance">
+              <PropertyRef Name="AttendanceId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="AttendanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AttendanceRating" Type="Self.AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="RaterUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="AttendanceRating" Type="Self.AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="RateeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="BlockedUser" Type="Self.BlockedUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlockedUser">
+              <PropertyRef Name="BlockerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUser_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="BlockedUser" Type="Self.BlockedUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlockedUser">
+              <PropertyRef Name="BlockedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Connection" Type="Self.Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="ConnectionUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_EventLocation">
+          <End Role="EventLocation" Type="Self.EventLocation" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventLocation">
+              <PropertyRef Name="EventLocationId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="StartEventLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_EventLocation1">
+          <End Role="EventLocation" Type="Self.EventLocation" Multiplicity="0..1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventLocation">
+              <PropertyRef Name="EventLocationId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EndEventLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_EventType">
+          <End Role="EventType" Type="Self.EventType" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="EventTypeId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Event" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="OwnerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_Event">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="Invitation" Type="Self.Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Invitation" Type="Self.Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="InvitorUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_User1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Invitation" Type="Self.Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="InviteeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ImageResource">
+          <End Role="ImageResource" Type="Self.ImageResource" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageResource">
+              <PropertyRef Name="ImageResourceId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PictureImageResourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HambasafeDataModelStoreContainer">
+          <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttendanceRating" EntityType="Self.AttendanceRating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BlockedUser" EntityType="Self.BlockedUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Connection" EntityType="Self.Connection" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventLocation" EntityType="Self.EventLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EventType" EntityType="Self.EventType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageResource" EntityType="Self.ImageResource" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invitation" EntityType="Self.Invitation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Attendance_Event" Association="Self.FK_Attendance_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_User" Association="Self.FK_Attendance_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Attendance" EntitySet="Attendance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_Attendance" Association="Self.FK_AttendanceRating_Attendance">
+            <End Role="Attendance" EntitySet="Attendance" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_User" Association="Self.FK_AttendanceRating_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_User1" Association="Self.FK_AttendanceRating_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUser_User" Association="Self.FK_BlockedUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="BlockedUser" EntitySet="BlockedUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUser_User1" Association="Self.FK_BlockedUser_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="BlockedUser" EntitySet="BlockedUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_User" Association="Self.FK_Connection_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_User1" Association="Self.FK_Connection_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Connection" EntitySet="Connection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventLocation" Association="Self.FK_Event_EventLocation">
+            <End Role="EventLocation" EntitySet="EventLocation" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventLocation1" Association="Self.FK_Event_EventLocation1">
+            <End Role="EventLocation" EntitySet="EventLocation" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventType" Association="Self.FK_Event_EventType">
+            <End Role="EventType" EntitySet="EventType" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_User" Association="Self.FK_Event_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_Event" Association="Self.FK_Invitation_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Invitation" EntitySet="Invitation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_User" Association="Self.FK_Invitation_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Invitation" EntitySet="Invitation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_User1" Association="Self.FK_Invitation_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Invitation" EntitySet="Invitation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ImageResource" Association="Self.FK_User_ImageResource">
+            <End Role="ImageResource" EntitySet="ImageResource" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HambasafeDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HambasafeDataContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Attendances" EntityType="HambasafeDataModel.Attendance" />
+          <EntitySet Name="AttendanceRatings" EntityType="HambasafeDataModel.AttendanceRating" />
+          <EntitySet Name="BlockedUsers" EntityType="HambasafeDataModel.BlockedUser" />
+          <EntitySet Name="Connections" EntityType="HambasafeDataModel.Connection" />
+          <EntitySet Name="Events" EntityType="HambasafeDataModel.Event" />
+          <EntitySet Name="EventLocations" EntityType="HambasafeDataModel.EventLocation" />
+          <EntitySet Name="EventTypes" EntityType="HambasafeDataModel.EventType" />
+          <EntitySet Name="ImageResources" EntityType="HambasafeDataModel.ImageResource" />
+          <EntitySet Name="Invitations" EntityType="HambasafeDataModel.Invitation" />
+          <EntitySet Name="Logs" EntityType="HambasafeDataModel.Log" />
+          <EntitySet Name="Users" EntityType="HambasafeDataModel.User" />
+          <AssociationSet Name="FK_Attendance_Event" Association="HambasafeDataModel.FK_Attendance_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attendance_User" Association="HambasafeDataModel.FK_Attendance_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Attendance" EntitySet="Attendances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_Attendance" Association="HambasafeDataModel.FK_AttendanceRating_Attendance">
+            <End Role="Attendance" EntitySet="Attendances" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_User" Association="HambasafeDataModel.FK_AttendanceRating_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AttendanceRating_User1" Association="HambasafeDataModel.FK_AttendanceRating_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AttendanceRating" EntitySet="AttendanceRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUser_User" Association="HambasafeDataModel.FK_BlockedUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BlockedUser" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlockedUser_User1" Association="HambasafeDataModel.FK_BlockedUser_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="BlockedUser" EntitySet="BlockedUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_User" Association="HambasafeDataModel.FK_Connection_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Connection" EntitySet="Connections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Connection_User1" Association="HambasafeDataModel.FK_Connection_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Connection" EntitySet="Connections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventLocation" Association="HambasafeDataModel.FK_Event_EventLocation">
+            <End Role="EventLocation" EntitySet="EventLocations" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventLocation1" Association="HambasafeDataModel.FK_Event_EventLocation1">
+            <End Role="EventLocation" EntitySet="EventLocations" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_EventType" Association="HambasafeDataModel.FK_Event_EventType">
+            <End Role="EventType" EntitySet="EventTypes" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_User" Association="HambasafeDataModel.FK_Event_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_Event" Association="HambasafeDataModel.FK_Invitation_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Invitation" EntitySet="Invitations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_ImageResource" Association="HambasafeDataModel.FK_User_ImageResource">
+            <End Role="ImageResource" EntitySet="ImageResources" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_User" Association="HambasafeDataModel.FK_Invitation_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Invitation" EntitySet="Invitations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invitation_User1" Association="HambasafeDataModel.FK_Invitation_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Invitation" EntitySet="Invitations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Attendance">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+          </Key>
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="EventId" Type="Int32" Nullable="false" />
+          <Property Name="HasAttended" Type="Boolean" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Event" Relationship="HambasafeDataModel.FK_Attendance_Event" FromRole="Attendance" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="HambasafeDataModel.FK_Attendance_User" FromRole="Attendance" ToRole="User" />
+          <NavigationProperty Name="AttendanceRatings" Relationship="HambasafeDataModel.FK_AttendanceRating_Attendance" FromRole="Attendance" ToRole="AttendanceRating" />
+        </EntityType>
+        <EntityType Name="AttendanceRating">
+          <Key>
+            <PropertyRef Name="AttendanceId" />
+            <PropertyRef Name="RaterUserId" />
+            <PropertyRef Name="RateeUserId" />
+          </Key>
+          <Property Name="AttendanceId" Type="Int32" Nullable="false" />
+          <Property Name="RaterUserId" Type="Int32" Nullable="false" />
+          <Property Name="RateeUserId" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Byte" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Attendance" Relationship="HambasafeDataModel.FK_AttendanceRating_Attendance" FromRole="AttendanceRating" ToRole="Attendance" />
+          <NavigationProperty Name="User" Relationship="HambasafeDataModel.FK_AttendanceRating_User" FromRole="AttendanceRating" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="HambasafeDataModel.FK_AttendanceRating_User1" FromRole="AttendanceRating" ToRole="User" />
+        </EntityType>
+        <EntityType Name="BlockedUser">
+          <Key>
+            <PropertyRef Name="BlockerUserId" />
+            <PropertyRef Name="BlockedUserId" />
+          </Key>
+          <Property Name="BlockerUserId" Type="Int32" Nullable="false" />
+          <Property Name="BlockedUserId" Type="Int32" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Reason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="HambasafeDataModel.FK_BlockedUser_User" FromRole="BlockedUser" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="HambasafeDataModel.FK_BlockedUser_User1" FromRole="BlockedUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Connection">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ConnectionUserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ConnectionUserId" Type="Int32" Nullable="false" />
+          <Property Name="Relationship" Type="String" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="HambasafeDataModel.FK_Connection_User" FromRole="Connection" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="HambasafeDataModel.FK_Connection_User1" FromRole="Connection" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventId" />
+          </Key>
+          <Property Name="EventId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartEventLocationId" Type="Int32" />
+          <Property Name="EndEventLocationId" Type="Int32" />
+          <Property Name="OwnerUserId" Type="Int32" Nullable="false" />
+          <Property Name="EventTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="DateTimeStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateTimeEnd" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsPublic" Type="Boolean" />
+          <Property Name="MaxWaitingMinutes" Type="Int16" Nullable="false" />
+          <Property Name="Attributes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Attendances" Relationship="HambasafeDataModel.FK_Attendance_Event" FromRole="Event" ToRole="Attendance" />
+          <NavigationProperty Name="EventLocation" Relationship="HambasafeDataModel.FK_Event_EventLocation" FromRole="Event" ToRole="EventLocation" />
+          <NavigationProperty Name="EventLocation1" Relationship="HambasafeDataModel.FK_Event_EventLocation1" FromRole="Event" ToRole="EventLocation" />
+          <NavigationProperty Name="EventType" Relationship="HambasafeDataModel.FK_Event_EventType" FromRole="Event" ToRole="EventType" />
+          <NavigationProperty Name="User" Relationship="HambasafeDataModel.FK_Event_User" FromRole="Event" ToRole="User" />
+          <NavigationProperty Name="Invitations" Relationship="HambasafeDataModel.FK_Invitation_Event" FromRole="Event" ToRole="Invitation" />
+        </EntityType>
+        <EntityType Name="EventLocation">
+          <Key>
+            <PropertyRef Name="EventLocationId" />
+          </Key>
+          <Property Name="EventLocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Province" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Suburb" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="PostCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Latitude" Type="Double" />
+          <Property Name="Longitude" Type="Double" />
+          <NavigationProperty Name="Events" Relationship="HambasafeDataModel.FK_Event_EventLocation" FromRole="EventLocation" ToRole="Event" />
+          <NavigationProperty Name="Events1" Relationship="HambasafeDataModel.FK_Event_EventLocation1" FromRole="EventLocation" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="EventType">
+          <Key>
+            <PropertyRef Name="EventTypeId" />
+          </Key>
+          <Property Name="EventTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Events" Relationship="HambasafeDataModel.FK_Event_EventType" FromRole="EventType" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="ImageResource">
+          <Key>
+            <PropertyRef Name="ImageResourceId" />
+          </Key>
+          <Property Name="ImageResourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageData" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="MimeType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="HambasafeDataModel.FK_User_ImageResource" FromRole="ImageResource" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Invitation">
+          <Key>
+            <PropertyRef Name="InvitationId" />
+          </Key>
+          <Property Name="InvitationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvitorUserId" Type="Int32" />
+          <Property Name="InviteeUserId" Type="Int32" />
+          <Property Name="EventId" Type="Int32" />
+          <Property Name="OptionalEmailInvitee" Type="String" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Comment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Event" Relationship="HambasafeDataModel.FK_Invitation_Event" FromRole="Invitation" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="HambasafeDataModel.FK_Invitation_User" FromRole="Invitation" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="HambasafeDataModel.FK_Invitation_User1" FromRole="Invitation" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LogName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LogDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstNames" Type="String" Nullable="false" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdentityDocumentUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PictureImageResourceId" Type="Int32" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="90" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="254" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="DateValidated" Type="DateTime" Precision="3" />
+          <Property Name="DateLastLogin" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Attendances" Relationship="HambasafeDataModel.FK_Attendance_User" FromRole="User" ToRole="Attendance" />
+          <NavigationProperty Name="AttendanceRatings" Relationship="HambasafeDataModel.FK_AttendanceRating_User" FromRole="User" ToRole="AttendanceRating" />
+          <NavigationProperty Name="AttendanceRatings1" Relationship="HambasafeDataModel.FK_AttendanceRating_User1" FromRole="User" ToRole="AttendanceRating" />
+          <NavigationProperty Name="BlockedUsers" Relationship="HambasafeDataModel.FK_BlockedUser_User" FromRole="User" ToRole="BlockedUser" />
+          <NavigationProperty Name="BlockedUsers1" Relationship="HambasafeDataModel.FK_BlockedUser_User1" FromRole="User" ToRole="BlockedUser" />
+          <NavigationProperty Name="Connections" Relationship="HambasafeDataModel.FK_Connection_User" FromRole="User" ToRole="Connection" />
+          <NavigationProperty Name="Connections1" Relationship="HambasafeDataModel.FK_Connection_User1" FromRole="User" ToRole="Connection" />
+          <NavigationProperty Name="Events" Relationship="HambasafeDataModel.FK_Event_User" FromRole="User" ToRole="Event" />
+          <NavigationProperty Name="ImageResource" Relationship="HambasafeDataModel.FK_User_ImageResource" FromRole="User" ToRole="ImageResource" />
+          <NavigationProperty Name="Invitations" Relationship="HambasafeDataModel.FK_Invitation_User" FromRole="User" ToRole="Invitation" />
+          <NavigationProperty Name="Invitations1" Relationship="HambasafeDataModel.FK_Invitation_User1" FromRole="User" ToRole="Invitation" />
+        </EntityType>
+        <Association Name="FK_Attendance_Event">
+          <End Type="HambasafeDataModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="HambasafeDataModel.Attendance" Role="Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attendance_User">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="HambasafeDataModel.Attendance" Role="Attendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Attendance">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_Attendance">
+          <End Type="HambasafeDataModel.Attendance" Role="Attendance" Multiplicity="1" />
+          <End Type="HambasafeDataModel.AttendanceRating" Role="AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Attendance">
+              <PropertyRef Name="AttendanceId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="AttendanceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_User">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="HambasafeDataModel.AttendanceRating" Role="AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="RaterUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AttendanceRating_User1">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="HambasafeDataModel.AttendanceRating" Role="AttendanceRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="AttendanceRating">
+              <PropertyRef Name="RateeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUser_User">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="HambasafeDataModel.BlockedUser" Role="BlockedUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlockedUser">
+              <PropertyRef Name="BlockerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlockedUser_User1">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="HambasafeDataModel.BlockedUser" Role="BlockedUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BlockedUser">
+              <PropertyRef Name="BlockedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_User">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="HambasafeDataModel.Connection" Role="Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Connection_User1">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="HambasafeDataModel.Connection" Role="Connection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Connection">
+              <PropertyRef Name="ConnectionUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_EventLocation">
+          <End Type="HambasafeDataModel.EventLocation" Role="EventLocation" Multiplicity="0..1" />
+          <End Type="HambasafeDataModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventLocation">
+              <PropertyRef Name="EventLocationId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="StartEventLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_EventLocation1">
+          <End Type="HambasafeDataModel.EventLocation" Role="EventLocation" Multiplicity="0..1" />
+          <End Type="HambasafeDataModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventLocation">
+              <PropertyRef Name="EventLocationId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EndEventLocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_EventType">
+          <End Type="HambasafeDataModel.EventType" Role="EventType" Multiplicity="1" />
+          <End Type="HambasafeDataModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EventType">
+              <PropertyRef Name="EventTypeId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="EventTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_User">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="HambasafeDataModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="OwnerUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_Event">
+          <End Type="HambasafeDataModel.Event" Role="Event" Multiplicity="0..1" />
+          <End Type="HambasafeDataModel.Invitation" Role="Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="EventId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_ImageResource">
+          <End Type="HambasafeDataModel.ImageResource" Role="ImageResource" Multiplicity="0..1" />
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImageResource">
+              <PropertyRef Name="ImageResourceId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PictureImageResourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_User">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HambasafeDataModel.Invitation" Role="Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="InvitorUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invitation_User1">
+          <End Type="HambasafeDataModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="HambasafeDataModel.Invitation" Role="Invitation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Invitation">
+              <PropertyRef Name="InviteeUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HambasafeDataModelStoreContainer" CdmEntityContainer="HambasafeDataContext">
+          <EntitySetMapping Name="Attendances">
+            <EntityTypeMapping TypeName="HambasafeDataModel.Attendance">
+              <MappingFragment StoreEntitySet="Attendance">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="HasAttended" ColumnName="HasAttended" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendanceRatings">
+            <EntityTypeMapping TypeName="HambasafeDataModel.AttendanceRating">
+              <MappingFragment StoreEntitySet="AttendanceRating">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="RateeUserId" ColumnName="RateeUserId" />
+                <ScalarProperty Name="RaterUserId" ColumnName="RaterUserId" />
+                <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BlockedUsers">
+            <EntityTypeMapping TypeName="HambasafeDataModel.BlockedUser">
+              <MappingFragment StoreEntitySet="BlockedUser">
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="BlockedUserId" ColumnName="BlockedUserId" />
+                <ScalarProperty Name="BlockerUserId" ColumnName="BlockerUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Connections">
+            <EntityTypeMapping TypeName="HambasafeDataModel.Connection">
+              <MappingFragment StoreEntitySet="Connection">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Relationship" ColumnName="Relationship" />
+                <ScalarProperty Name="ConnectionUserId" ColumnName="ConnectionUserId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="HambasafeDataModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Attributes" ColumnName="Attributes" />
+                <ScalarProperty Name="MaxWaitingMinutes" ColumnName="MaxWaitingMinutes" />
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DateTimeEnd" ColumnName="DateTimeEnd" />
+                <ScalarProperty Name="DateTimeStart" ColumnName="DateTimeStart" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
+                <ScalarProperty Name="OwnerUserId" ColumnName="OwnerUserId" />
+                <ScalarProperty Name="EndEventLocationId" ColumnName="EndEventLocationId" />
+                <ScalarProperty Name="StartEventLocationId" ColumnName="StartEventLocationId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventLocations">
+            <EntityTypeMapping TypeName="HambasafeDataModel.EventLocation">
+              <MappingFragment StoreEntitySet="EventLocation">
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="Suburb" ColumnName="Suburb" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="EventLocationId" ColumnName="EventLocationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EventTypes">
+            <EntityTypeMapping TypeName="HambasafeDataModel.EventType">
+              <MappingFragment StoreEntitySet="EventType">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageResources">
+            <EntityTypeMapping TypeName="HambasafeDataModel.ImageResource">
+              <MappingFragment StoreEntitySet="ImageResource">
+                <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="ImageResourceId" ColumnName="ImageResourceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invitations">
+            <EntityTypeMapping TypeName="HambasafeDataModel.Invitation">
+              <MappingFragment StoreEntitySet="Invitation">
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="OptionalEmailInvitee" ColumnName="OptionalEmailInvitee" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="InviteeUserId" ColumnName="InviteeUserId" />
+                <ScalarProperty Name="InvitorUserId" ColumnName="InvitorUserId" />
+                <ScalarProperty Name="InvitationId" ColumnName="InvitationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="HambasafeDataModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="LogDescription" ColumnName="LogDescription" />
+                <ScalarProperty Name="LogName" ColumnName="LogName" />
+                <ScalarProperty Name="LogType" ColumnName="LogType" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HambasafeDataModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="DateLastLogin" ColumnName="DateLastLogin" />
+                <ScalarProperty Name="DateValidated" ColumnName="DateValidated" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PictureImageResourceId" ColumnName="PictureImageResourceId" />
+                <ScalarProperty Name="IdentityDocumentUrl" ColumnName="IdentityDocumentUrl" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstNames" ColumnName="FirstNames" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

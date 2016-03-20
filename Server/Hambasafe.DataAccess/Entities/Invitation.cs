@@ -21,7 +21,7 @@ namespace Hambasafe.DataAccess.Entities
         public string OptionalEmailInvitee { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public string Status { get; set; }
-        public string StatusReason { get; set; }
+        public string Comment { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
         public virtual Event Event { get; set; }
