@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.directives', 'starter.services', 'facebook', 'ngResource'])
+angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter.directives', 'starter.services', 'facebook', 'ngResource', 'ngAutocomplete'])
 
   .constant('config', {
     baseServiceURL: "http://hsdevapi1.azurewebsites.net"
@@ -73,7 +73,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         views: {
           'menuContent': {
             templateUrl: "templates/emergency.html",
-          
+
           }
         }
       })
