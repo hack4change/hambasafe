@@ -1,9 +1,8 @@
-starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state) {
+starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state, $compile) {
       function initialize() {
-              var myLatlng = new google.maps.LatLng(43.07493,-89.381388);
+
               
               var mapOptions = {
-                        center: myLatlng,
                         zoom: 16,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                       };
@@ -18,19 +17,26 @@ starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state)
                 content: compiled[0]
               });
 
+
+
+              $scope.map = map;
+              navigator.geolocation.getCurrentPosition(function(pos) {
+                console.log(pos);
+                $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
               var marker = new google.maps.Marker({
-                position: myLatlng,
+                position: new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude),
                 map: map,
                 title: 'Uluru (Ayers Rock)'
               });
-
-              google.maps.event.addListener(marker, 'click', function() {
-                infowindow.open(map,marker);
+              // google.maps.event.addListener(marker, 'click', function() {
+              //   infowindow.open(map,marker);
+              // });
+              }, function(error) {
+                alert('Unable to get location: ' + error.message);
               });
-
-              $scope.map = map;
       }
       google.maps.event.addDomListener(window, 'load', initialize);
+
 
       $scope.centerOnMe = function() {
         if(!$scope.map) {
@@ -42,12 +48,6 @@ starterControllers.controller('MapCtrl', function ($scope, EventFactory, $state)
           showBackdrop: false
         });
 
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-          $scope.loading.hide();
-        }, function(error) {
-          alert('Unable to get location: ' + error.message);
-        });
       };
 
       $scope.clickTest = function() {

@@ -1,4 +1,4 @@
-starterControllers.controller('RegistrationCtrl', function ($scope, $stateParams, Facebook, LocalStorage) {
+starterControllers.controller('RegistrationCtrl', function ($scope, $stateParams, Facebook, LocalStorage, UserFactory) {
   $scope.fbMe = function () {
     // From now on you can use the Facebook service just as Facebook api says
     Facebook.api('/me', function (response) {
@@ -7,6 +7,11 @@ starterControllers.controller('RegistrationCtrl', function ($scope, $stateParams
     });
   };
 
+  /*
+   *  DoB
+   *  Email
+   *  Profile Picture
+   */
   $scope.doRegister = function (valid) {
     $scope.submitted = true;
 

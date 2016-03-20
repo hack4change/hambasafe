@@ -1,7 +1,12 @@
-<ion-view>
+<ion-view ng-init="initialize">
   <ion-content class="padding">
-
-          <div id="map" data-tap-disabled="true"></div>
+    <div id="map" style="height:100%; width:100%;" data-tap-disabled="true"></div>
 
   </ion-content>
+    <div class="bar bar-footer bar-balanced">
+        <div class="title"></div>
+        <div class="item range">
+          <input type="range" name="volume">
+        </div>
+    </div>
 </ion-view>
