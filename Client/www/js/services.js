@@ -88,8 +88,7 @@ angular.module('starter.services', [])
         getAllEvents: {
           method: 'GET',
           isArray: true
-        }
-      ,
+        },
         getEvent: {
           method: 'GET',
           url: config.baseServiceURL + '/v1/event'

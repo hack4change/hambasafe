@@ -124,7 +124,7 @@ angular.module('starter.controllers', [])
       $scope.eventData = {};
       $scope.init = function() {
         
-      eventFactory.getEvent({id: 1}
+      eventFactory.getEvent({id: 3}
        , function (event) {
          $scope.eventData = event;
          console.log(event);
@@ -163,7 +163,15 @@ angular.module('starter.controllers', [])
         $scope.shownGroup = null;
     })()
     $scope.searchEvents = function(){
-    
+      eventFactory.getAllEvents(
+        {id: 1},
+        function (event) {
+          $scope.eventData = event;
+          console.log(event);
+        },
+        function (error) {
+
+        });
     }
     $scope.eventType = ["Walk", "Run", "Cycle"]; //convert to array of objects
     $scope.typeSelected = $scope.eventType[0];
@@ -187,12 +195,14 @@ angular.module('starter.controllers', [])
       return $scope.shownGroup === group && $scope.typeSelected !== type;
     };
   })
-  .controller('SearchCtrl', function ($scope) {
+  .controller('SearchCtrl', function ($scope, eventFactory) {
     //init
     (function(){
-        $scope.shownGroup = null;
     })()
     $scope.searchEvents = function(){
+    
+    }
+    $scope.getEvents = function(){
     
     }
     $scope.eventType = ["Walk", "Run", "Cycle"];

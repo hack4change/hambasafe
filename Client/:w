@@ -1,0 +1,36 @@
+<ion-view view-title="Search">
+  <ion-content class="padding">
+
+    <div class="button-bar">
+  		<a class="button" ng-click="searchEvents()">SEARCH</a>
+    </div>
+
+    <ion-list>
+      <div>
+        <ion-item class="item-stable"
+                  ng-click="toggleGroup(group)"
+                  ng-class="{active: isGroupShown(group)}">
+          <i class="icon pull-right" style="float:right" ng-class="isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>
+          &nbsp;
+          <b>{{typeSelected}}</b>
+        </ion-item>
+        <ion-item class="item-accordion"
+                  ng-repeat="type in eventType"
+                    ng-show="isShown(type, group)" style="border-top: 0px" ng-click="toggleSelection(type, group)" >
+          <b>{{type}}</b>
+        </ion-item>
+      </div>
+    </ion-list>
+          <i class="icon icon-clock" ></i>
+
+  	<div class="button-bar">
+  		<a class="button">
+          <i class="icon icon-clock" ></i>
+      </a>
+  		<a class="button">
+          <i class="icon icon-location" ></i>
+      </a>
+	</div>
+
+  </ion-content>
+</ion-view>
