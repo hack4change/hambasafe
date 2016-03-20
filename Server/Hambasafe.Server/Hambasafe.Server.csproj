@@ -278,8 +278,8 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\v1\CityModel.cs" />
     <Compile Include="Models\ErrorReport.cs" />
+    <Compile Include="Models\v1\CountryModel.cs" />
     <Compile Include="Models\v1\EventModel.cs" />
     <Compile Include="Models\v1\EventTypeModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -377,6 +377,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hambasafe.DataAccess\Hambasafe.DataAccess.csproj">
+      <Project>{ce1e56a3-f9c9-45e4-aac2-7125591febce}</Project>
+      <Name>Hambasafe.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
