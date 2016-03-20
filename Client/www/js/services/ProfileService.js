@@ -5,7 +5,7 @@ starterServices.service('ProfileService', ['$http', 'config',
       return {
         setProfile:function(id){
           localStorage.setItem(profileKey);
-          return $http.post(base + 'createevent', config)
+          return $http.post(base + 'create-user ', config)
          .then(function success(result) {
 
          }, function error(err) {
@@ -13,16 +13,13 @@ starterServices.service('ProfileService', ['$http', 'config',
          });
         },
         getAll: function(id){
-          return $http.get(base + 'user', config)
+          return $http.get(base + 'users', config)
         },
-        get: function (id) {
-          var val = id|| localStorage.getItem(profileKey);
-          return $http.get(base + 'user?id=' + val, config)
-          .then(function success(result){
+        get: function (id ) {
+          var val = id || localStorage.getItem(profileKey);
 
-          }, function error(err){
+          return $http.get(base + 'users?id=' + val, config);
 
-          })
         }
       };
     }

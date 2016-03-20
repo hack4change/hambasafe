@@ -12,4 +12,11 @@ starterControllers.controller('HomeCtrl', function ($scope, $location, EventFact
   }
   $scope.refreshEvents();
 
-  });
+  $scope.click = function(event) {
+    if (event.EventDateTimeEnd > new Date()) {
+      $location.path("app/rating")
+    } else {
+      $location.path("app/event-detail")
+    }
+  }
+});
