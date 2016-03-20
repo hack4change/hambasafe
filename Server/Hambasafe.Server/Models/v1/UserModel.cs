@@ -32,10 +32,14 @@ namespace Hambasafe.Server.Models.v1
         {
 
         }
-
         public UserModel(Entities.User user)
         {
             Status = user.Status;
         }
+
+        //public static Entities.User BuildUser(UserModel user)
+        //{
+        //    AutoMapper.Mapper
+        //}
     }
 }

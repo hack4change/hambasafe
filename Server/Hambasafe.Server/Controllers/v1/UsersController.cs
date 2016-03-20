@@ -20,6 +20,26 @@ namespace Hambasafe.Server.Controllers.v1
         {
         }
 
+
+        [AllowAnonymous]
+        [Route("createuser"), HttpPost]
+        public async Task<HttpResponseMessage> CreateUser(UserModel newUser)
+        {
+            try
+            {
+                //TODO add this 
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("users"), HttpGet]
         public async Task<HttpResponseMessage> GetAllUsers()
@@ -37,6 +57,9 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("users"), HttpGet]
         public async Task<HttpResponseMessage> GetUsers(string username)
@@ -57,6 +80,9 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("user"), HttpGet]
         public async Task<HttpResponseMessage> GetUser(int id)
@@ -75,6 +101,9 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("profile"), HttpGet]
         public async Task<HttpResponseMessage> GetProfile(int id)

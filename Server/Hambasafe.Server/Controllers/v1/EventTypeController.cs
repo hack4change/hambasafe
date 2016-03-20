@@ -21,6 +21,9 @@ namespace Hambasafe.Server.Controllers.v1
         {
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("eventtypes"), HttpGet]
         public async Task<HttpResponseMessage> GetEventTypes()

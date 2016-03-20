@@ -509,6 +509,26 @@
             http://localhost/help
             </summary>
         </member>
+        <member name="M:Hambasafe.Server.Controllers.v1.LocationController.GetAllLocations">
+            <summary>
+            Implemented
+            </summary>
+        </member>
+        <member name="M:Hambasafe.Server.Controllers.v1.LocationController.GetLocationsBySuburb(System.Int32)">
+            <summary>
+            Implemented
+            </summary>
+        </member>
+        <member name="M:Hambasafe.Server.Controllers.v1.LocationController.GetLocation(System.Int32)">
+            <summary>
+            Implemented
+            </summary>
+        </member>
+        <member name="M:Hambasafe.Server.Controllers.v1.EventTypeController.GetEventTypes">
+            <summary>
+            Implemented
+            </summary>
+        </member>
         <member name="M:Hambasafe.Server.Controllers.v1.EventsController.GetEvent(System.Int32)">
             <summary>
             Implemented
@@ -520,6 +540,26 @@
             </summary>
         </member>
         <member name="M:Hambasafe.Server.Controllers.v1.EventsController.GetEventsByUser(System.Int32)">
+            <summary>
+            Implemented
+            </summary>
+        </member>
+        <member name="M:Hambasafe.Server.Controllers.v1.UsersController.GetAllUsers">
+            <summary>
+            Implemented
+            </summary>
+        </member>
+        <member name="M:Hambasafe.Server.Controllers.v1.UsersController.GetUsers(System.String)">
+            <summary>
+            Implemented
+            </summary>
+        </member>
+        <member name="M:Hambasafe.Server.Controllers.v1.UsersController.GetUser(System.Int32)">
+            <summary>
+            Implemented
+            </summary>
+        </member>
+        <member name="M:Hambasafe.Server.Controllers.v1.UsersController.GetProfile(System.Int32)">
             <summary>
             Implemented
             </summary>
