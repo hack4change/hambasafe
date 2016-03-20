@@ -1,4 +1,4 @@
-starterServices.factory('eventFactory', ['$resource', 'config',
+starterServices.factory('EventFactory', ['$resource', 'config',
     function ($resource, config) {
       return $resource(config.baseServiceURL + '/v1/events', {}, {
         getAllEvents: {
