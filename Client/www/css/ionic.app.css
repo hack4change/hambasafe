@@ -9791,6 +9791,18 @@ a.button {
 .login-button span {
   margin-left: -42px; }
 
+.margin-left {
+  margin-left: 15px; }
+
+.margin-right {
+  margin-right: 15px; }
+
+.margin-top {
+  margin-top: 15px; }
+
+.margin-bottom {
+  margin-bottom: 15px; }
+
 .ion-android-add-circle {
   position: absolute !important;
   right: 20px;

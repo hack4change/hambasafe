@@ -1,7 +1,7 @@
 {
   "name": "hambasafe",
   "version": "1.1.1",
-    "description": "hambasafe: Nkosi!",
+  "description": "Safety in numbers. Walk and excercise with friends or trusted locals.",
   "private": true,
   "loglevel": "info",
   "dependencies": {

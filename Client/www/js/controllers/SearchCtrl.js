@@ -1,4 +1,4 @@
-starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $state, $location) {
+starterControllers.controller('SearchCtrl', function ($scope, EventService, $state, $location) {
     //init
     (function(){
       $scope.eventType = ["Walk", "Run", "Cycle"];
@@ -8,7 +8,7 @@ starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $sta
     })()
     $scope.searchEvents = function(){
       var searchBy = $scope.selectedSearch;
-      EventFactory.getAllEvents().then(function(response) {
+      EventService.getAllEvents().then(function(response) {
         console.log(response);
         $scope.eventsToList = response.data;
       }, function(err){
