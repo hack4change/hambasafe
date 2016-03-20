@@ -1,29 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Hambasafe.DataAccess;
+﻿using Entities = Hambasafe.DataAccess.Entities;
 
 namespace Hambasafe.Server.Models.v1
 {
-    public class EventLocation
+    public class EventLocationModel
     {
-        public EventLocation()
+        public EventLocationModel()
         { }
 
-        public EventLocation(Entities.EventLocation location)
+        public EventLocationModel(Entities.EventLocation location)
         {
-            Id = location.EventLocationId;
-            SuburbId = location.SuburbId;
+            EventLocationId = location.EventLocationId;
+            Country = location.Country;
+            Province = location.Province;
+            Suburb = location.Suburb;
+            PostCode = location.PostCode;
             Address = location.Address;
             Latitude = location.Latitude;
             Longitude = location.Longitude;
         }
 
-        public int? Id { get; set; }
-        public int SuburbId { get; set; }
+        public int EventLocationId { get; set; }
+        public string Country { get; set; }
+        public string Province { get; set; }
+        public string Suburb { get; set; }
+        public string PostCode { get; set; }
         public string Address { get; set; }
-        public Nullable<double> Latitude { get; set; }
-        public Nullable<double> Longitude { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
     }
 }

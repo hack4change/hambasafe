@@ -38,8 +38,8 @@ namespace Hambasafe.Server.Controllers.v1
                     DateTimeEnd = eventModel.EventDateTimeEnd,
                     IsPublic = eventModel.PublicEvent,
                     MaxWaitingMinutes = eventModel.WaitMins,
-                    StartEventLocationId = eventModel.StartLocation.Id,
-                    EndEventLocationId = eventModel.EndLocation == null ? null : eventModel.EndLocation.Id,
+                    StartEventLocationId = eventModel.StartLocation.EventLocationId,
+                    EndEventLocationId = eventModel.EndLocation == null ? (int?)null : eventModel.EndLocation.EventLocationId,
                     OwnerUserId = eventModel.OwnerUser.UserId,
                     Attributes = eventModel.Attributes,
                     DateCreated = DateTime.Now
@@ -89,7 +89,13 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var context = new HambasafeDataContext();
 
-                var events = context.Events.Select(e => new EventModel(e));
+                var entities = context.Events
+                                      .Include("EventType")
+                                      .Include("EventLocation")
+                                      .Include("EventLocation1")
+                                      .ToArray();
+
+                var events = entities.Select(e => new EventModel(e));
 
                 return Request.CreateResponse(HttpStatusCode.OK, events);
             }

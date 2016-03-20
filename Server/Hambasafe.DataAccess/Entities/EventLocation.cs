@@ -22,12 +22,14 @@ namespace Hambasafe.DataAccess.Entities
         }
     
         public int EventLocationId { get; set; }
-        public int SuburbId { get; set; }
+        public string Country { get; set; }
+        public string Province { get; set; }
+        public string Suburb { get; set; }
+        public string PostCode { get; set; }
         public string Address { get; set; }
         public Nullable<double> Latitude { get; set; }
         public Nullable<double> Longitude { get; set; }
     
-        public virtual Suburb Suburb { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

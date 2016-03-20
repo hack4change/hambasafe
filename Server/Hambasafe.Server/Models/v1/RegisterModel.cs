@@ -27,6 +27,6 @@ namespace Hambasafe.Server.Models.v1
 
         public string Password { get; set; }
 
-        public ProfilePictureModel ProfilePicture { get; set; }
+        public string ProfilePicture { get; set; }
     }
 }

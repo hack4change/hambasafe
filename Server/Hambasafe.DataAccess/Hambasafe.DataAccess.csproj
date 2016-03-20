@@ -63,9 +63,6 @@
     <Compile Include="Entities\Connection.cs">
       <DependentUpon>HambasafeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Country.cs">
-      <DependentUpon>HambasafeModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Entities\Event.cs">
       <DependentUpon>HambasafeModel.tt</DependentUpon>
     </Compile>
@@ -96,10 +93,7 @@
     <Compile Include="Entities\Invitation.cs">
       <DependentUpon>HambasafeModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Province.cs">
-      <DependentUpon>HambasafeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Suburb.cs">
+    <Compile Include="Entities\Log.cs">
       <DependentUpon>HambasafeModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\User.cs">

@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,7 +7,7 @@ using System.Web.Http;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
 using Hambasafe.DataAccess.Entities;
-using models = Hambasafe.Server.Models.v1;
+using Hambasafe.Server.Models.v1;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -29,7 +29,7 @@ namespace Hambasafe.Server.Controllers.v1
             try
             {
                 var dataContext = new HambasafeDataContext();
-                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList().Select(l=>new models.EventLocation(l)));
+                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList().Select(l => new EventLocationModel(l)));
             }
             catch (Exception error)
             {
@@ -42,13 +42,19 @@ namespace Hambasafe.Server.Controllers.v1
         /// </summary>
         [AllowAnonymous]
         [Route("locations-by-suburb"), HttpGet]
-        public async Task<HttpResponseMessage> GetLocationsBySuburb(int suburbId)
+        public async Task<HttpResponseMessage> GetLocationsBySuburb(string suburb)
         {
             try
             {
                 var dataContext = new HambasafeDataContext();
-                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList()
-                                                                            .Where(l=>l.SuburbId==suburbId));
+
+                var entities = dataContext.EventLocations
+                                          .Where(el => el.Suburb.ToLower() == suburb.ToLower())
+                                          .ToArray();
+
+                var locations = entities.Select(e => new EventLocationModel(e));
+
+                return Request.CreateResponse(HttpStatusCode.OK, locations);
             }
             catch (Exception error)
             {
