@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HambasafeDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HambasafeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Attendance">
           <Key>
             <PropertyRef Name="AttendanceId" />
@@ -372,7 +372,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="HambasafeDataModelStoreContainer">
+        <EntityContainer Name="HambasafeModelStoreContainer">
           <EntitySet Name="Attendance" EntityType="Self.Attendance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AttendanceRating" EntityType="Self.AttendanceRating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlockedUser" EntityType="Self.BlockedUser" Schema="dbo" store:Type="Tables" />
@@ -466,7 +466,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="HambasafeDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="HambasafeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Attendance">
           <Key>
             <PropertyRef Name="AttendanceId" />
@@ -872,7 +872,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="HambasafeConnectionString" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="HambasafeDataContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Attendances" EntityType="Self.Attendance" />
           <EntitySet Name="AttendanceRatings" EntityType="Self.AttendanceRating" />
           <EntitySet Name="BlockedUsers" EntityType="Self.BlockedUser" />
@@ -967,9 +967,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HambasafeDataModelStoreContainer" CdmEntityContainer="HambasafeConnectionString">
+        <EntityContainerMapping StorageEntityContainer="HambasafeModelStoreContainer" CdmEntityContainer="HambasafeDataContext">
           <EntitySetMapping Name="Attendances">
-            <EntityTypeMapping TypeName="HambasafeDataModel.Attendance">
+            <EntityTypeMapping TypeName="HambasafeModel.Attendance">
               <MappingFragment StoreEntitySet="Attendance">
                 <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -980,7 +980,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AttendanceRatings">
-            <EntityTypeMapping TypeName="HambasafeDataModel.AttendanceRating">
+            <EntityTypeMapping TypeName="HambasafeModel.AttendanceRating">
               <MappingFragment StoreEntitySet="AttendanceRating">
                 <ScalarProperty Name="AttendanceId" ColumnName="AttendanceId" />
                 <ScalarProperty Name="RaterUserId" ColumnName="RaterUserId" />
@@ -992,7 +992,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BlockedUsers">
-            <EntityTypeMapping TypeName="HambasafeDataModel.BlockedUser">
+            <EntityTypeMapping TypeName="HambasafeModel.BlockedUser">
               <MappingFragment StoreEntitySet="BlockedUser">
                 <ScalarProperty Name="BlockerUserId" ColumnName="BlockerUserId" />
                 <ScalarProperty Name="BlockedUserId" ColumnName="BlockedUserId" />
@@ -1002,7 +1002,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Connections">
-            <EntityTypeMapping TypeName="HambasafeDataModel.Connection">
+            <EntityTypeMapping TypeName="HambasafeModel.Connection">
               <MappingFragment StoreEntitySet="Connection">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ConnectionUserId" ColumnName="ConnectionUserId" />
@@ -1012,7 +1012,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Countries">
-            <EntityTypeMapping TypeName="HambasafeDataModel.Country">
+            <EntityTypeMapping TypeName="HambasafeModel.Country">
               <MappingFragment StoreEntitySet="Country">
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1021,7 +1021,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Events">
-            <EntityTypeMapping TypeName="HambasafeDataModel.Event">
+            <EntityTypeMapping TypeName="HambasafeModel.Event">
               <MappingFragment StoreEntitySet="Event">
                 <ScalarProperty Name="EventId" ColumnName="EventId" />
                 <ScalarProperty Name="StartEventLocationId" ColumnName="StartEventLocationId" />
@@ -1041,7 +1041,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EventLocations">
-            <EntityTypeMapping TypeName="HambasafeDataModel.EventLocation">
+            <EntityTypeMapping TypeName="HambasafeModel.EventLocation">
               <MappingFragment StoreEntitySet="EventLocation">
                 <ScalarProperty Name="EventLocationId" ColumnName="EventLocationId" />
                 <ScalarProperty Name="SuburbId" ColumnName="SuburbId" />
@@ -1052,7 +1052,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EventTypes">
-            <EntityTypeMapping TypeName="HambasafeDataModel.EventType">
+            <EntityTypeMapping TypeName="HambasafeModel.EventType">
               <MappingFragment StoreEntitySet="EventType">
                 <ScalarProperty Name="EventTypeId" ColumnName="EventTypeId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1061,7 +1061,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Invitations">
-            <EntityTypeMapping TypeName="HambasafeDataModel.Invitation">
+            <EntityTypeMapping TypeName="HambasafeModel.Invitation">
               <MappingFragment StoreEntitySet="Invitation">
                 <ScalarProperty Name="InvitationId" ColumnName="InvitationId" />
                 <ScalarProperty Name="InvitorUserId" ColumnName="InvitorUserId" />
@@ -1076,7 +1076,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Provinces">
-            <EntityTypeMapping TypeName="HambasafeDataModel.Province">
+            <EntityTypeMapping TypeName="HambasafeModel.Province">
               <MappingFragment StoreEntitySet="Province">
                 <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
                 <ScalarProperty Name="CountryId" ColumnName="CountryId" />
@@ -1085,7 +1085,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Suburbs">
-            <EntityTypeMapping TypeName="HambasafeDataModel.Suburb">
+            <EntityTypeMapping TypeName="HambasafeModel.Suburb">
               <MappingFragment StoreEntitySet="Suburb">
                 <ScalarProperty Name="SuburbId" ColumnName="SuburbId" />
                 <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
@@ -1097,7 +1097,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="HambasafeDataModel.User">
+            <EntityTypeMapping TypeName="HambasafeModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="FirstNames" ColumnName="FirstNames" />
