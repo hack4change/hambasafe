@@ -25,7 +25,7 @@ namespace Hambasafe.Server.Controllers.v1
         [Route("eventtypes"), HttpGet]
         public async Task<HttpResponseMessage> GetEventTypes()
         {
-            HambasafeConnectionString context = new HambasafeConnectionString();
+            HambasafeDataContext context = new HambasafeDataContext();
             try
             {
                 var eventTypes = context.EventTypes.Select(et => new EventTypeModel(et)).ToArray();

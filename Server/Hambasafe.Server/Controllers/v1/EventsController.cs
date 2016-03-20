@@ -43,7 +43,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
                 EventModel event1 = new EventModel(context.Events.Where(e => e.EventId == id) as Entities.Event);
                 
                 return Request.CreateResponse(HttpStatusCode.OK, event1);
@@ -60,7 +60,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
                 var events = context.Events.Select(e => new EventModel(e)).ToArray();
 
@@ -78,7 +78,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
                 var events = context.Events.Where(e=>e.OwnerUserId == userid).Select(e => new EventModel(e)).ToArray();
 
@@ -156,7 +156,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
                 //TODO implement
                 //var matchingLocations = context.Location

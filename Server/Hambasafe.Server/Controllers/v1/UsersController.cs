@@ -26,7 +26,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
                 var users = context.Users.Select(e => new UserModel(e)).ToArray();
 
@@ -44,7 +44,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
                 var users = context.Users.Where(a=>
                                 a.FirstNames.ToUpper().Contains(username.ToUpper()) 
@@ -64,7 +64,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
                 UserModel user = new UserModel(context.Users.Where(e => e.UserId == id) as Entities.User);
 
@@ -82,7 +82,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeConnectionString context = new Entities.HambasafeConnectionString();
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
                 UserModel user = new UserModel(context.Users.Where(e => e.UserId == id) as Entities.User);
 
