@@ -8,15 +8,11 @@ starterControllers.controller('SearchCtrl', function ($scope, EventFactory, $sta
     })()
     $scope.searchEvents = function(){
       var searchBy = $scope.selectedSearch;
-      EventFactory.getAllEvents({}
-       , function (event) {
-     console.log(event);
-         $scope.eventsToList = event;
-         console.log(event);
-       }
-       , function (error) {
+      EventFactory.getAllEvents().then(function(response) {
+        console.log(reponse);
+      }, function(response){
 
-       });
+      });
     }
     $scope.searchEvents();
 
