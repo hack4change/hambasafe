@@ -4,32 +4,37 @@ using System.Linq;
 using System.Web;
 using System.Device.Location;
 using System.Web.Http;
+using Entities = Hambasafe.DataAccess.Entities;
 
-namespace Hambasafe.Server.Models
+namespace Hambasafe.Server.Models.v1
 {
     [RoutePrefix("v1")]
     public class SuburbModel
     {
-        private string _name;
-        private GeoCoordinate _coord;
-        private CityModel _city;
-
-        public string Name
+        public SuburbModel(Entities.Suburb suburb)
         {
-            get { return _name; }
-            set { _name = value; }
+            SuburbId = suburb.SuburbId;
+            Name = suburb.Name;
+            Latitude = suburb.Latitude;
+            Longitude = suburb.Longitude;
+            PostalCode = suburb.PostalCode;
+            Province = new ProvinceModel(suburb.Province);
         }
 
-        public GeoCoordinate Coord
+        public SuburbModel()
         {
-            get { return _coord; }
-            set { _coord = value; }
         }
 
-        public CityModel City
-        {
-            get { return _city; }
-            set { _city = value; }
-        }
+        public int SuburbId { get; set; }
+
+        public string Name { get; set; }
+
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
+        public string PostalCode { get; set; }
+
+        public ProvinceModel Province { get; set; }
     }
 }

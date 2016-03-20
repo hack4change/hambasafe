@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -7,7 +6,8 @@ using System.Web.Http;
 using System.Threading.Tasks;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
-using Hambasafe.Server.Models;
+using Hambasafe.Server.Models.v1;
+using Entities = Hambasafe.DataAccess.Entities;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -20,50 +20,76 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
+        [Route("createevent"), HttpPost]
+        public async Task<HttpResponseMessage> CreateEvent(EventModel newEvent)
+        {
+            try
+            {
+                //TODO add this 
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        /// <summary>
+        /// Implemented
+        /// </summary>
+        [AllowAnonymous]
+        [Route("event"), HttpGet]
+        public async Task<HttpResponseMessage> GetEvent(int id)
+        {
+            try
+            {
+                var dataContext = new Entities.HambasafeDataContext();
+                var evnt = dataContext.Events.ToList().Where(e => e.EventId == id)
+                                                      .Select(e => new EventModel(e))
+                                                      .First();
+
+                return Request.CreateResponse(HttpStatusCode.OK, evnt);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        /// <summary>
+        /// Implemented
+        /// </summary>
+        [AllowAnonymous]
         [Route("events"), HttpGet]
         public async Task<HttpResponseMessage> GetEvents()
         {
             try
             {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Claremont", City = new CityModel() { Name = "Cape Town", Province = new ProvinceModel() { Name = "Western Cape" } } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", City = new CityModel() { Name = "Cape Town", Province = new ProvinceModel() { Name = "Western Cape" } } },
+                var dataContext = new Entities.HambasafeDataContext();
+                var events = dataContext.Events.ToList().Select(e => new EventModel(e));
 
-                };
-                Models.EventModel event2 = new Models.EventModel()
-                {
-                    Name = "Event 2",
-                    Description = "Event 2 Description",
-                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "cnr Klipper Rd and Main Rd" },
-                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } },
-                    EndAddressLines = new List<string>() { "cnr Woolsack Rd and Main Rd" },
-                    EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
 
-                };
-                var dummyEvents = new[]
-                {
-                    event1,
-                    event2
-                };
+        /// <summary>
+        /// Implemented
+        /// </summary>
+        [AllowAnonymous]
+        [Route("eventsbyuser"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByUser(int userid)
+        {
+            try
+            {
+                var dataContext = new Entities.HambasafeDataContext();
+                var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
 
-                return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
+                return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
             {
@@ -72,50 +98,77 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("eventsSuburb"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsSuburb(SuburbModel suburb)
+        [Route("eventsbyattendee"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
         {
             try
             {
-                EventModel event1 = new EventModel()
-                {
-                    Name = "Event 1",
-                    Description = "Event 1 Description",
-                    EventType = new EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "100 Main Rd" },
-                    StartSuburb = new SuburbModel() { Name = "Newlands", City = new CityModel() { Name = "Cape Town", Province = new ProvinceModel() { Name = "Western Cape" } } },
-                    EndAddressLines = new List<string>() { "100 Main Rd" },
-                    EndSuburb = new SuburbModel() { Name = "Claremont", City = new CityModel() { Name = "Cape Town", Province = new ProvinceModel() { Name = "Western Cape" } } },
+                //TODO implement
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
 
-                };
-                Models.EventModel event2 = new Models.EventModel()
-                {
-                    Name = "Event 2",
-                    Description = "Event 2 Description",
-                    EventType = new Models.EventTypeModel() { Name = "Run", Description = "Go for a nice run" },
-                    EventDateTimeStart = DateTime.Now.Date.AddHours(14),
-                    EventDateTimeEnd = DateTime.Now.Date.AddHours(16),
-                    PublicEvent = true,
-                    Distance = 4,
-                    WaitMins = 5,
-                    StartAddressLines = new List<string>() { "cnr Klipper Rd and Main Rd" },
-                    StartSuburb = new Models.SuburbModel() { Name = "Newlands", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } },
-                    EndAddressLines = new List<string>() { "cnr Woolsack Rd and Main Rd" },
-                    EndSuburb = new Models.SuburbModel() { Name = "Rondebosch", City = new Models.CityModel() { Name = "Cape Town", Province = new Models.ProvinceModel() { Name = "Western Cape" } } }
+        [AllowAnonymous]
+        [Route("eventsbyattendee"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
+        {
+            try
+            {
+                //TODO implement
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
 
-                };
+        [AllowAnonymous]
+        [Route("eventsbysuburb"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsBySuburb(string suburbname)
+        {
+            try
+            {
+                //TODO implement
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
 
-                var dummyEvents = new[]
-                {
-                    event1,
-                    event2
-                };
-                return Request.CreateResponse(HttpStatusCode.OK, dummyEvents);
+        [AllowAnonymous]
+        [Route("eventsbysuburb"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsBySuburb(int suburbid)
+        {
+            try
+            {
+                //TODO implement
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("eventsbycoordinates"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByCoordinates(double latitude, double longitude, int radius)
+        {
+            try
+            {
+                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
+
+                //TODO implement
+                //var matchingLocations = context.Location
+
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception error)
             {

@@ -3,25 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Entities = Hambasafe.DataAccess.Entities;
 
-namespace Hambasafe.Server.Models
+namespace Hambasafe.Server.Models.v1
 {
     [RoutePrefix("v1")]
     public class EventTypeModel
     {
-        private string _name;
-        private string _description;
-
-        public string Name
+        public EventTypeModel(Entities.EventType dbEventType)
         {
-            get { return _name; }
-            set { _name = value; }
+            EventTypeId = dbEventType.EventTypeId;
+            Name = dbEventType.Name;
+            Description = dbEventType.Description;
         }
 
-        public string Description
+        public EventTypeModel()
         {
-            get { return _description; }
-            set { _description = value; }
+
         }
+
+        public int EventTypeId { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }
