@@ -69,10 +69,14 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
         }
       }
     })
-    .state('registration', {
+    .state('app.registration', {
       url: '/registration',
+      views: {
+        'menuContent': {
       templateUrl: 'templates/registration.html',
       controller: 'RegistrationCtrl'
+      }
+    }
     })
 
   .state('app.home', {
@@ -137,6 +141,15 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
     }
   })
 
+  .state('app.map', {
+    url: '/map',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/map.html',
+        controller: 'MapCtrl'
+      }
+    }
+  })
   .state('app.rating', {
     url: '/rating',
     views: {
