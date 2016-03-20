@@ -15,10 +15,16 @@ starterServices.service('ProfileService', ['$http', 'config',
         getAll: function(id){
           return $http.get(base + 'users', config)
         },
-        get: function (id ) {
+        getById: function (id ) {
           var val = id || localStorage.getItem(profileKey);
 
-          return $http.get(base + 'users?id=' + val, config);
+          return $http.get(base + 'users?username=' + val, config);
+
+        },
+        getByUsername: function (id ) {
+          var val = id || localStorage.getItem(profileKey);
+
+          return $http.get(base + 'users?username=' + val, config);
 
         }
       };

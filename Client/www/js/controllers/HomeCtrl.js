@@ -1,9 +1,9 @@
-starterControllers.controller('HomeCtrl', function ($scope, $location, EventFactory) {
+starterControllers.controller('HomeCtrl', function ($scope, $location, EventService) {
   (function(){
     $scope.events = [];
   })()
   $scope.refreshEvents = function(){
-    EventFactory.getAllEvents().then(function(response) {
+    EventService.getAllEvents().then(function(response) {
       console.log(response);
       $scope.events = response.data;
     }, function(err){
