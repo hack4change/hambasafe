@@ -14,15 +14,15 @@ namespace Hambasafe.Server.Models.v1
             EventId = dbEvent.EventId;
             Name = dbEvent.Name;
             Description = dbEvent.Description;
-            EventType = new EventTypeModel(dbEvent.EventType);
+            EventType = dbEvent.EventType == null ? null : new EventTypeModel(dbEvent.EventType);
             EventDateTimeStart = dbEvent.DateTimeStart;
             EventDateTimeEnd = dbEvent.DateTimeEnd;
             Attributes = dbEvent.Attributes;
             WaitMins = dbEvent.MaxWaitingMinutes;
             PublicEvent = dbEvent.IsPublic;
-            StartLocation = new EventLocation(dbEvent.EventLocation);
-            EndLocation = dbEvent.EventLocation1 == null ? null : new EventLocation(dbEvent.EventLocation1);
-            OwnerUser = new UserModel(dbEvent.User);
+            StartLocation = dbEvent.EventLocation == null ? null :  new EventLocationModel(dbEvent.EventLocation);
+            EndLocation = dbEvent.EventLocation1 == null ? null : new EventLocationModel(dbEvent.EventLocation1);
+            OwnerUser = dbEvent.User == null ? null : new UserModel(dbEvent.User);
         }
 
         public EventModel()
@@ -47,9 +47,9 @@ namespace Hambasafe.Server.Models.v1
 
         public bool? PublicEvent { get; set; }
 
-        public EventLocation StartLocation { get; set; }
+        public EventLocationModel StartLocation { get; set; }
 
-        public EventLocation EndLocation { get; set; }
+        public EventLocationModel EndLocation { get; set; }
 
         public UserModel OwnerUser { get; set; }
     }

@@ -287,9 +287,8 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ErrorReport.cs" />
+    <Compile Include="Models\v1\EventLocationModel.cs" />
     <Compile Include="Models\v1\InvitationModel.cs" />
-    <Compile Include="Models\v1\ProfilePictureModel.cs" />
-    <Compile Include="Models\v1\EventLocation.cs" />
     <Compile Include="Models\v1\EventModel.cs" />
     <Compile Include="Models\v1\EventTypeModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
