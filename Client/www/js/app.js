@@ -108,7 +108,15 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
       }
     }
   })
-
+  .state('app.tell-a-friend', {
+    url: '/tell-a-friend',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/about-us.html',
+        controller: 'TellaFriendCtrl'
+      }
+    }
+  })
   .state('tab', {
     url: '/tab',
     abstract: true,
