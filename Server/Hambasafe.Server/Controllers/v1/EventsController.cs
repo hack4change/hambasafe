@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,7 +7,6 @@ using System.Threading.Tasks;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
 using Hambasafe.Server.Models.v1;
-using System.Device.Location;
 using Entities = Hambasafe.DataAccess.Entities;
 
 namespace Hambasafe.Server.Controllers.v1
@@ -37,16 +35,21 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("event"), HttpGet]
         public async Task<HttpResponseMessage> GetEvent(int id)
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
-                EventModel event1 = new EventModel(context.Events.Where(e => e.EventId == id) as Entities.Event);
-                
-                return Request.CreateResponse(HttpStatusCode.OK, event1);
+                var dataContext = new Entities.HambasafeDataContext();
+                var evnt = dataContext.Events.ToList().Where(e => e.EventId == id)
+                                                      .Select(e => new EventModel(e))
+                                                      .First();
+
+                return Request.CreateResponse(HttpStatusCode.OK, evnt);
             }
             catch (Exception error)
             {
@@ -54,17 +57,19 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("events"), HttpGet]
         public async Task<HttpResponseMessage> GetEvents()
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
+                var dataContext = new Entities.HambasafeDataContext();
+                var events = dataContext.Events.ToList().Select(e => new EventModel(e));
 
-                //var events = context.Events.Select(e => new EventModel(e)).ToArray();
-
-                return Request.CreateResponse(HttpStatusCode.OK, context.Events.ToArray());
+                return Request.CreateResponse(HttpStatusCode.OK, events);
             }
             catch (Exception error)
             {
@@ -72,15 +77,17 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
+        /// <summary>
+        /// Implemented
+        /// </summary>
         [AllowAnonymous]
         [Route("eventsbyuser"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByUser(int userid)
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
-
-                var events = context.Events.Where(e=>e.OwnerUserId == userid).Select(e => new EventModel(e)).ToArray();
+                var dataContext = new Entities.HambasafeDataContext();
+                var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
 
                 return Request.CreateResponse(HttpStatusCode.OK, events);
             }

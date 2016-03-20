@@ -25,7 +25,7 @@ namespace Hambasafe.Server.Controllers.v1
             try
             {
                 var dataContext = new HambasafeDataContext();
-                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToArray());
+                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList());
             }
             catch (Exception error)
             {
