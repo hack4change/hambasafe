@@ -1,4 +1,4 @@
-starterControllers.controller('HomeCtrl', function ($scope, EventFactory) {
+starterControllers.controller('HomeCtrl', function ($scope, $location, EventFactory) {
     var t = EventFactory.get();
 
     $scope.events = [];
@@ -6,5 +6,10 @@ starterControllers.controller('HomeCtrl', function ($scope, EventFactory) {
     for (var i = 0; i < 50; i++) {
       var event = {label: "Test " + i};
       $scope.events.push(event)
+    }
+
+    $scope.goCreate = function() {
+    	console.log("here")
+    	$location.path("create");
     }
   });
