@@ -1,0 +1,28 @@
+<ion-view>
+  <ion-content>
+
+    <div>
+      <img src="http://ionicframework.com/img/docs/stantz.jpg">
+      <div>
+        <h2>{{event.Name}}</h2>
+        <h3>{{event.Description}}</h3>
+      </div>
+    </div>
+    <div>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>0}" ng-click = "setRate(1)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>1}" ng-click = "setRate(2)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>2}" ng-click = "setRate(3)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>3}" ng-click = "setRate(4)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>4}" ng-click = "setRate(5)"></span>
+    </div>
+
+    <div>Rate</div>
+
+    <div class="bar bar-footer">
+      <button class="button button-block button-positive">
+        Done
+      </button>
+    </div>
+
+  </ion-content>
+</ion-view>
