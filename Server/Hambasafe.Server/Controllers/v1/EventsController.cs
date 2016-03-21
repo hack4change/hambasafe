@@ -9,6 +9,7 @@ using Hambasafe.Server.Services.TableStorage;
 using Hambasafe.Server.Models.v1;
 using Hambasafe.DataAccess.Entities;
 using System.Device.Location;
+using System.Data.Entity;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -100,9 +101,9 @@ namespace Hambasafe.Server.Controllers.v1
                 var context = new HambasafeDataContext();
 
                 var entities = context.Events
-                                      .Include("EventType")
-                                      .Include("EventLocation")
-                                      .Include("EventLocation1")
+                                      .Include(e => e.EventType)
+                                      .Include(e => e.EventLocation)
+                                      .Include(e => e.EventLocation1)
                                       .ToArray();
 
                 var events = entities.Select(e => new EventModel(e));
