@@ -1,20 +1,16 @@
-Hack4change Movement
-====================
-
-Hi and Welcome! This project was born during a 48h hackathon at Workshop 17, Cape Town. Anyone and everyone is invited to collaborate, fork and contribute!
-
-The app can compile on any platform supported by Cordova. 
-
-The front-end development is in NodeJS: Ionic and AngularJS and the latest work is currently in the Queen branch. 
-
-During the course of the hackathon, we've set up many development environments - a Docker container containing all the dependencies was also set up and proved the quickest way to get off to a running start on Linux; the default Node environment on Windows and Mac had almost no issues. 
-
-The back-end is hosted on Azure and the API is coded in .NET which you can do with the free version of Visual Studio. 
-
 Hambasafe Application
 =====================
 
-The Hambasafe Application repository consists of two main solutions located in the Client and Server folders.
+Hi and Welcome!
+---------------
+
+The application can compile on any platform supported by [Cordova](https://cordova.apache.org/). 
+
+The front-end (Client) development is in NodeJS: [Ionic](http://ionicframework.com/) and [AngularJS v1](https://angularjs.org/) and the latest work is currently in the [Queen](https://github.com/hack4change/hambasafe/tree/queen) branch. 
+
+Development can be done on Mac, Windows and Linux - a Docker container containing all the dependencies was also set up and proved the quickest way to get off to a running start on Linux; the default Node environment on Windows and Mac had almost no issues. 
+
+The official back-end (Server) is hosted on [Azure](https://azure.microsoft.com/en-us/) and the API is coded in .NET which you can do with the [free version of Visual Studio](https://www.visualstudio.com/en-us/products/visual-studio-dev-essentials-vs.aspx). 
 
 Server
 ------
@@ -27,3 +23,13 @@ Business Logic layer responsible for translating DataAccess models to models in 
 
 - Hamba.DataAccess
 Data Access layer responsible for performing CRUD operations on the SQL Azure hosted database.  Entity Framework (EF6) is used as the translating ORM.
+
+
+Hack4change Movement
+====================
+
+This project was born during a 48h [hackathon](https://twitter.com/hashtag/hambasafe) at Workshop 17, Cape Town. Anyone and everyone is invited to join, collaborate, fork and contribute!
+
+![Hackathon Team](/Hackathon Team.jpg?raw=true "Hackathon Team Photo")
+
+Join us!
