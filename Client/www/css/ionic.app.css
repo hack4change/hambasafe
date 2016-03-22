@@ -9724,7 +9724,7 @@ a.button {
   background: #8E8E8E; }
 
 .sign-up ion-content {
-  top: 100px;
+  padding-top: 100px;
   display: block; }
 
 .sign-up ion-content p {
@@ -9774,6 +9774,15 @@ a.button {
 .linkedin-color {
   color: #007bb5; }
 
+/* Fonts */
+/*@font-face {
+  font-family: 'montserrat';
+  url('fonts/Montserrat-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'opensans';
+  url('fonts/OpenSans-Regular.ttf') format('truetype');
+}*/
 .app-logo {
   text-align: center; }
 
@@ -9785,11 +9794,38 @@ a.button {
   background: url(/img/landing.jpg) no-repeat;
   background-size: cover; }
 
+.landing ion-content {
+  background: rgba(255, 255, 255, 0.6); }
+
+.landing-content h3 {
+  font-family: 'montserrat';
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+  padding: 6px;
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  color: #4A4A4A;
+  text-shadow: 2px 2px #E6E6E6;
+  margin-right: auto; }
+
 .login-button i::before {
   width: 42px; }
 
 .login-button span {
   margin-left: -42px; }
+
+.margin-left {
+  margin-left: 15px; }
+
+.margin-right {
+  margin-right: 15px; }
+
+.margin-top {
+  margin-top: 15px; }
+
+.margin-bottom {
+  margin-bottom: 15px; }
 
 .ion-android-add-circle {
   position: absolute !important;

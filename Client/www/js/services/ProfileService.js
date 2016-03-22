@@ -1,29 +1,50 @@
-starterServices.service('ProfileService', ['$http', 'config',
-    function ($http, config) {
-      var base = config.baseServiceURL + "/v1/";
-      var profileKey = "profileKey";
-      return {
-        setProfile:function(id){
-          localStorage.setItem(profileKey);
-          return $http.post(base + 'createevent', config)
-         .then(function success(result) {
+starterServices.service('ProfileService',
+function ($http, config, localStorageService, $q,Facebook) {
+  var base = config.baseServiceURL + "/v1/";
+  var profileKey = "profileKey";
 
-         }, function error(err) {
+  return {
+    setProfileFromFacebook: function (profile) {
+      localStorageService.set(profileKey, profile);
+    },
+    getAll: function (id) {
+      return $http.get(base + 'users', config)
+    },
+    getById: function (id) {
+      var val = id || localStorage.getItem(profileKey);
 
-         });
-        },
-        getAll: function(id){
-          return $http.get(base + 'user', config)
-        },
-        get: function (id) {
-          var val = id|| localStorage.getItem(profileKey);
-          return $http.get(base + 'user?id=' + val, config)
-          .then(function success(result){
+      return $http.get(base + 'users?username=' + val, config);
 
-          }, function error(err){
+    },
+    getByUsername: function (id) {
+      var val = id || localStorage.getItem(profileKey);
 
-          })
-        }
-      };
+      return $http.get(base + 'users?username=' + val, config);
+    },
+    get: function (id) {
+      var val = id || localStorage.getItem(profileKey);
+
+      return $http.get(base + 'user?id=' + val, config);
+
+    },
+    getProfileId: function () {
+
+    },
+    getFaceBookProfile() {
+      var defer = $q.defer();
+
+      Facebook.api('/me', function (response) {
+        console.log(response);
+        var prof = {
+          FirstNames: response.first_name,
+          LastName: response.last_name,
+          Gender: response.gender
+        };
+        defer.resolve(prof);
+      });
+      return defer.promise;
+
     }
-]);
+  };
+}
+);

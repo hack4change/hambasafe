@@ -1,12 +1,7 @@
-starterControllers.controller('RegistrationCtrl', function ($scope, $stateParams, Facebook, LocalStorage, UserFactory) {
-  $scope.fbMe = function () {
-    // From now on you can use the Facebook service just as Facebook api says
-    Facebook.api('/me', function (response) {
-      $scope.user = response;
-      console.log($scope.user);
-    });
-  };
-
+starterControllers.controller('RegistrationCtrl', function ($scope, $stateParams, ProfileService) {
+  ProfileService.getFaceBookProfile().then(function (profile) {
+    $scope.user = profile;
+  });
   /*
    *  DoB
    *  Email
@@ -15,13 +10,7 @@ starterControllers.controller('RegistrationCtrl', function ($scope, $stateParams
   $scope.doRegister = function (valid) {
     $scope.submitted = true;
 
-    if (!$scope.loginData.password) {
-      valid = false;
-    } else if ($scope.loginData.password.length < 7) {
-      valid = false;
-    } else {
-      $scope.passwordError = null;
-    }
+
 
     $scope.updatePasswordError();
 

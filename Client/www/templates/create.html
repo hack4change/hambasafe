@@ -55,6 +55,10 @@
           </label>
 
           <label class="item item-input">
+            <input placeholder="Location" type="text" ng-autocomplete ng-model="result" options="options" details="details"/>
+          </label>
+
+          <label class="item item-input">
             <textarea placeholder="Description" ng-model="eventData.Description"></textarea>
           </label>
 
@@ -66,7 +70,7 @@
 
 
           <div>
-            <button class="button button-block button-positive">
+            <button class="button button-block button-positive" ng-click="create()">
               CREATE
             </button>
           </div>

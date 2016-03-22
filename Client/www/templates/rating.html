@@ -1,0 +1,25 @@
+<ion-view>
+  <ion-content>
+
+    <div class="item item-avatar">
+      <img src="http://ionicframework.com/img/docs/stantz.jpg">
+      <h2>{{event.Name}}</h2>
+      <p>{{event.Description}}</p>
+    </div>
+    <div class="item item-body">
+
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>0}" ng-click="setRate(1)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>1}" ng-click="setRate(2)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>2}" ng-click="setRate(3)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>3}" ng-click="setRate(4)"></span>
+      <span class="ion-ios-star icon-l" ng-class="{'star-filled':Rate>4}" ng-click="setRate(5)"></span>
+    </div>
+
+    <div class = "padding">
+      <button class="button button-block button-positive activated">
+        Done
+      </button>
+    </div>
+
+  </ion-content>
+</ion-view>
