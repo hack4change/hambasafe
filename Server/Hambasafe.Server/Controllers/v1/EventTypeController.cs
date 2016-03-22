@@ -31,7 +31,7 @@ namespace Hambasafe.Server.Controllers.v1
             HambasafeDataContext context = new HambasafeDataContext();
             try
             {
-                var eventTypes = context.EventTypes.ToList().Select(et => new EventTypeModel(et));
+                var eventTypes =  context.EventTypes.ToList().Select(et => new EventTypeModel(et));
 
                 return Request.CreateResponse(HttpStatusCode.OK, eventTypes);
             }

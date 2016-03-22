@@ -62,7 +62,7 @@ namespace Hambasafe.Server.Controllers.v1
         /// Implemented
         /// </summary>
         [AllowAnonymous]
-        [Route("users"), HttpGet]
+        [Route("users-by-name"), HttpGet]
         public async Task<HttpResponseMessage> GetUsers(string username)
         {
             try

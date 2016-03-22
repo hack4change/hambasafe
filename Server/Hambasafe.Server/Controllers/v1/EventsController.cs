@@ -137,7 +137,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("events-by-attendee"), HttpGet]
+        [Route("events-by-attendee-id"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
         {
             try
@@ -157,7 +157,7 @@ namespace Hambasafe.Server.Controllers.v1
         }
 
         [AllowAnonymous]
-        [Route("events-by-attendee"), HttpGet]
+        [Route("events-by-attendee-name"), HttpGet]
         public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
         {
             try
