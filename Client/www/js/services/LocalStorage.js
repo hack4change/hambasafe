@@ -18,8 +18,6 @@ starterServices.factory("LocalStorage", ['$window',
         return _facebookAuth;
       },
 
-      clear: function () {
-        localStorage.clear();
-      }
+
     };
   }]);
