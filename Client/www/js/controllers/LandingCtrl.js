@@ -1,9 +1,11 @@
-starterControllers.controller('LandingCtrl', function ($scope, $stateParams, Facebook, LocalStorage, $location) {
+starterControllers.controller('LandingCtrl', function ($scope, $stateParams, Facebook, ProfileService, $location) {
   $scope.getLoginStatus = function () {
+    Facebook.logout();
     Facebook.getLoginStatus(function (response) {
+      console.log(response);
       if (response.status === 'connected') {
-        $scope.loggedIn = true;
-      $location.path('app/registration');
+
+        $location.path('app/home');
       } else {
         $scope.loggedIn = false;
       }
@@ -11,12 +13,11 @@ starterControllers.controller('LandingCtrl', function ($scope, $stateParams, Fac
   };
 
   $scope.fbLogin = function () {
-    // From now on you can use the Facebook service just as Facebook api says
+    Facebook
     Facebook.login(function (response) {
-      // Do something with response.
       console.log(response);
-      LocalStorage.facebookAuth = response;
-      $location.path('app/registration');
+       ProfileService.setProfileFromFacebook(response);
+       $location.path('app/registration');
     });
   };
 });

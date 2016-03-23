@@ -1,27 +1,22 @@
-starterServices.service('ProfileService', ['$http', 'config',
-function ($http, config) {
+starterServices.service('ProfileService',
+function ($http, config, localStorageService, $q,Facebook) {
   var base = config.baseServiceURL + "/v1/";
   var profileKey = "profileKey";
+
   return {
-    setProfile: function (id) {
-      localStorage.setItem(profileKey);
-      return $http.post(base + 'create-user ', config)
-      .then(function success(result) {
-
-      }, function error(err) {
-
-      });
+    setProfileFromFacebook: function (profile) {
+      localStorageService.set(profileKey, profile);
     },
     getAll: function (id) {
       return $http.get(base + 'users', config)
     },
-    getById: function (id ) {
+    getById: function (id) {
       var val = id || localStorage.getItem(profileKey);
 
       return $http.get(base + 'users?username=' + val, config);
 
     },
-    getByUsername: function (id ) {
+    getByUsername: function (id) {
       var val = id || localStorage.getItem(profileKey);
 
       return $http.get(base + 'users?username=' + val, config);
@@ -34,7 +29,22 @@ function ($http, config) {
     },
     getProfileId: function () {
 
+    },
+    getFaceBookProfile() {
+      var defer = $q.defer();
+
+      Facebook.api('/me', function (response) {
+        console.log(response);
+        var prof = {
+          FirstNames: response.first_name,
+          LastName: response.last_name,
+          Gender: response.gender
+        };
+        defer.resolve(prof);
+      });
+      return defer.promise;
+
     }
   };
 }
-]);
+);

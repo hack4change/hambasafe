@@ -8,7 +8,9 @@
     "ng-cordova-oauth": "~0.2.3",
     "angular-facebook": "^0.2.3",
     "ng-facebook": "^0.1.6",
-    "angular-resource": "^1.5.2"
+    "angular-resource": "^1.5.2",
+    "ngAutocomplete": "^1.0.0",
+    "angular-local-storage": "*"
   },
   "resolutions": {
     "angular": "1.5.2"

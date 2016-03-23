@@ -1,4 +1,4 @@
-var starterServices = angular.module('starter.services', []);
+var starterServices = angular.module('starter.services', ["LocalStorageModule"]);
 
 
 
