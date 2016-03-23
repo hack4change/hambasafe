@@ -12,7 +12,7 @@ namespace Hambasafe.DataAccess.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class ImageResource
+    public  class ImageResource
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ImageResource()
