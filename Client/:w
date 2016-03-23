@@ -1,4 +1,4 @@
-starterControllers.controller('MapCtrl', function ($scope, EventService, $state, $compile, $ionicLoading, $location) {
+starterControllers.controller('MapCtrl', function ($scope, EventService, $state, $compile, $ionicLoading) {
   (function(){
     $scope.sliderDistance = 10;
   })()
@@ -11,8 +11,7 @@ starterControllers.controller('MapCtrl', function ($scope, EventService, $state,
     console.log("Hey");
     if(!!$scope.gCoords && !!$scope.sliderDistance){
       console.log($scope.sliderDistance);
-      console.log($scope.gCoords.lat() + " " + $scope.gCoords.lng() );
-      $location.path('app/search?lat='+$scope.gCoords.lat()+ "&lng"+$scope.gCoords.lng()+"&dist="+ $scope.sliderDistance);
+      console.log($scope.gCoords.lat() + " "+ $scope.gCoords.lng() );
     }
   }
   $scope.init = function() {
@@ -29,9 +28,9 @@ starterControllers.controller('MapCtrl', function ($scope, EventService, $state,
     // var contentString = "<div><a ng-click='clickTest()'>Click me!</a>a></div>div>";
     // var compiled = $compile(contentString)($scope);
 
-    // var infowindow = new google.maps.InfoWindow({
-    //   content: compiled[0]
-    // });
+    var infowindow = new google.maps.InfoWindow({
+      content: compiled[0]
+    });
 
 
 

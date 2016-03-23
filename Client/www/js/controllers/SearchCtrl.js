@@ -1,6 +1,9 @@
-starterControllers.controller('SearchCtrl', function ($scope, EventService, $location) {
+starterControllers.controller('SearchCtrl', function ($scope, $stateParams, EventService, $location) {
     //init
     (function(){
+      console.log($stateParams.lat);
+      console.log($stateParams.lng);
+      console.log($stateParams.dist);
     })()
     $scope.eventType = ["Event Type"];
     $scope.typeSelected = $scope.eventType[0];
