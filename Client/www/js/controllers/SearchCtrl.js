@@ -4,10 +4,14 @@ starterControllers.controller('SearchCtrl', function ($scope, $stateParams, Even
       console.log($stateParams.lat);
       console.log($stateParams.lng);
       console.log($stateParams.dist);
+
     })()
     $scope.eventType = ["Event Type"];
     $scope.typeSelected = $scope.eventType[0];
     $scope.selectedSearch = 0;
+    if($stateParams.lat && $stateParams.lng &&$stateParams.dist){
+      $scope.selectedSearch = 1;
+    }
     $scope.eventsToList = []
     $scope.searchEvents = function(){
       var searchBy = $scope.selectedSearch;
