@@ -143,6 +143,7 @@
     <Compile Include="Entities\Invitation.cs" />
     <Compile Include="Entities\Log.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
