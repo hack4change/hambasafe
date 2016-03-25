@@ -18,7 +18,7 @@ namespace Hambasafe.DataAccess.Entities
         public DateTime? DateUpdated { get; set; }
     
         public virtual Event Event { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
+        //public virtual User User { get; set; }
+        //public virtual User User1 { get; set; }
     }
 }

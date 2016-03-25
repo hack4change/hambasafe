@@ -14,15 +14,15 @@ namespace Hambasafe.Server.Models.v1
             EventId = dbEvent.EventId;
             Name = dbEvent.Name;
             Description = dbEvent.Description;
-            EventType = dbEvent.EventType == null ? null : new EventTypeModel(dbEvent.EventType);
+           EventType = dbEvent.EventType == null ? null : new EventTypeModel(dbEvent.EventType);
             EventDateTimeStart = dbEvent.DateTimeStart;
             EventDateTimeEnd = dbEvent.DateTimeEnd;
             Attributes = dbEvent.Attributes;
             WaitMins = dbEvent.MaxWaitingMinutes;
             PublicEvent = dbEvent.IsPublic;
-            StartLocation = dbEvent.EventLocation == null ? null :  new EventLocationModel(dbEvent.EventLocation);
-            EndLocation = dbEvent.EventLocation1 == null ? null : new EventLocationModel(dbEvent.EventLocation1);
-            OwnerUser = dbEvent.User == null ? null : new UserModel(dbEvent.User);
+         //   StartLocation = dbEvent.EventLocation == null ? null :  new EventLocationModel(dbEvent.EventLocation);
+         //   EndLocation = dbEvent.EventLocation1 == null ? null : new EventLocationModel(dbEvent.EventLocation1);
+        //    OwnerUser = dbEvent.User == null ? null : new UserModel(dbEvent.User);
         }
 
         public EventModel()

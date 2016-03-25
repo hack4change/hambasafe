@@ -11,7 +11,7 @@ namespace Hambasafe.DataAccess.Entities
         public string Relationship { get; set; }
         public DateTime? DateCreated { get; set; }
     
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
+        //public virtual User User { get; set; }
+        //public virtual User User1 { get; set; }
     }
 }
