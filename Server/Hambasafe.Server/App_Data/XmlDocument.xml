@@ -47,11 +47,6 @@
             Implemented
             </summary>
         </member>
-        <member name="M:Hambasafe.Server.Controllers.v1.EventTypeController.GetEventTypes">
-            <summary>
-            Implemented
-            </summary>
-        </member>
         <member name="M:Hambasafe.Server.Controllers.v1.EventsController.CreateEvent(Hambasafe.Server.Models.v1.EventModel)">
             <summary>
             Implemented
@@ -67,7 +62,7 @@
             Implemented
             </summary>
         </member>
-        <member name="M:Hambasafe.Server.Controllers.v1.EventsController.GetEventsByUser(System.Int32)">
+        <member name="M:Hambasafe.Server.Controllers.v1.EventsController.GetDistance(System.Double,System.Double,System.Double,System.Double)">
             <summary>
             Implemented
             </summary>

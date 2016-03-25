@@ -38,7 +38,7 @@ namespace Hambasafe.Server.Controllers.v1
                     Comment = invitationModel.Comment
                 };
 
-                dataContext.Invitations.Add(invitationEntity);
+               // dataContext.Invitations.Add(invitationEntity);
                 dataContext.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK);
@@ -49,38 +49,38 @@ namespace Hambasafe.Server.Controllers.v1
             }
         }
 
-        [AllowAnonymous]
-        [Route("invitations-invitee"), HttpPost]
-        public async Task<HttpResponseMessage> GetInvitationsByUserInvitee(int userid)
-        {
-            try
-            {
-                var dataContext = new HambasafeDataContext();
-                var invitations = dataContext.Invitations.ToList().Where(e => e.InviteeUserId == userid).Select(e => new InvitationModel(e));
+        //[AllowAnonymous]
+        //[Route("invitations-invitee"), HttpPost]
+        //public async Task<HttpResponseMessage> GetInvitationsByUserInvitee(int userid)
+        //{
+        //    try
+        //    {
+        //        var dataContext = new HambasafeDataContext();
+        //        var invitations = dataContext.Invitations.ToList().Where(e => e.InviteeUserId == userid).Select(e => new InvitationModel(e));
 
-                return Request.CreateResponse(HttpStatusCode.OK, invitations);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
+        //        return Request.CreateResponse(HttpStatusCode.OK, invitations);
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return HandleError(error);
+        //    }
+        //}
 
-        [AllowAnonymous]
-        [Route("invitations-invitor"), HttpPost]
-        public async Task<HttpResponseMessage> GetInvitationsByUserInvitor(int userid)
-        {
-            try
-            {
-                var dataContext = new HambasafeDataContext();
-                var invitations = dataContext.Invitations.ToList().Where(e => e.InvitorUserId == userid).Select(e => new InvitationModel(e));
+        //[AllowAnonymous]
+        //[Route("invitations-invitor"), HttpPost]
+        //public async Task<HttpResponseMessage> GetInvitationsByUserInvitor(int userid)
+        //{
+        //    try
+        //    {
+        //        var dataContext = new HambasafeDataContext();
+        //        var invitations = dataContext.Invitations.ToList().Where(e => e.InvitorUserId == userid).Select(e => new InvitationModel(e));
 
-                return Request.CreateResponse(HttpStatusCode.OK, invitations);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
+        //        return Request.CreateResponse(HttpStatusCode.OK, invitations);
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return HandleError(error);
+        //    }
+        //}
     }
 }

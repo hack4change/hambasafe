@@ -41,20 +41,12 @@ namespace Hambasafe.Server.Controllers.v1
         /// </summary>
         [AllowAnonymous]
         [Route("users"), HttpGet]
-        public async Task<HttpResponseMessage> GetAllUsers()
+        public  UserModel[] GetAllUsers()
         {
-            try
+            using (var context = new Entities.HambasafeDataContext())
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
-
-                var users = context.Users.Select(e => new UserModel(e))
-                                         .ToArray();
-
-                return Request.CreateResponse(HttpStatusCode.OK, users);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
+                var entities = context.Users;
+                return entities.Select(e => new UserModel(e)).ToArray();
             }
         }
 
@@ -69,7 +61,7 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
-                var users = context.Users.Where(a => a.FirstNames.ToUpper().Contains(username.ToUpper()) || 
+                var users = context.Users.Where(a => a.FirstNames.ToUpper().Contains(username.ToUpper()) ||
                                                      a.LastName.ToUpper().Contains(username.ToUpper()))
                                          .Select(e => new UserModel(e))
                                          .ToArray();

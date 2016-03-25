@@ -16,7 +16,7 @@ namespace Hambasafe.DataAccess.Entities
         public Nullable<System.DateTime> DateCreated { get; set; }
     
         public virtual Attendance Attendance { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
+      //  public virtual User User { get; set; }
+       // public virtual User User1 { get; set; }
     }
 }
