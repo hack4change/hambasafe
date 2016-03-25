@@ -1,6 +1,8 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Hambasafe.DataAccess.Entities
 {
   
@@ -11,8 +13,11 @@ namespace Hambasafe.DataAccess.Entities
         public int BlockedUserId { get; set; }
         public DateTime? DateCreated { get; set; }
         public string Reason { get; set; }
-    
-       // public virtual User User { get; set; }
-      //  public virtual User User1 { get; set; }
+
+        [ForeignKey("BlockerUserId")]
+        public virtual User BlockerUser { get; set; }
+
+        [ForeignKey("BlockedUserId")]
+        public virtual User Blocked { get; set; }
     }
 }

@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hambasafe.DataAccess.Entities
 {
-   
-    
-    public  class Event
+
+
+    public class Event
     {
-        
+
         public Event()
         {
             this.Attendances = new HashSet<Attendance>();
@@ -16,8 +17,10 @@ namespace Hambasafe.DataAccess.Entities
         }
         [Key]
         public int EventId { get; set; }
-        
+
         public int OwnerUserId { get; set; }
+        public int StartEventLocationId { get; set; }
+        public int EndEventLocationId { get; set; }
         public int EventTypeId { get; set; }
         public string Name { get; set; }
         public DateTime DateTimeStart { get; set; }
@@ -31,11 +34,14 @@ namespace Hambasafe.DataAccess.Entities
 
 
         public virtual ICollection<Attendance> Attendances { get; set; }
-        //public virtual EventLocation StartEventLocation { get; set; }
-       // public virtual EventLocation EndEventLocation { get; set; }
+        [ForeignKey("StartEventLocationId")]
+        public virtual EventLocation StartEventLocation { get; set; }
+        [ForeignKey("EndEventLocationId")]
+        public virtual EventLocation EndEventLocation { get; set; }
+
         public virtual EventType EventType { get; set; }
         public virtual User OwnerUser { get; set; }
-        
+
         public virtual ICollection<Invitation> Invitations { get; set; }
     }
 }

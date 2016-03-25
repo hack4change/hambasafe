@@ -20,8 +20,8 @@ namespace Hambasafe.Server.Models.v1
             Attributes = dbEvent.Attributes;
             WaitMins = dbEvent.MaxWaitingMinutes;
             PublicEvent = dbEvent.IsPublic;
-         //   StartLocation = dbEvent.EventLocation == null ? null :  new EventLocationModel(dbEvent.EventLocation);
-         //   EndLocation = dbEvent.EventLocation1 == null ? null : new EventLocationModel(dbEvent.EventLocation1);
+            StartLocation = dbEvent.StartEventLocation == null ? null :  new EventLocationModel(dbEvent.StartEventLocation);
+           EndLocation = dbEvent.EndEventLocation == null ? null : new EventLocationModel(dbEvent.EndEventLocation);
         //    OwnerUser = dbEvent.User == null ? null : new UserModel(dbEvent.User);
         }
 

@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Hambasafe.DataAccess.Entities
 {
 
@@ -10,8 +12,10 @@ namespace Hambasafe.DataAccess.Entities
         public int ConnectionUserId { get; set; }
         public string Relationship { get; set; }
         public DateTime? DateCreated { get; set; }
-    
-        //public virtual User User { get; set; }
-        //public virtual User User1 { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
+        [ForeignKey("ConnectionUserId")]
+        public virtual User ConnectionUser { get; set; }
     }
 }

@@ -46,7 +46,6 @@ namespace Hambasafe.Server.Controllers.v1
             using (var context = new Entities.HambasafeDataContext())
             {
                 var entities = context.Users.ToArray();
-               // return entities.ToArray();
                 return entities.Select(e => new UserModel(e)).ToArray();
             }
         }

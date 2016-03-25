@@ -29,7 +29,7 @@ namespace Hambasafe.DataAccess.Entities
         public string Gender { get; set; }
         public System.DateTime DateOfBirth { get; set; }
         public string IdentityDocumentUrl { get; set; }
-        public int? PictureImageResourceId { get; set; }
+       // public int? PictureImageResourceId { get; set; }
         public string Status { get; set; }
         public string MobileNumber { get; set; }
         public string EmailAddress { get; set; }
