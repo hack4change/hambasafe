@@ -41,11 +41,12 @@ namespace Hambasafe.Server.Controllers.v1
         /// </summary>
         [AllowAnonymous]
         [Route("users"), HttpGet]
-        public  UserModel[] GetAllUsers()
+        public UserModel[] GetAllUsers()
         {
             using (var context = new Entities.HambasafeDataContext())
             {
-                var entities = context.Users;
+                var entities = context.Users.ToArray();
+               // return entities.ToArray();
                 return entities.Select(e => new UserModel(e)).ToArray();
             }
         }

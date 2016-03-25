@@ -21,24 +21,22 @@ namespace Hambasafe.Server.Controllers.v1
         {
         }
 
-        /// <summary>
-        /// Implemented
-        /// </summary>
-        //[AllowAnonymous]
-        //[Route("event-types"), HttpGet]
-        //public async Task<HttpResponseMessage> GetEventTypes()
-        //{
-        //    HambasafeDataContext context = new HambasafeDataContext();
-        //    try
-        //    {
-        //        var eventTypes =  context.EventTypes.ToList().Select(et => new EventTypeModel(et));
+      
+        [AllowAnonymous]
+        [Route("event-types"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventTypes()
+        {
+            HambasafeDataContext context = new HambasafeDataContext();
+            try
+            {
+                var eventTypes = context.EventTypes.ToList().Select(et => new EventTypeModel(et));
 
-        //        return Request.CreateResponse(HttpStatusCode.OK, eventTypes);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return HandleError(error);
-        //    }
-        //}
+                return Request.CreateResponse(HttpStatusCode.OK, eventTypes);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
     }
 }

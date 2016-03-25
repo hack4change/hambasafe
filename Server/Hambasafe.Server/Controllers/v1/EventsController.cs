@@ -114,70 +114,67 @@ namespace Hambasafe.Server.Controllers.v1
                 }
         }
 
-        /// <summary>
-        /// Implemented
-        /// </summary>
-        //[AllowAnonymous]
-        //[Route("events-by-user"), HttpGet]
-        //public async Task<HttpResponseMessage> GetEventsByUser(int userid)
-        //{
-        //    try
-        //    {
-        //        var dataContext = new HambasafeDataContext();
-        //        var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
+        [AllowAnonymous]
+        [Route("events-by-user"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByUser(int userid)
+        {
+            try
+            {
+                var dataContext = new HambasafeDataContext();
+                var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
 
-        //        return Request.CreateResponse(HttpStatusCode.OK, events);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return HandleError(error);
-        //    }
-        //}
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
 
-        //[AllowAnonymous]
-        //[Route("events-by-attendee-id"), HttpGet]
-        //public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
-        //{
-        //    try
-        //    {
-        //        var context = new HambasafeDataContext();
+        [AllowAnonymous]
+        [Route("events-by-attendee-id"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
+        {
+            try
+            {
+                var context = new HambasafeDataContext();
 
-        //        var events = context.Attendances.Where(a => a.UserId == attendeeid)
-        //                                        .Select(a => new EventModel(a.Event))
-        //                                        .ToArray();
+                var events = context.Attendances.Where(a => a.UserId == attendeeid)
+                                                .Select(a => new EventModel(a.Event))
+                                                .ToArray();
 
-        //        return Request.CreateResponse(HttpStatusCode.OK, events);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return HandleError(error);
-        //    }
-        //}
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
 
-        //[AllowAnonymous]
-        //[Route("events-by-attendee-name"), HttpGet]
-        //public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
-        //{
-        //    try
-        //    {
-        //        var context = new HambasafeDataContext();
+        [AllowAnonymous]
+        [Route("events-by-attendee-name"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
+        {
+            try
+            {
+                var context = new HambasafeDataContext();
 
-        //        var userIds = context.Users.Where(a => a.FirstNames.ToUpper().Contains(attendeename.ToUpper()) ||
-        //                                               a.LastName.ToUpper().Contains(attendeename.ToUpper()))
-        //                                .Select(e => e.UserId)
-        //                                .ToArray();
+                var userIds = context.Users.Where(a => a.FirstNames.ToUpper().Contains(attendeename.ToUpper()) ||
+                                                       a.LastName.ToUpper().Contains(attendeename.ToUpper()))
+                                        .Select(e => e.UserId)
+                                        .ToArray();
 
-        //        var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
-        //                                        .Select(a => new EventModel(a.Event))
-        //                                        .ToArray();
+                var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
+                                                .Select(a => new EventModel(a.Event))
+                                                .ToArray();
 
-        //        return Request.CreateResponse(HttpStatusCode.OK, events);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return HandleError(error);
-        //    }
-        //}
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
 
         //[AllowAnonymous]
         //[Route("events-by-suburb"), HttpGet]
