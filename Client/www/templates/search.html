@@ -1,8 +1,8 @@
-<ion-view>
+<ion-view view-title="Search">
   <ion-content>
 
     <div class="button-bar bar-positive">
-      <a class="button" ng-click="searchEvents()"><b>SEARCH</b></a>
+      <a class="button" ng-click="searchEvents()"><b>FIND</b></a>
     </div>
     
     <ion-list>
@@ -32,7 +32,7 @@
 	</div>
   <div class="tiled-list">
     <div class="list">
-      <a class="item item-avatar" href="/#/eventdetail/{{event.EventId}}" ng-class="" collection-repeat="event in eventsToList | orderBy: 'EventDateTimeStart'| filter: filterResults">
+      <a class="item item-avatar" href="#/app/event-detail/{{event.EventId}}" ng-class="" collection-repeat="event in eventsToList | orderBy: 'EventDateTimeStart'| filter: filterResults" >
         <img src="http://ionicframework.com/img/docs/stantz.jpg">
         <div>
           <h2>{{event.Name}}</h2>

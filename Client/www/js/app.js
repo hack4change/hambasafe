@@ -169,7 +169,7 @@ angular.module('starter', ['ui.router', 'ionic', 'starter.controllers', 'starter
   })
 
   .state('app.search', {
-      url: '/search',
+      url: '/search?lng&lat&dist',
       views: {
         'menuContent': {
           templateUrl: 'templates/search.html',

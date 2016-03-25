@@ -4,13 +4,13 @@
     <form name="registrationForm" ng-submit="doRegistration(signupForm.$valid)" novalidate>
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="First Name" ng-model="user.FirstNames">
+          <input type="text" placeholder="First Name" ng-model="user.FirstNames" required>
         </label>
         <label class="item item-input">
-          <input type="text" placeholder="Last Name" ng-model="user.LastName">
+          <input type="text" placeholder="Last Name" ng-model="user.LastName" required>
         </label>
         <label class="item item-input">
-          <input type="date" placeholder="Date of Birth" ng-model="user.DateOfBirth">
+          <input type="date" placeholder="Date of Birth" ng-model="user.DateOfBirth" required>
         </label>
         <label class="item item-input item-select">
           <div class="input-label" >
@@ -23,10 +23,19 @@
           </select>
         </label>
         <label class="item item-input">
-          <input type="tel" placeholder="Cell Number" ng-model="user.DateOfBirth">
+          <input type="tel" placeholder="Cell Number" ng-model="user.PhoneNumber" required>
         </label>
         <label class="item item-input">
-          <input type="email" placeholder="Email" ng-model="user.EmailAddress">
+          <input type="email" placeholder="Email" ng-model="user.EmailAddress" required>
+        </label>
+        <label class="item item-input">
+          <input type="email" placeholder="Confirm Email" ng-model="user.ConfirmEmailAddress" required>
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Password" ng-model="user.Password" required>
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Confirm Password" ng-model="user.ConfirmPassword" required>
         </label>
         <div class="row">
           <button class="button button-positive" type="submit">Sign Up</button>
