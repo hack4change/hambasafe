@@ -38,6 +38,8 @@ namespace Hambasafe.DataAccess.Entities
         public DateTime? DateValidated { get; set; }
         public DateTime? DateLastLogin { get; set; }
 
+        //implement as needed
+
         //public virtual ICollection<Attendance> Attendances { get; set; }
         //public virtual ICollection<AttendanceRating> AttendanceRatings { get; set; }
         //public virtual ICollection<AttendanceRating> AttendanceRatings1 { get; set; }
@@ -45,7 +47,7 @@ namespace Hambasafe.DataAccess.Entities
         //public virtual ICollection<BlockedUser> BlockedUsers1 { get; set; }
         //public virtual ICollection<Connection> Connections { get; set; }
         //public virtual ICollection<Connection> Connections1 { get; set; }
-        //public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
         [ForeignKey("PictureImageResourceId")]
         public virtual ImageResource PictureImageResource { get; set; }
         //public virtual ICollection<Invitation> Invitations { get; set; }

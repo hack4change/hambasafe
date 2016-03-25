@@ -104,8 +104,8 @@ namespace Hambasafe.Server.Controllers.v1
 
                     var entities = context.Events
                                           .Include(e => e.EventType)
-                                          //.Include(e => e.EventLocation)
-                                          //.Include(e => e.EventLocation1)
+                                          .Include(e => e.StartEventLocation)
+                                          .Include(e => e.EndEventLocation)
                                           .ToArray();
 
                     var events = entities.Select(e => new EventModel(e));

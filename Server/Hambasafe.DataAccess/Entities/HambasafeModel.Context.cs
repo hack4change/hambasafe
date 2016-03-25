@@ -1,8 +1,9 @@
-﻿
+﻿using Microsoft.Data.Entity;
+using System.Configuration;
+
 namespace Hambasafe.DataAccess.Entities
 {
-    using Microsoft.Data.Entity;
-
+   
     public class HambasafeDataContext : DbContext
     {
         public HambasafeDataContext()
@@ -10,8 +11,8 @@ namespace Hambasafe.DataAccess.Entities
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=hsdevdb1;Trusted_Connection=True;");
+            var connectionString = ConfigurationManager.ConnectionStrings["HambasafeDataContext"].ConnectionString;
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
 
