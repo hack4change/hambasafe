@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 using System;
 namespace Hambasafe.DataAccess.Entities
 {
-  
 
-    public  class Log
+
+    public class Log
     {
         [Key]
         public int LogId { get; set; }

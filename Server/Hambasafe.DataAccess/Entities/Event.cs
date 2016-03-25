@@ -12,8 +12,8 @@ namespace Hambasafe.DataAccess.Entities
 
         public Event()
         {
-            this.Attendances = new HashSet<Attendance>();
-            this.Invitations = new HashSet<Invitation>();
+            Attendances = new HashSet<Attendance>();
+            Invitations = new HashSet<Invitation>();
         }
         [Key]
         public int EventId { get; set; }
@@ -32,14 +32,16 @@ namespace Hambasafe.DataAccess.Entities
         public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
 
-
         public virtual ICollection<Attendance> Attendances { get; set; }
+
         [ForeignKey("StartEventLocationId")]
         public virtual EventLocation StartEventLocation { get; set; }
+
         [ForeignKey("EndEventLocationId")]
         public virtual EventLocation EndEventLocation { get; set; }
 
         public virtual EventType EventType { get; set; }
+
         public virtual User OwnerUser { get; set; }
 
         public virtual ICollection<Invitation> Invitations { get; set; }
