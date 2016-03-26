@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hambasafe.DataAccess.Entities
 {
@@ -11,7 +12,8 @@ namespace Hambasafe.DataAccess.Entities
             Events = new HashSet<Event>();
         }
         [Key]
-        public int EventTypeId { get; set; }
+        [Column("EventTypeId")]
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 

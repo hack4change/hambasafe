@@ -73,7 +73,7 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var dataContext = new HambasafeDataContext();
                 return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList()
-                                                                                           .Where(l => l.EventLocationId == id));
+                                                                                           .Where(l => l.Id == id));
             }
             catch (Exception error)
             {

@@ -10,7 +10,7 @@ namespace Hambasafe.Server.Models.v1
 
         public InvitationModel(Entities.Invitation dbInvitation)
         {
-            InvitationId = dbInvitation.InvitationId;
+            InvitationId = dbInvitation.Id;
             InvitorUserId = dbInvitation.InvitorUserId;
             InviteeUserId = dbInvitation.InviteeUserId;
             EventId = dbInvitation.EventId;

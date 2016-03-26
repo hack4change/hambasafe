@@ -9,7 +9,7 @@ namespace Hambasafe.Server.Models.v1
 
         public EventLocationModel(Entities.EventLocation location)
         {
-            EventLocationId = location.EventLocationId;
+            EventLocationId = location.Id;
             Country = location.Country;
             Province = location.Province;
             Suburb = location.Suburb;

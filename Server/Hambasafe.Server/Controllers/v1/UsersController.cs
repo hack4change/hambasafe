@@ -85,7 +85,7 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
 
-                var userEntity = context.Users.Where(e => e.UserId == id)
+                var userEntity = context.Users.Where(e => e.Id == id)
                                               .FirstOrDefault();
 
                 if (userEntity == null)

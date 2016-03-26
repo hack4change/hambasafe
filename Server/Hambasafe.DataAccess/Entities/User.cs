@@ -22,7 +22,8 @@ namespace Hambasafe.DataAccess.Entities
             //Invitations1 = new HashSet<Invitation>();
         }
         [Key]
-        public int UserId { get; set; }
+        [Column("UserId")]
+        public int Id { get; set; }
         public string Token { get; set; }
         public string FirstNames { get; set; }
         public string LastName { get; set; }

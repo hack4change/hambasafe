@@ -74,150 +74,152 @@ namespace Hambasafe.Server.Controllers.v1
 
         [AllowAnonymous]
         [Route("event"), HttpGet]
-        public EventModel GetEvent(int id)
+        public async Task<EventModel> GetEvent(int id)
         {
-            return new EventModel(EventService.First(i => i.EventId == id));
+            var eventEntity = await EventService.FindById(id);
+            return new EventModel(eventEntity);
         }
 
 
         [AllowAnonymous]
         [Route("events"), HttpGet]
-        public EventModel[] GetEvents()
+        public async Task<EventModel[]> GetEvents()
         {
-            return EventService.FindAll().ToArray().Select(e => new EventModel(e)).ToArray();
-            
-    }
+            var events = await EventService.FindAll();
+            return events.Select(e => new EventModel(e)).ToArray();
 
-    [AllowAnonymous]
-    [Route("events-by-user"), HttpGet]
-    public async Task<HttpResponseMessage> GetEventsByUser(int userid)
-    {
-        try
-        {
-            var dataContext = new HambasafeDataContext();
-            var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
-
-            return Request.CreateResponse(HttpStatusCode.OK, events);
         }
-        catch (Exception error)
+
+        [AllowAnonymous]
+        [Route("events-by-user"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByUser(int userid)
         {
-            return HandleError(error);
+            try
+            {
+                var dataContext = new HambasafeDataContext();
+                var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("events-by-attendee-id"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
+        {
+            try
+            {
+                var context = new HambasafeDataContext();
+
+                var events = context.Attendances.Where(a => a.UserId == attendeeid)
+                                                .Select(a => new EventModel(a.Event))
+                                                .ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        [AllowAnonymous]
+        [Route("events-by-attendee-name"), HttpGet]
+        public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
+        {
+            try
+            {
+                var context = new HambasafeDataContext();
+
+                var userIds = context.Users.Where(a => a.FirstNames.ToUpper().Contains(attendeename.ToUpper()) ||
+                                                       a.LastName.ToUpper().Contains(attendeename.ToUpper()))
+                                        .Select(e => e.Id)
+                                        .ToArray();
+
+                var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
+                                                .Select(a => new EventModel(a.Event))
+                                                .ToArray();
+
+                return Request.CreateResponse(HttpStatusCode.OK, events);
+            }
+            catch (Exception error)
+            {
+                return HandleError(error);
+            }
+        }
+
+        //[AllowAnonymous]
+        //[Route("events-by-suburb"), HttpGet]
+        //public async Task<HttpResponseMessage> GetEventsBySuburb(string suburbname)
+        //{
+        //    try
+        //    {
+        //        var context = new HambasafeDataContext();
+
+        //        var events = context.Events.Where(a =>
+        //            a.EventLocation.Suburb.ToUpper().Contains(suburbname.ToUpper())).Select(a => new EventModel(a))
+        //                                        .ToArray();
+
+        //        return Request.CreateResponse(HttpStatusCode.OK, events);
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return HandleError(error);
+        //    }
+        //}
+
+        //[AllowAnonymous]
+        //[Route("events-by-coordinates"), HttpGet]
+        //public async Task<HttpResponseMessage> GetEventsByCoordinates(double latitude, double longitude, int radius)
+        //{
+        //    try
+        //    {
+        //        var context = new HambasafeDataContext();
+
+        //        var locationids = context.EventLocations.Where(a => a.Latitude != null && a.Longitude != null && GetDistance(latitude, longitude, a.Latitude.Value, a.Longitude.Value) <= radius)
+        //                                .Select(e => e.EventLocationId)
+        //                                .ToArray();
+
+        //        var events = context.Events.Where(a => locationids.Contains(
+        //            a.EventLocation.EventLocationId)).Select(a => new EventModel(a))
+        //                                        .ToArray();
+
+        //        return Request.CreateResponse(HttpStatusCode.OK);
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return HandleError(error);
+        //    }
+        //}
+
+        private double GetDistance(double latitude1, double longitude1, double latitude2, double longitude2)
+        {
+            GeoCoordinate coord1 = new GeoCoordinate(latitude1, longitude1);
+            GeoCoordinate coord2 = new GeoCoordinate(latitude2, longitude2);
+
+            return coord1.GetDistanceTo(coord2);
+        }
+
+        private EventLocation InsertLocation(HambasafeDataContext dataContext, EventLocationModel locationModel)
+        {
+            var location = new EventLocation()
+            {
+                Address = locationModel.Address,
+                Country = locationModel.Country,
+                Latitude = locationModel.Latitude,
+                Longitude = locationModel.Longitude,
+                PostCode = locationModel.PostCode,
+                Province = locationModel.Province,
+                Suburb = locationModel.Suburb
+            };
+            //  dataContext.EventLocations.Add(location);
+            dataContext.SaveChanges();
+
+            return location;
         }
     }
-
-    [AllowAnonymous]
-    [Route("events-by-attendee-id"), HttpGet]
-    public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
-    {
-        try
-        {
-            var context = new HambasafeDataContext();
-
-            var events = context.Attendances.Where(a => a.UserId == attendeeid)
-                                            .Select(a => new EventModel(a.Event))
-                                            .ToArray();
-
-            return Request.CreateResponse(HttpStatusCode.OK, events);
-        }
-        catch (Exception error)
-        {
-            return HandleError(error);
-        }
-    }
-
-    [AllowAnonymous]
-    [Route("events-by-attendee-name"), HttpGet]
-    public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
-    {
-        try
-        {
-            var context = new HambasafeDataContext();
-
-            var userIds = context.Users.Where(a => a.FirstNames.ToUpper().Contains(attendeename.ToUpper()) ||
-                                                   a.LastName.ToUpper().Contains(attendeename.ToUpper()))
-                                    .Select(e => e.UserId)
-                                    .ToArray();
-
-            var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
-                                            .Select(a => new EventModel(a.Event))
-                                            .ToArray();
-
-            return Request.CreateResponse(HttpStatusCode.OK, events);
-        }
-        catch (Exception error)
-        {
-            return HandleError(error);
-        }
-    }
-
-    //[AllowAnonymous]
-    //[Route("events-by-suburb"), HttpGet]
-    //public async Task<HttpResponseMessage> GetEventsBySuburb(string suburbname)
-    //{
-    //    try
-    //    {
-    //        var context = new HambasafeDataContext();
-
-    //        var events = context.Events.Where(a =>
-    //            a.EventLocation.Suburb.ToUpper().Contains(suburbname.ToUpper())).Select(a => new EventModel(a))
-    //                                        .ToArray();
-
-    //        return Request.CreateResponse(HttpStatusCode.OK, events);
-    //    }
-    //    catch (Exception error)
-    //    {
-    //        return HandleError(error);
-    //    }
-    //}
-
-    //[AllowAnonymous]
-    //[Route("events-by-coordinates"), HttpGet]
-    //public async Task<HttpResponseMessage> GetEventsByCoordinates(double latitude, double longitude, int radius)
-    //{
-    //    try
-    //    {
-    //        var context = new HambasafeDataContext();
-
-    //        var locationids = context.EventLocations.Where(a => a.Latitude != null && a.Longitude != null && GetDistance(latitude, longitude, a.Latitude.Value, a.Longitude.Value) <= radius)
-    //                                .Select(e => e.EventLocationId)
-    //                                .ToArray();
-
-    //        var events = context.Events.Where(a => locationids.Contains(
-    //            a.EventLocation.EventLocationId)).Select(a => new EventModel(a))
-    //                                        .ToArray();
-
-    //        return Request.CreateResponse(HttpStatusCode.OK);
-    //    }
-    //    catch (Exception error)
-    //    {
-    //        return HandleError(error);
-    //    }
-    //}
-
-    private double GetDistance(double latitude1, double longitude1, double latitude2, double longitude2)
-    {
-        GeoCoordinate coord1 = new GeoCoordinate(latitude1, longitude1);
-        GeoCoordinate coord2 = new GeoCoordinate(latitude2, longitude2);
-
-        return coord1.GetDistanceTo(coord2);
-    }
-
-    private EventLocation InsertLocation(HambasafeDataContext dataContext, EventLocationModel locationModel)
-    {
-        var location = new EventLocation()
-        {
-            Address = locationModel.Address,
-            Country = locationModel.Country,
-            Latitude = locationModel.Latitude,
-            Longitude = locationModel.Longitude,
-            PostCode = locationModel.PostCode,
-            Province = locationModel.Province,
-            Suburb = locationModel.Suburb
-        };
-        //  dataContext.EventLocations.Add(location);
-        dataContext.SaveChanges();
-
-        return location;
-    }
-}
 }

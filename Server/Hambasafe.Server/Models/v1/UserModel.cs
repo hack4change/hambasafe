@@ -10,7 +10,7 @@ namespace Hambasafe.Server.Models.v1
     {
         public UserModel(Entities.User user)
         {
-            UserId = user.UserId;
+            UserId = user.Id;
             Token = user.Token;
             FirstNames = user.FirstNames;
             LastName = user.LastName;

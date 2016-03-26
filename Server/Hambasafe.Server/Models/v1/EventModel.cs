@@ -11,25 +11,25 @@ namespace Hambasafe.Server.Models.v1
     {
         public EventModel(Entities.Event dbEvent)
         {
-            EventId = dbEvent.EventId;
+            Id = dbEvent.Id;
             Name = dbEvent.Name;
             Description = dbEvent.Description;
-           EventType = dbEvent.EventType == null ? null : new EventTypeModel(dbEvent.EventType);
+            EventType = dbEvent.EventType == null ? null : new EventTypeModel(dbEvent.EventType);
             EventDateTimeStart = dbEvent.DateTimeStart;
             EventDateTimeEnd = dbEvent.DateTimeEnd;
             Attributes = dbEvent.Attributes;
             WaitMins = dbEvent.MaxWaitingMinutes;
             PublicEvent = dbEvent.IsPublic;
-            StartLocation = dbEvent.StartEventLocation == null ? null :  new EventLocationModel(dbEvent.StartEventLocation);
-           EndLocation = dbEvent.EndEventLocation == null ? null : new EventLocationModel(dbEvent.EndEventLocation);
-        //    OwnerUser = dbEvent.User == null ? null : new UserModel(dbEvent.User);
+            StartLocation = dbEvent.StartEventLocation == null ? null : new EventLocationModel(dbEvent.StartEventLocation);
+            EndLocation = dbEvent.EndEventLocation == null ? null : new EventLocationModel(dbEvent.EndEventLocation);
+            //    OwnerUser = dbEvent.User == null ? null : new UserModel(dbEvent.User);
         }
 
         public EventModel()
         {
         }
 
-        public int EventId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

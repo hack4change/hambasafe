@@ -16,7 +16,8 @@ namespace Hambasafe.DataAccess.Entities
             Invitations = new HashSet<Invitation>();
         }
         [Key]
-        public int EventId { get; set; }
+        [Column("EventId")]
+        public int Id { get; set; }
 
         public int OwnerUserId { get; set; }
         public int StartEventLocationId { get; set; }

@@ -3,6 +3,7 @@ namespace Hambasafe.DataAccess.Entities
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     public  class EventLocation
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -12,7 +13,8 @@ namespace Hambasafe.DataAccess.Entities
             //this.Events1 = new HashSet<Event>();
         }
         [Key]
-        public int EventLocationId { get; set; }
+        [Column("EventLocationId")]
+        public int Id { get; set; }
         public string Country { get; set; }
         public string Province { get; set; }
         public string Suburb { get; set; }

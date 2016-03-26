@@ -9,7 +9,8 @@ namespace Hambasafe.DataAccess.Entities
     public  class Invitation
     {
         [Key]
-        public int InvitationId { get; set; }
+        [Column("InvitationId")]
+        public int Id { get; set; }
         public int? InvitorUserId { get; set; }
         public int? InviteeUserId { get; set; }
         public int? EventId { get; set; }

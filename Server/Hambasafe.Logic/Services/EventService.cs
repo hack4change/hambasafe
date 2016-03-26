@@ -11,22 +11,28 @@ using System.Linq.Expressions;
 namespace Hambasafe.Logic.Services
 {
 
-    public interface IEventService : IRepository<Event>
+    public interface IEventService 
     {
-
+        
+        Task<List<Event>> FindAll();
+        Task<Event> FindById(int id);
     }
-    public class EventService : EfRepository<Event>, IEventService
+    public class EventService :  IEventService
     {
-        public EventService(DbContext dbContext)
-            : base(dbContext)
+        IRepository<Event> Repository;
+        public EventService(IRepository<Event> repository)
         {
-
+            Repository = repository;
         }
-        public override IQueryable<Event> FindAll(Expression<Func<Event, bool>> where = null)
+        public Task<List<Event>> FindAll()
         {
-            return base.FindAll(where).Include(e => e.EventType)
+            return  Repository.FindAll().Include(e => e.EventType)
                                       .Include(e => e.StartEventLocation)
-                                      .Include(e => e.EndEventLocation);
+                                      .Include(e => e.EndEventLocation).ToListAsync();
+        }
+        public Task<Event> FindById(int id)
+        {
+            return Repository.First(i=>i.Id== id);
         }
     }
 }

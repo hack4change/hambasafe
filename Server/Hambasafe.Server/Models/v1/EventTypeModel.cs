@@ -12,7 +12,7 @@ namespace Hambasafe.Server.Models.v1
     {
         public EventTypeModel(Entities.EventType dbEventType)
         {
-            EventTypeId = dbEventType.EventTypeId;
+            EventTypeId = dbEventType.Id;
             Name = dbEventType.Name;
             Description = dbEventType.Description;
         }

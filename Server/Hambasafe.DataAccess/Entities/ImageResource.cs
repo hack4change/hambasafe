@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Hambasafe.DataAccess.Entities
 {
 
@@ -8,7 +10,8 @@ namespace Hambasafe.DataAccess.Entities
     {
        
         [Key]
-        public int ImageResourceId { get; set; }
+        [Column("ImageResourceId")]
+        public int Id { get; set; }
         public byte[] ImageData { get; set; }
         public string MimeType { get; set; }
 
