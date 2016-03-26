@@ -36,10 +36,10 @@ namespace Hambasafe.DataAccess.Entities
         public virtual ICollection<Attendance> Attendances { get; set; }
 
         [ForeignKey("StartEventLocationId")]
-        public virtual EventLocation StartEventLocation { get; set; }
+        public virtual EventLocation StartLocation { get; set; }
 
         [ForeignKey("EndEventLocationId")]
-        public virtual EventLocation EndEventLocation { get; set; }
+        public virtual EventLocation EndLocation { get; set; }
 
         public virtual EventType EventType { get; set; }
 

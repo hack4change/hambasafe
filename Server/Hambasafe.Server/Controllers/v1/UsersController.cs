@@ -8,16 +8,20 @@ using System.Web.Http;
 using Hambasafe.Server.Models.v1;
 using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
-using Entities = Hambasafe.DataAccess.Entities;
+using AutoMapper;
+using System.Collections.Generic;
+using Hambasafe.DataAccess.Entities;
 
 namespace Hambasafe.Server.Controllers.v1
 {
     [RoutePrefix("v1")]
     public class UsersController : ApiControllerBase
     {
-        public UsersController(IConfigurationService configuration, ITableStorageService tableStorage) :
+        IMapper Mapper;
+        public UsersController(IConfigurationService configuration, ITableStorageService tableStorage, IMapper mapper) :
             base(configuration, tableStorage)
         {
+            Mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -41,12 +45,12 @@ namespace Hambasafe.Server.Controllers.v1
         /// </summary>
         [AllowAnonymous]
         [Route("users"), HttpGet]
-        public UserModel[] GetAllUsers()
+        public List<UserModel> GetAllUsers()
         {
-            using (var context = new Entities.HambasafeDataContext())
+            using (var context = new HambasafeDataContext())
             {
-                var entities = context.Users.ToArray();
-                return entities.Select(e => new UserModel(e)).ToArray();
+                return Mapper.Map<List<User>, List<UserModel>>(context.Users.ToList());
+
             }
         }
 
@@ -59,12 +63,10 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
+                HambasafeDataContext context = new HambasafeDataContext();
 
-                var users = context.Users.Where(a => a.FirstNames.ToUpper().Contains(username.ToUpper()) ||
-                                                     a.LastName.ToUpper().Contains(username.ToUpper()))
-                                         .Select(e => new UserModel(e))
-                                         .ToArray();
+                var users = Mapper.Map<List<User>, List<UserModel>>(context.Users.Where(a => a.FirstNames.ToUpper().Contains(username.ToUpper()) ||
+                                                     a.LastName.ToUpper().Contains(username.ToUpper())).ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, users);
             }
@@ -83,7 +85,7 @@ namespace Hambasafe.Server.Controllers.v1
         {
             try
             {
-                Entities.HambasafeDataContext context = new Entities.HambasafeDataContext();
+                HambasafeDataContext context = new HambasafeDataContext();
 
                 var userEntity = context.Users.Where(e => e.Id == id)
                                               .FirstOrDefault();
@@ -93,7 +95,7 @@ namespace Hambasafe.Server.Controllers.v1
                     return Request.CreateResponse(HttpStatusCode.NotFound, $"User was not found for id:{id}");
                 }
 
-                var user = new UserModel(userEntity);
+                var user = Mapper.Map<UserModel>(userEntity);
 
                 return Request.CreateResponse(HttpStatusCode.OK, user);
             }

@@ -7,19 +7,9 @@ namespace Hambasafe.Server.Models.v1
         public EventLocationModel()
         { }
 
-        public EventLocationModel(Entities.EventLocation location)
-        {
-            EventLocationId = location.Id;
-            Country = location.Country;
-            Province = location.Province;
-            Suburb = location.Suburb;
-            PostCode = location.PostCode;
-            Address = location.Address;
-            Latitude = location.Latitude;
-            Longitude = location.Longitude;
-        }
+        
 
-        public int EventLocationId { get; set; }
+        public int Id { get; set; }
         public string Country { get; set; }
         public string Province { get; set; }
         public string Suburb { get; set; }

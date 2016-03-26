@@ -9,15 +9,18 @@ using Hambasafe.Server.Services.TableStorage;
 using System.Threading.Tasks;
 using Hambasafe.DataAccess.Entities;
 using Hambasafe.Server.Models.v1;
+using AutoMapper;
 
 namespace Hambasafe.Server.Controllers.v1
 {
     [RoutePrefix("v1")]
     public class InvitationsController : ApiControllerBase
     {
-        public InvitationsController(IConfigurationService configuration, ITableStorageService tableStorage) :
+        IMapper Mapper;
+        public InvitationsController(IConfigurationService configuration, ITableStorageService tableStorage, IMapper mapper) :
             base(configuration, tableStorage)
         {
+            Mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -56,7 +59,8 @@ namespace Hambasafe.Server.Controllers.v1
             try
             {
                 var dataContext = new HambasafeDataContext();
-                var invitations = dataContext.Invitations.ToList().Where(e => e.InviteeUserId == userid).Select(e => new InvitationModel(e));
+                var invitations = Mapper.Map<List<Invitation>, List<InvitationModel >> (dataContext.Invitations.Where(e => e.InviteeUserId == userid).ToList());
+              
 
                 return Request.CreateResponse(HttpStatusCode.OK, invitations);
             }
@@ -73,7 +77,7 @@ namespace Hambasafe.Server.Controllers.v1
             try
             {
                 var dataContext = new HambasafeDataContext();
-                var invitations = dataContext.Invitations.ToList().Where(e => e.InvitorUserId == userid).Select(e => new InvitationModel(e));
+                var invitations = Mapper.Map<List<Invitation>, List<InvitationModel>>(dataContext.Invitations.Where(e => e.InvitorUserId == userid).ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, invitations);
             }

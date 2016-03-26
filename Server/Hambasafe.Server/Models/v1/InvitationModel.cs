@@ -8,16 +8,7 @@ namespace Hambasafe.Server.Models.v1
         {
         }
 
-        public InvitationModel(Entities.Invitation dbInvitation)
-        {
-            InvitationId = dbInvitation.Id;
-            InvitorUserId = dbInvitation.InvitorUserId;
-            InviteeUserId = dbInvitation.InviteeUserId;
-            EventId = dbInvitation.EventId;
-            OptionalEmailInvitee = dbInvitation.OptionalEmailInvitee;
-            Status = dbInvitation.Status;
-            Comment = dbInvitation.Comment;
-        }
+       
 
         public int? InvitationId { get; set; }
 

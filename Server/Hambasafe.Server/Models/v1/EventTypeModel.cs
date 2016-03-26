@@ -10,12 +10,7 @@ namespace Hambasafe.Server.Models.v1
     [RoutePrefix("v1")]
     public class EventTypeModel
     {
-        public EventTypeModel(Entities.EventType dbEventType)
-        {
-            EventTypeId = dbEventType.Id;
-            Name = dbEventType.Name;
-            Description = dbEventType.Description;
-        }
+        
 
         public EventTypeModel()
         {

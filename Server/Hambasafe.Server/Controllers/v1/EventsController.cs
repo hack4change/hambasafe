@@ -12,6 +12,8 @@ using System.Device.Location;
 using System.Data.Entity;
 using Hambasafe.DataAccess;
 using Hambasafe.Logic.Services;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace Hambasafe.Server.Controllers.v1
 {
@@ -19,10 +21,12 @@ namespace Hambasafe.Server.Controllers.v1
     public class EventsController : ApiControllerBase
     {
         IEventService EventService;
-        public EventsController(IConfigurationService configuration, ITableStorageService tableStorage, IEventService eventService) :
+        IMapper Mapper;
+        public EventsController(IConfigurationService configuration, ITableStorageService tableStorage, IEventService eventService,IMapper mapper) :
             base(configuration, tableStorage)
         {
             EventService = eventService;
+            Mapper = mapper;
         }
 
         /// <summary>
@@ -36,33 +40,12 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 using (var dataContext = new HambasafeDataContext())
                 {
-                    EventLocation startLocation = InsertLocation(dataContext, eventModel.StartLocation);
-                    EventLocation endLocation = null;
-                    if (eventModel.EndLocation != null)
-                    {
-                        endLocation = InsertLocation(dataContext, eventModel.EndLocation);
-                    }
 
-                    var eventEntity = new Event()
-                    {
-                        //Name = eventModel.Name,
-                        //Description = eventModel.Description,
-                        //EventTypeId = eventModel.EventType.EventTypeId,
-                        //DateTimeStart = eventModel.EventDateTimeStart,
-                        //DateTimeEnd = eventModel.EventDateTimeEnd,
-                        //IsPublic = eventModel.PublicEvent,
-                        //MaxWaitingMinutes = eventModel.WaitMins,
-                        //StartEventLocationId = startLocation.EventLocationId,
-                        // EndEventLocationId = endLocation?.EventLocationId,
-                        //OwnerUserId = eventModel.OwnerUser.UserId,
-                        //Attributes = eventModel.Attributes,
-                        //DateCreated = DateTime.Now
-                    };
-
+                    var eventEntity = Mapper.Map<Event>(eventModel);
                     dataContext.Events.Add(eventEntity);
                     dataContext.SaveChanges();
-
-                    return Request.CreateResponse(HttpStatusCode.OK, new EventModel(eventEntity));
+                  
+                    return Request.CreateResponse(HttpStatusCode.OK, Mapper.Map<EventModel>(eventEntity));
                 }
             }
             catch (Exception error)
@@ -77,80 +60,80 @@ namespace Hambasafe.Server.Controllers.v1
         public async Task<EventModel> GetEvent(int id)
         {
             var eventEntity = await EventService.FindById(id);
-            return new EventModel(eventEntity);
+            return Mapper.Map<EventModel>(eventEntity);
         }
 
 
         [AllowAnonymous]
         [Route("events"), HttpGet]
-        public async Task<EventModel[]> GetEvents()
+        public async Task<List<EventModel>> GetEvents()
         {
             var events = await EventService.FindAll();
-            return events.Select(e => new EventModel(e)).ToArray();
+            return Mapper.Map<List<Event>, List<EventModel>>(events);
 
         }
 
-        [AllowAnonymous]
-        [Route("events-by-user"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsByUser(int userid)
-        {
-            try
-            {
-                var dataContext = new HambasafeDataContext();
-                var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
+        //[AllowAnonymous]
+        //[Route("events-by-user"), HttpGet]
+        //public async Task<HttpResponseMessage> GetEventsByUser(int userid)
+        //{
+        //    try
+        //    {
+        //        var dataContext = new HambasafeDataContext();
+        //        var events = dataContext.Events.ToList().Where(e => e.OwnerUserId == userid).Select(e => new EventModel(e));
 
-                return Request.CreateResponse(HttpStatusCode.OK, events);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
+        //        return Request.CreateResponse(HttpStatusCode.OK, events);
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return HandleError(error);
+        //    }
+        //}
 
-        [AllowAnonymous]
-        [Route("events-by-attendee-id"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
-        {
-            try
-            {
-                var context = new HambasafeDataContext();
+        //[AllowAnonymous]
+        //[Route("events-by-attendee-id"), HttpGet]
+        //public async Task<HttpResponseMessage> GetEventsByAttendee(int attendeeid)
+        //{
+        //    try
+        //    {
+        //        var context = new HambasafeDataContext();
 
-                var events = context.Attendances.Where(a => a.UserId == attendeeid)
-                                                .Select(a => new EventModel(a.Event))
-                                                .ToArray();
+        //        var events = context.Attendances.Where(a => a.UserId == attendeeid)
+        //                                        .Select(a => new EventModel(a.Event))
+        //                                        .ToArray();
 
-                return Request.CreateResponse(HttpStatusCode.OK, events);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
+        //        return Request.CreateResponse(HttpStatusCode.OK, events);
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return HandleError(error);
+        //    }
+        //}
 
-        [AllowAnonymous]
-        [Route("events-by-attendee-name"), HttpGet]
-        public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
-        {
-            try
-            {
-                var context = new HambasafeDataContext();
+        //[AllowAnonymous]
+        //[Route("events-by-attendee-name"), HttpGet]
+        //public async Task<HttpResponseMessage> GetEventsByAttendeeName(string attendeename)
+        //{
+        //    try
+        //    {
+        //        var context = new HambasafeDataContext();
 
-                var userIds = context.Users.Where(a => a.FirstNames.ToUpper().Contains(attendeename.ToUpper()) ||
-                                                       a.LastName.ToUpper().Contains(attendeename.ToUpper()))
-                                        .Select(e => e.Id)
-                                        .ToArray();
+        //        var userIds = context.Users.Where(a => a.FirstNames.ToUpper().Contains(attendeename.ToUpper()) ||
+        //                                               a.LastName.ToUpper().Contains(attendeename.ToUpper()))
+        //                                .Select(e => e.Id)
+        //                                .ToArray();
 
-                var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
-                                                .Select(a => new EventModel(a.Event))
-                                                .ToArray();
+        //        var events = context.Attendances.Where(a => userIds.Contains(a.UserId))
+        //                                        .Select(a => new EventModel(a.Event))
+        //                                        .ToArray();
 
-                return Request.CreateResponse(HttpStatusCode.OK, events);
-            }
-            catch (Exception error)
-            {
-                return HandleError(error);
-            }
-        }
+        //        return Request.CreateResponse(HttpStatusCode.OK, events);
+        //    }
+        //    catch (Exception error)
+        //    {
+        //        return HandleError(error);
+        //    }
+        //}
 
         //[AllowAnonymous]
         //[Route("events-by-suburb"), HttpGet]
@@ -204,22 +187,6 @@ namespace Hambasafe.Server.Controllers.v1
             return coord1.GetDistanceTo(coord2);
         }
 
-        private EventLocation InsertLocation(HambasafeDataContext dataContext, EventLocationModel locationModel)
-        {
-            var location = new EventLocation()
-            {
-                Address = locationModel.Address,
-                Country = locationModel.Country,
-                Latitude = locationModel.Latitude,
-                Longitude = locationModel.Longitude,
-                PostCode = locationModel.PostCode,
-                Province = locationModel.Province,
-                Suburb = locationModel.Suburb
-            };
-            //  dataContext.EventLocations.Add(location);
-            dataContext.SaveChanges();
-
-            return location;
-        }
+    
     }
 }

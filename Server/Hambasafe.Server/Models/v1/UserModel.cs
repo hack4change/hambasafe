@@ -8,18 +8,7 @@ namespace Hambasafe.Server.Models.v1
 {
     public class UserModel
     {
-        public UserModel(Entities.User user)
-        {
-            UserId = user.Id;
-            Token = user.Token;
-            FirstNames = user.FirstNames;
-            LastName = user.LastName;
-            Gender = user.Gender;
-            DateOfBirth = user.DateOfBirth;
-            Status = user.Status;
-            MobileNumber = user.MobileNumber;
-            EmailAddress = user.EmailAddress;
-        }
+       
 
         public UserModel()
         {

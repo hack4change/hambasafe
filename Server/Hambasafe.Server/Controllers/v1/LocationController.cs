@@ -8,15 +8,19 @@ using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
 using Hambasafe.DataAccess.Entities;
 using Hambasafe.Server.Models.v1;
+using AutoMapper;
+using System.Collections.Generic;
 
 namespace Hambasafe.Server.Controllers.v1
 {
     [RoutePrefix("v1")]
     public class LocationController : ApiControllerBase
     {
-        public LocationController(IConfigurationService configuration, ITableStorageService tableStorage) :
+        IMapper Mapper;
+        public LocationController(IConfigurationService configuration, ITableStorageService tableStorage, IMapper mapper) :
             base(configuration, tableStorage)
         {
+            Mapper = mapper;
         }
 
         /// <summary>
@@ -29,7 +33,8 @@ namespace Hambasafe.Server.Controllers.v1
             try
             {
                 var dataContext = new HambasafeDataContext();
-                return Request.CreateResponse(HttpStatusCode.OK, dataContext.EventLocations.ToList().Select(l => new EventLocationModel(l)));
+                var locations = Mapper.Map<List<EventLocation>, List<EventLocationModel>>(dataContext.EventLocations.ToList());
+                return Request.CreateResponse(HttpStatusCode.OK, locations);
             }
             catch (Exception error)
             {
@@ -48,11 +53,9 @@ namespace Hambasafe.Server.Controllers.v1
             {
                 var dataContext = new HambasafeDataContext();
 
-                var entities = dataContext.EventLocations
+                var locations = Mapper.Map<List<EventLocation>, List<EventLocationModel>>(dataContext.EventLocations
                                           .Where(el => el.Suburb.ToLower() == suburb.ToLower())
-                                          .ToArray();
-
-                var locations = entities.Select(e => new EventLocationModel(e));
+                                          .ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, locations);
             }

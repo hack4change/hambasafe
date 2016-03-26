@@ -27,8 +27,8 @@ namespace Hambasafe.Logic.Services
         public Task<List<Event>> FindAll()
         {
             return  Repository.FindAll().Include(e => e.EventType)
-                                      .Include(e => e.StartEventLocation)
-                                      .Include(e => e.EndEventLocation).ToListAsync();
+                                      .Include(e => e.StartLocation)
+                                      .Include(e => e.EndLocation).ToListAsync();
         }
         public Task<Event> FindById(int id)
         {

@@ -6,7 +6,6 @@ namespace Hambasafe.DataAccess.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     public  class EventLocation
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EventLocation()
         {
             //this.Events = new HashSet<Event>();

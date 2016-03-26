@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,18 +10,21 @@ using Hambasafe.Server.Services.Configuration;
 using Hambasafe.Server.Services.TableStorage;
 using Hambasafe.DataAccess.Entities;
 using Hambasafe.Server.Models.v1;
+using AutoMapper;
 
 namespace Hambasafe.Server.Controllers.v1
 {
     [RoutePrefix("v1")]
     public class EventTypeController : ApiControllerBase
     {
-        public EventTypeController(IConfigurationService configuration, ITableStorageService tableStorage) :
+        IMapper Mapper;
+        public EventTypeController(IConfigurationService configuration, ITableStorageService tableStorage, IMapper mapper) :
             base(configuration, tableStorage)
         {
+            Mapper = mapper;
         }
 
-      
+
         [AllowAnonymous]
         [Route("event-types"), HttpGet]
         public async Task<HttpResponseMessage> GetEventTypes()
@@ -29,8 +32,7 @@ namespace Hambasafe.Server.Controllers.v1
             HambasafeDataContext context = new HambasafeDataContext();
             try
             {
-                var eventTypes = context.EventTypes.ToList().Select(et => new EventTypeModel(et));
-
+                var eventTypes = Mapper.Map<List<EventType>, List<EventTypeModel>>(context.EventTypes.ToList());
                 return Request.CreateResponse(HttpStatusCode.OK, eventTypes);
             }
             catch (Exception error)

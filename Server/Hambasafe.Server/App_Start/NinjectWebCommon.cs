@@ -13,6 +13,7 @@ namespace Hambasafe.Server.App_Start
     using Ninject;
     using Ninject.Web.Common;
     using DataAccess;
+    using AutoMapper;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -66,6 +67,9 @@ namespace Hambasafe.Server.App_Start
             kernel.Load(Assembly.GetExecutingAssembly());
             kernel.Load(new DataAccessModule());
             kernel.Load(new LogicModule());
+            var config = new MapperConfiguration(i => i.AddProfile<AutoMapperProfile>());
+            var mapper = config.CreateMapper();
+            kernel.Bind<IMapper>().ToConstant(mapper).InSingletonScope();
         }        
     }
 }
