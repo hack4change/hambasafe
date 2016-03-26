@@ -12,7 +12,7 @@ namespace Hambasafe.Server.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-
+    using DataAccess;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -64,6 +64,8 @@ namespace Hambasafe.Server.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load(Assembly.GetExecutingAssembly());
+            kernel.Load(new DataAccessModule());
+            kernel.Load(new LogicModule());
         }        
     }
 }

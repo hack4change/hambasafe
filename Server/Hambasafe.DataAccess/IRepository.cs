@@ -12,7 +12,7 @@ namespace Hambasafe.DataAccess
     {
         IQueryable<TEntity> GetAll();
         bool Any(Expression<Func<TEntity, bool>> where = null);
-        TEntity FindOne(Expression<Func<TEntity, bool>> where = null);
+        TEntity First(Expression<Func<TEntity, bool>> where = null);
         IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null);
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
@@ -56,14 +56,14 @@ namespace Hambasafe.DataAccess
             DbContext.SaveChanges();
         }
 
-        public IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null)
+        public virtual IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null)
         {
             return null != where ? Entities.Where(where) : Entities;
         }
 
-        public TEntity FindOne(Expression<Func<TEntity, bool>> where = null)
+        public TEntity First(Expression<Func<TEntity, bool>> where = null)
         {
-            return FindAll(where).FirstOrDefault();
+            return Entities.First(where);
         }
 
         public IQueryable<TEntity> GetAll()

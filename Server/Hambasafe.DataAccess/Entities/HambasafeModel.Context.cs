@@ -11,7 +11,7 @@ namespace Hambasafe.DataAccess.Entities
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["HambasafeDataContext"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["localSql"].ConnectionString;
             optionsBuilder.UseSqlServer(connectionString);
         }
 
