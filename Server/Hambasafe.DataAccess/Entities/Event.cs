@@ -43,6 +43,7 @@ namespace Hambasafe.DataAccess.Entities
 
         public virtual EventType EventType { get; set; }
 
+        [ForeignKey("OwnerUserId")]
         public virtual User OwnerUser { get; set; }
 
         public virtual ICollection<Invitation> Invitations { get; set; }

@@ -14,6 +14,9 @@ namespace Hambasafe.Server.App_Start
     using Ninject.Web.Common;
     using DataAccess;
     using AutoMapper;
+    using System.Configuration;
+    using Microsoft.Data.Entity.Infrastructure;
+    using Logic;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -70,6 +73,8 @@ namespace Hambasafe.Server.App_Start
             var config = new MapperConfiguration(i => i.AddProfile<AutoMapperProfile>());
             var mapper = config.CreateMapper();
             kernel.Bind<IMapper>().ToConstant(mapper).InSingletonScope();
+            var connectionString = ConfigurationManager.ConnectionStrings["localSql"].ConnectionString;
+            
         }        
     }
 }

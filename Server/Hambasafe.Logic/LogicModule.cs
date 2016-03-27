@@ -3,7 +3,7 @@ using Hambasafe.Logic.Services;
 using Microsoft.Data.Entity;
 using Ninject.Modules;
 
-namespace Hambasafe.DataAccess
+namespace Hambasafe.Logic
 {
     public class LogicModule : NinjectModule
     {

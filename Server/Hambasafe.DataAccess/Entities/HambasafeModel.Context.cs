@@ -3,7 +3,7 @@ using System.Configuration;
 
 namespace Hambasafe.DataAccess.Entities
 {
-   
+
     public class HambasafeDataContext : DbContext
     {
         public HambasafeDataContext()
@@ -11,8 +11,15 @@ namespace Hambasafe.DataAccess.Entities
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["localSql"].ConnectionString;
-            optionsBuilder.UseSqlServer(connectionString);
+            if (bool.Parse(ConfigurationManager.AppSettings["HambasafeDataContext"]))
+            {
+                var connectionString = ConfigurationManager.ConnectionStrings["localSql"].ConnectionString;
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+            else
+            {
+                optionsBuilder.UseInMemoryDatabase();
+            }
         }
 
 
