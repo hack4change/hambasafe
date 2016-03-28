@@ -17,7 +17,7 @@ namespace HambaSafe.Logic.UnitTests.Services
         IEventService EventService { get; set; }
         public EventServiceTest()
         {
-            var kernel = new StandardKernel(new DataAccessModule(), new LogicModule());
+            var kernel = Bootstrapper.Kernel;
             EventService = kernel.Get<IEventService>();
           
         }
@@ -33,7 +33,8 @@ namespace HambaSafe.Logic.UnitTests.Services
             var c = await EventService.FindById(2);
             Assert.Equal(c.Id, 2);
         }
-        
+       
+
     }
     public class DatabaseFixture : IDisposable
     {
