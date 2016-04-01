@@ -1,15 +1,13 @@
 using System.Reflection;
 using Ninject;
-using Hambasafe.DataAccess;
-using Hambasafe.Logic;
 
-namespace Hambasafe.Logic
+namespace HambaSafe.Logic.UnitTests
 {
 
     public static class Bootstrapper
     {
         private static StandardKernel _kernel;
-        private static object syncRoot = new object();
+        private static readonly object SyncRoot = new object();
         
         public static IKernel Kernel
         {
@@ -18,7 +16,7 @@ namespace Hambasafe.Logic
                 // Singleton https://msdn.microsoft.com/en-us/library/ff650316.aspx
                 if (_kernel == null)
                 {
-                    lock (syncRoot)
+                    lock (SyncRoot)
                     {
                         if (_kernel == null)
                         {
@@ -47,8 +45,8 @@ namespace Hambasafe.Logic
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Load(Assembly.GetExecutingAssembly());
-            kernel.Load(new DataAccessModule());
-            kernel.Load(new LogicModule());
+           // kernel.Load(new DataAccessModule());
+       //     kernel.Load(new LogicModule());
 
 
 

@@ -1,6 +1,4 @@
-﻿using Hambasafe.DataAccess.Entities;
-using Hambasafe.Logic.Services;
-using Microsoft.Data.Entity;
+﻿using Hambasafe.Logic.Services;
 using Ninject.Modules;
 
 namespace Hambasafe.Logic

@@ -49,12 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hambasafe.Server\Hambasafe.Server.csproj">
-      <Project>{ddcef958-1fb7-4d76-bfb5-c9271ad84791}</Project>
-      <Name>Hambasafe.Server</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

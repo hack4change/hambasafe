@@ -334,10 +334,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hambasafe.DataAccess\Hambasafe.DataAccess.csproj">
-      <Project>{ce1e56a3-f9c9-45e4-aac2-7125591febce}</Project>
-      <Name>Hambasafe.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Hambasafe.Logic\Hambasafe.Logic.csproj">
       <Project>{167f2c9e-7a36-4dee-a2f5-08d3cafd9177}</Project>
       <Name>Hambasafe.Logic</Name>

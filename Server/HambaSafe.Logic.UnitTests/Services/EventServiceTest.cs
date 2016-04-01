@@ -1,6 +1,5 @@
 ﻿using Hambasafe.DataAccess;
 using Hambasafe.DataAccess.Entities;
-using Hambasafe.Logic;
 using Hambasafe.Logic.Services;
 using Ninject;
 using System;

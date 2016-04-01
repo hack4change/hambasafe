@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Hambasafe.DataLayer;
+using Hambasafe.DataLayer.Entities;
+using Microsoft.Data.Entity;
 
-namespace Hambasafe.Logic.Services
+namespace Hambasafe.Services.Services
 {
 
     public interface IEventService
@@ -12,22 +15,23 @@ namespace Hambasafe.Logic.Services
     }
     public class EventService : IEventService
     {
-        IRepository<Event> Repository;
+        readonly IRepository<Event> _repository;
         public EventService(IRepository<Event> repository)
         {
-            Repository = repository;
+            _repository = repository;
         }
         public Task<List<Event>> FindAll()
         {
-            return Repository.FindAll()
+            return _repository.FindAll()
                 .Include(e => e.OwnerUser)
                 .Include(e => e.EventType)
                 .Include(e => e.StartLocation)
-                .Include(e => e.EndLocation).ToListAsync();
+                .Include(e => e.EndLocation)
+                .ToListAsync();
         }
         public Task<Event> FindById(int id)
         {
-            return Repository.First(i => i.Id == id);
+            return _repository.First(i => i.Id == id);
         }
     }
 }

@@ -129,12 +129,7 @@
     <Compile Include="Services\EventService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hambasafe.DataAccess\Hambasafe.DataAccess.csproj">
-      <Project>{ce1e56a3-f9c9-45e4-aac2-7125591febce}</Project>
-      <Name>Hambasafe.DataAccess</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
