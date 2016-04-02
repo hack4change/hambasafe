@@ -14,9 +14,9 @@ namespace Hambasafe.Api.Controllers.v1
     [Route("v1/[controller]")]
     public class EventsController
     {
-        private readonly EventService _eventService;
-        readonly IMapper _mapper;
-        public EventsController(EventService eventService, IMapper mapper)
+        private readonly IEventService _eventService;
+        private readonly IMapper _mapper;
+        public EventsController(IEventService eventService, IMapper mapper)
 
         {
             _eventService = eventService;

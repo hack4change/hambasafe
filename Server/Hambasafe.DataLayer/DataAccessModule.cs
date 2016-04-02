@@ -9,6 +9,7 @@ namespace Hambasafe.DataLayer
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<HambasafeDataContext>().As<DbContext>();
+            builder.RegisterType<HambasafeDataContext>().AsSelf();
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>));
         }
     }

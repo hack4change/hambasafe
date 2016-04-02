@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hambasafe.UnitTests", "Hambasafe.UnitTests\Hambasafe.UnitTests.csproj", "{219065E7-CC0A-47A8-A057-45A7C1B3CBCF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HambaSafe.Logic.UnitTests", "HambaSafe.Logic.UnitTests\HambaSafe.Logic.UnitTests.csproj", "{BAD2EF08-80F2-4A7C-9812-BD7E79E65254}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hambasafe.Api", "Hambasafe.Api\Hambasafe.Api.xproj", "{B7648D16-67FA-4A90-B76C-CA32527E1565}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hambasafe.Services", "Hambasafe.Services\Hambasafe.Services.xproj", "{5F49FFE7-AAC1-44F0-91AE-A7A8F41DFAD7}"
@@ -15,20 +11,14 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hambasafe.DataLayer", "Hamb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hambasafe.Server", "Hambasafe.Server\Hambasafe.Server.csproj", "{DDCEF958-1FB7-4D76-BFB5-C9271AD84791}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Hambasafe.Services.Tests", "Hambasafe.Services.Tests\Hambasafe.Services.Tests.xproj", "{FBFE8EAE-D96E-41CA-A7EA-9A6CFD4D95FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{219065E7-CC0A-47A8-A057-45A7C1B3CBCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{219065E7-CC0A-47A8-A057-45A7C1B3CBCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{219065E7-CC0A-47A8-A057-45A7C1B3CBCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{219065E7-CC0A-47A8-A057-45A7C1B3CBCF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BAD2EF08-80F2-4A7C-9812-BD7E79E65254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAD2EF08-80F2-4A7C-9812-BD7E79E65254}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BAD2EF08-80F2-4A7C-9812-BD7E79E65254}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BAD2EF08-80F2-4A7C-9812-BD7E79E65254}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B7648D16-67FA-4A90-B76C-CA32527E1565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7648D16-67FA-4A90-B76C-CA32527E1565}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7648D16-67FA-4A90-B76C-CA32527E1565}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +35,10 @@ Global
 		{DDCEF958-1FB7-4D76-BFB5-C9271AD84791}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDCEF958-1FB7-4D76-BFB5-C9271AD84791}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDCEF958-1FB7-4D76-BFB5-C9271AD84791}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBFE8EAE-D96E-41CA-A7EA-9A6CFD4D95FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBFE8EAE-D96E-41CA-A7EA-9A6CFD4D95FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBFE8EAE-D96E-41CA-A7EA-9A6CFD4D95FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBFE8EAE-D96E-41CA-A7EA-9A6CFD4D95FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

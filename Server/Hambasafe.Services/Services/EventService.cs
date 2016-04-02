@@ -18,6 +18,7 @@ namespace Hambasafe.Services.Services
         readonly IRepository<Event> _repository;
         public EventService(IRepository<Event> repository)
         {
+
             _repository = repository;
         }
         public Task<List<Event>> FindAll()

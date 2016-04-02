@@ -6,18 +6,22 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Hambasafe.Api.Models.v1;
 using Hambasafe.DataLayer.Entities;
+using Hambasafe.Services.Services;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 
 namespace Hambasafe.Api.Controllers.v1
 {
     [Route("v1")]
-    public class UsersController 
+    public class UsersController
     {
         IMapper Mapper;
-        public UsersController( IMapper mapper) 
+        private readonly IUserService _userService;
+
+        public UsersController(IMapper mapper, IUserService userService)
         {
             Mapper = mapper;
+            _userService = userService;
         }
 
         //[AllowAnonymous]
@@ -41,13 +45,12 @@ namespace Hambasafe.Api.Controllers.v1
         /// </summary>
         [AllowAnonymous]
         [Route("users"), HttpGet]
-        public List<UserModel> GetAllUsers()
+        public async Task<List<UserModel>> GetAllUsers()
         {
-            using (var context = new HambasafeDataContext())
-            {
-                return Mapper.Map<List<User>, List<UserModel>>(context.Users.ToList());
+            var users = await _userService.FindAll();
+            return Mapper.Map<List<User>, List<UserModel>>(users);
 
-            }
+
         }
 
         /// <summary>
@@ -57,14 +60,8 @@ namespace Hambasafe.Api.Controllers.v1
         [Route("users-by-name"), HttpGet]
         public async Task<List<UserModel>> GetUsers(string username)
         {
-           
-                HambasafeDataContext context = new HambasafeDataContext();
-
-                var users = Mapper.Map<List<User>, List<UserModel>>(context.Users.Where(a => a.FirstNames.ToUpper().Contains(username.ToUpper()) ||
-                                                     a.LastName.ToUpper().Contains(username.ToUpper())).ToList());
-
-                return users;
-            
+            var users = await _userService.FindAllByUsername(username);
+            return Mapper.Map<List<User>, List<UserModel>>(users);
         }
 
         /// <summary>
@@ -74,15 +71,8 @@ namespace Hambasafe.Api.Controllers.v1
         [Route("user"), HttpGet]
         public async Task<UserModel> GetUser(int id)
         {
-                HambasafeDataContext context = new HambasafeDataContext();
-
-                var userEntity = context.Users.FirstOrDefault(e => e.Id == id);
-
-                var user = Mapper.Map<UserModel>(userEntity);
-
-                return  user;
-            
-            
+            var userEntity = await _userService.FindById(id);
+            return Mapper.Map<UserModel>(userEntity);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Hambasafe.DataLayer
         void AddRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
         void Delete(TEntity entity);
+        void DeleteRange(IEnumerable<TEntity> entities);
         IQueryable<TEntity> Items { get; }
     }
     public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class
@@ -29,6 +30,12 @@ namespace Hambasafe.DataLayer
         public EfRepository(HambasafeDataContext dbContext)
         {
             DbContext = dbContext;
+        }
+
+        public void DeleteRange(IEnumerable<TEntity> entities)
+        {
+            Entities.RemoveRange(entities);
+            DbContext.SaveChangesAsync();
         }
 
         public IQueryable<TEntity> Items => Entities;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
 
 namespace Hambasafe.DataLayer.Entities
 {
@@ -8,7 +9,9 @@ namespace Hambasafe.DataLayer.Entities
         public HambasafeDataContext()
         {
         }
-     
+        public HambasafeDataContext(DbContextOptions options) : base(options)
+        {
+        }
 
 
         public virtual DbSet<Attendance> Attendances { get; set; }

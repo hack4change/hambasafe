@@ -12,12 +12,12 @@ using Microsoft.Data.Entity;
 namespace Hambasafe.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController
+    public class ValuesController : Controller
     {
-        private readonly EventService _eventRepository;
+        private readonly IEventService _eventRepository;
         private readonly IMapper _mapper;
 
-        public ValuesController(EventService eventRepository, IMapper mapper)
+        public ValuesController(IEventService eventRepository, IMapper mapper)
         {
             _eventRepository = eventRepository;
             _mapper = mapper;
@@ -25,11 +25,10 @@ namespace Hambasafe.Api.Controllers
 
         // GET: api/values
         [HttpGet]
-        public async Task<IEnumerable<EventModel>> Get()
+        public string Get()
         {
-          
-            var events = await _eventRepository.FindAll();
-            return _mapper.Map<List<Event>, List<EventModel>>(events);
+
+            return "Swagger/ui";
         }
 
         // GET api/values/5
