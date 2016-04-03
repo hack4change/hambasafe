@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "HambaSafe.DataLayer Class Library",
   "authors": [ "madan" ],
@@ -17,5 +17,8 @@
         "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final"
       }
     }
+  },
+  "dependencies": {
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
   }
 }

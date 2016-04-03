@@ -1,58 +1,103 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Net.Http;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using Hambasafe.Api.Models;
 using Hambasafe.Api.Models.v1;
 using Hambasafe.DataLayer.Entities;
+using HambaSafe.DataLayer.Entities;
 using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Http.Authentication;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Newtonsoft.Json;
 
 namespace Hambasafe.Api.Controllers.v1
 {
-    [Route("v1")]
-    public class AuthenticationController 
+    [Route("v1/[controller]")]
+  //  [Authorize(ActiveAuthenticationSchemes = "Bearer")]
+    public class AuthenticationController : Controller
     {
-        public AuthenticationController() { 
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly TokenAuthOptions _tokenOptions;
+
+        public AuthenticationController(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            TokenAuthOptions tokenOptions)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _tokenOptions = tokenOptions;
         }
+        public class FacebookUserViewModel
+        {
+            [JsonProperty("id")]
+            public string ID { get; set; }
+            [JsonProperty("name")]
+            public string FirstName { get; set; }
+            [JsonProperty("last_name")]
+            public string LastName { get; set; }
+            [JsonProperty("username")]
+            public string Username { get; set; }
+            [JsonProperty("email")]
+            public string Email { get; set; }
+        }
+        [HttpPost]
 
         [AllowAnonymous]
-        [Route("register"), HttpGet]
-        public async Task<HttpStatusCode> Register(RegisterModel registerModel)
+        [Route("ExternalLogin")]
+        public async Task<dynamic> VerifyFacebookAccessToken([FromForm]string accessToken)
         {
-           
-                var dataContext = new HambasafeDataContext();
-
-                // Create new user
-                var User = new User()
-                {
-                    FirstNames = registerModel.FirstNames,
-                    LastName = registerModel.LastName,
-                    Gender = registerModel.Gender,
-                    DateOfBirth = registerModel.DateOfBirth,
-                    Status = "created",
-                    MobileNumber = registerModel.MobileNumber,
-                    EmailAddress = registerModel.EmailAddress,
-                    DateCreated = new DateTime(),
-                    DateLastLogin = new DateTime()
-                };
-
-                // Create the token
-                var key = Encoding.UTF8.GetBytes(registerModel.Password.ToUpper());
-                string hashString;
-
-                //using (var hmac = new HMACSHA256(key))
-                //{
-                //    var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes());
-                //    hashString = Convert.ToBase64String(hash);
-                //}
-
-                //return hashString;
-
-
-
-                return HttpStatusCode.OK;
             
-           
+            
+            var path = "https://graph.facebook.com/me?access_token=" + accessToken;
+            var client = new HttpClient();
+            var uri = new Uri(path);
+            var response = await client.GetAsync(uri);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var fbUser  = Newtonsoft.Json.JsonConvert.DeserializeObject<FacebookUserViewModel>(content);
+                return new {token = GetToken("test",DateTime.Now.AddHours(20))};
+
+            }
+
+            return HttpStatusCode.Unauthorized;
         }
+     
+
+
+
+      
+      
+
+
+        private string GetToken(string user, DateTime? expires)
+        {
+            var handler = new JwtSecurityTokenHandler();
+
+            // Here, you should create or look up an identity for the user which is being authenticated.
+            // For now, just creating a simple generic identity.
+            ClaimsIdentity identity = new ClaimsIdentity(new GenericIdentity(user, "TokenAuth"), new[] { new Claim("EntityID", "1", ClaimValueTypes.Integer) });
+
+            var securityToken = handler.CreateToken(
+                issuer: _tokenOptions.Issuer,
+                audience: _tokenOptions.Audience,
+                signingCredentials: _tokenOptions.SigningCredentials,
+                subject: identity,
+                expires: expires
+                );
+            return handler.WriteToken(securityToken);
+        }
+        
     }
 }

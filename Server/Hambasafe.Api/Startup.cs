@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.AspNet.Builder;
@@ -12,11 +14,24 @@ using Microsoft.Data.Entity;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Hambasafe.Api.Models.v1;
+using Hambasafe.DataLayer.Entities;
+using HambaSafe.DataLayer.Entities;
+using Microsoft.AspNet.Authentication.JwtBearer;
+using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Diagnostics;
+using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 
 namespace Hambasafe.Api
 {
     public class Startup
     {
+        const string TokenAudience = "ExampleAudience";
+        const string TokenIssuer = "ExampleIssuer";
+        private RsaSecurityKey key;
+        private TokenAuthOptions tokenOptions;
+
         public Startup(IHostingEnvironment env)
         {
             // Set up configuration sources.
@@ -33,11 +48,32 @@ namespace Hambasafe.Api
         {
             services.AddEntityFramework()
                     .AddSqlServer()
-                    .AddDbContext<Hambasafe.DataLayer.Entities.HambasafeDataContext>(options =>
+                    .AddDbContext<HambasafeDataContext>(options =>
                                  options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+            services.AddEntityFramework()
+                  .AddSqlServer()
+                  .AddDbContext<ApplicationDbContext>(options =>
+                               options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+           
             services.AddMvc();
             services.AddSwaggerGen();
             var containerBuilder = new ContainerBuilder();
+            RSAParameters keyParams = RSAKeyUtils.GetRandomKey();
+
+            // Create the key, and a set of token options to record signing credentials 
+            // using that key, along with the other parameters we will need in the 
+            // token controlller.
+            key = new RsaSecurityKey(keyParams);
+            tokenOptions = new TokenAuthOptions()
+            {
+                Audience = TokenAudience,
+                Issuer = TokenIssuer,
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256Signature)
+            };
+            containerBuilder.RegisterInstance(tokenOptions).As<TokenAuthOptions>();
             containerBuilder.RegisterModule<DataLayer.DataAccessModule>();
             containerBuilder.RegisterModule<Services.ServicesModule>();
             var config = new MapperConfiguration(i => i.AddProfile<AutoMapperProfile>());
@@ -56,6 +92,66 @@ namespace Hambasafe.Api
             loggerFactory.AddDebug();
 
             app.UseIISPlatformHandler();
+            app.UseIdentity();
+            app.UseFacebookAuthentication(o =>
+            {
+                o.AppId = "216973471993488";
+                o.AppSecret = "ad89d09791b171b006f831095fb1f274";
+            });
+
+            app.UseExceptionHandler(appBuilder =>
+            {
+                appBuilder.Use(async (context, next) =>
+                {
+                    var error = context.Features[typeof(IExceptionHandlerFeature)] as IExceptionHandlerFeature;
+                    // This should be much more intelligent - at the moment only expired 
+                    // security tokens are caught - might be worth checking other possible 
+                    // exceptions such as an invalid signature.
+                    if (error != null && error.Error is SecurityTokenExpiredException)
+                    {
+                        context.Response.StatusCode = 401;
+                        // What you choose to return here is up to you, in this case a simple 
+                        // bit of JSON to say you're no longer authenticated.
+                        context.Response.ContentType = "application/json";
+                        await context.Response.WriteAsync(
+                            JsonConvert.SerializeObject(
+                                new { authenticated = false, tokenExpired = true }));
+                    }
+                    else if (error != null && error.Error != null)
+                    {
+                        context.Response.StatusCode = 500;
+                        context.Response.ContentType = "application/json";
+                        // TODO: Shouldn't pass the exception message straight out, change this.
+                        await context.Response.WriteAsync(
+                            JsonConvert.SerializeObject
+                            (new { success = false, error = error.Error.Message }));
+                    }
+                    // We're not trying to handle anything else so just let the default 
+                    // handler handle.
+                    else await next();
+                });
+            });
+
+            app.UseJwtBearerAuthentication(options =>
+            {
+                // Basic settings - signing key to validate with, audience and issuer.
+                options.TokenValidationParameters.IssuerSigningKey = key;
+                options.TokenValidationParameters.ValidAudience = tokenOptions.Audience;
+                options.TokenValidationParameters.ValidIssuer = tokenOptions.Issuer;
+
+                // When receiving a token, check that we've signed it.
+                options.TokenValidationParameters.ValidateSignature = true;
+
+                // When receiving a token, check that it is still valid.
+                options.TokenValidationParameters.ValidateLifetime = true;
+
+                // This defines the maximum allowable clock skew - i.e. provides a tolerance on the token expiry time 
+                // when validating the lifetime. As we're creating the tokens locally and validating them on the same 
+                // machines which should have synchronised time, this can be set to zero. Where external tokens are
+                // used, some leeway here could be useful.
+                options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(0);
+            });
+
             app.UseMvc();
             app.UseSwaggerGen();
             app.UseSwaggerUi();

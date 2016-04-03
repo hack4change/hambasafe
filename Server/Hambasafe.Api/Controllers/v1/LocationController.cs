@@ -11,7 +11,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace Hambasafe.Api.Controllers.v1
 {
-    [Route("v1")]
+    [Route("v1/[controller]")]
     public class LocationController 
     {
         IMapper Mapper;

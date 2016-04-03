@@ -1,8 +1,13 @@
-﻿using Microsoft.Data.Entity;
+﻿using HambaSafe.DataLayer.Entities;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 
 namespace Hambasafe.DataLayer.Entities
 {
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+    }
 
     public class HambasafeDataContext : DbContext
     {

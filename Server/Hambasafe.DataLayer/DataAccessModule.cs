@@ -10,6 +10,7 @@ namespace Hambasafe.DataLayer
         {
             builder.RegisterType<HambasafeDataContext>().As<DbContext>();
             builder.RegisterType<HambasafeDataContext>().AsSelf();
+            builder.RegisterType<ApplicationDbContext>().AsSelf();
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>));
         }
     }
