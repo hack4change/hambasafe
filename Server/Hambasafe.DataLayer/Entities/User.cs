@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace Hambasafe.DataLayer.Entities
 {
 
-    public class User : IdentityUser<int>
+    public class User 
     {
         public User()
         {
@@ -24,7 +24,7 @@ namespace Hambasafe.DataLayer.Entities
         }
         [Key]
         [Column("UserId")]
-        
+        public int Id { get; set; }
         public string Token { get; set; }
         public string FirstNames { get; set; }
         public string LastName { get; set; }
