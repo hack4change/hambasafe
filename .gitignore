@@ -47,4 +47,5 @@ packages/
 *.DotSettings
 *.DS_Store
 *NCrunch*
+*.lock.json
 /Client/www/lib
