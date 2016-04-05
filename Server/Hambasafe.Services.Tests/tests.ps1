@@ -1,1 +1,1 @@
-dnx Hambasafe.Services.Tests.xproj test
+& $env:USERPROFILE\.dnx\bin\dnx Hambasafe.Services.Tests.xproj test
