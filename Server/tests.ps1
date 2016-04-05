@@ -1,1 +1,0 @@
-& dnx -p "Hambasafe.Services.Tests\" test 
