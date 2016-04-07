@@ -1,33 +1,51 @@
-/.idea
 #ignore thumbnails created by windows
 Thumbs.db
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio 2015 cache/options directory
+.vs/
+
+# DNX
+project.lock.json
+artifacts/
+
 #Ignore files build by Visual Studio
 *.obj
 *.pdb
-*.user
 *.aps
 *.pch
 *.vspscc
 *_i.c
 *_p.c
 *.ncb
-*.suo
 *.tlb
 *.tlh
 *.bak
 *.ilk
 *.log
 .vsmdi
-[Bb]in
-[Dd]ebug*/
 *.lib
 *.sbr
-obj/
-[Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
 packages/
-.vs/
 *.msi
 *.wixpdb
 ~$*
@@ -47,5 +65,5 @@ packages/
 *.DotSettings
 *.DS_Store
 *NCrunch*
-*.lock.json
 /Client/www/lib
+/.idea
