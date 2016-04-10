@@ -27,13 +27,13 @@ namespace Hambasafe.DataLayer
             return Entities.AsQueryable();
         }
 
-        public bool Any(Expression<Func<TEntity, bool>> where = null)
-        {
-            return Entities.Any(where);
-        }
-
         public Task<TEntity> First(Expression<Func<TEntity, bool>> where = null)
         {
+            if (where == null)
+            {
+                where = e => true;
+            }
+
             return Entities.FirstAsync(where);
         }
 
@@ -42,70 +42,37 @@ namespace Hambasafe.DataLayer
             return null != where ? Entities.Where(where) : Entities;
         }
 
-        public void Add(TEntity entity)
+        public Task<int> Add(TEntity entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            // TODO : Return entity here with id
-            AddRange(entity.ToEnumerable());
+            return AddRange(entity.ToEnumerable());
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public Task<int> AddRange(IEnumerable<TEntity> entities)
         {
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
-
             Entities.AddRange(entities);
-            DbContext.SaveChanges();
-
-            // TODO : Return entities here with id
+            return DbContext.SaveChangesAsync();
         }
 
-        public void Update(TEntity entity)
+        public Task<int> Update(TEntity entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            UpdateRange(entity.ToEnumerable());
+            return UpdateRange(entity.ToEnumerable());
         }
 
-        public void UpdateRange(IEnumerable<TEntity> entities)
+        public Task<int> UpdateRange(IEnumerable<TEntity> entities)
         {
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
-
             Entities.UpdateRange(entities);
-            DbContext.SaveChanges();
+            return DbContext.SaveChangesAsync();
         }
 
-        public void Delete(TEntity entity)
+        public Task<int> Delete(TEntity entity)
         {
-            if (entity == null)
-            {
-                throw new ArgumentNullException(nameof(entity));
-            }
-
-            DeleteRange(entity.ToEnumerable());
+            return DeleteRange(entity.ToEnumerable());
         }
 
-        public void DeleteRange(IEnumerable<TEntity> entities)
+        public Task<int> DeleteRange(IEnumerable<TEntity> entities)
         {
-            if (entities == null)
-            {
-                throw new ArgumentNullException(nameof(entities));
-            }
-
             Entities.RemoveRange(entities);
-            DbContext.SaveChangesAsync();
+            return DbContext.SaveChangesAsync();
         }
     }
 }
