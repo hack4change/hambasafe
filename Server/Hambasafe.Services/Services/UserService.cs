@@ -6,33 +6,35 @@ using Microsoft.Data.Entity;
 
 namespace Hambasafe.Services.Services
 {
-
     public interface IUserService
     {
-
         Task<List<User>> FindAll();
         Task<User> FindById(int id);
         Task<List<User>> FindAllByUsername(string username);
     }
-    public class UserService : IUserService
+
+    public class UserService : ServiceBase<User>, IUserService
     {
-        readonly IRepository<User> _repository;
-        public UserService(IRepository<User> repository)
+        public UserService(IRepository<User> repository) : base(repository)
         {
-            _repository = repository;
         }
+
         public Task<List<User>> FindAll()
         {
-            return _repository.FindAll().ToListAsync();
+            return Repository.FindAll()
+                             .ToListAsync();
         }
+
         public Task<List<User>> FindAllByUsername(string username)
         {
             //case matching is done by the db.
-            return _repository.FindAll(a => a.FirstNames.Contains(username) || a.LastName.Contains(username)).ToListAsync();
+            return Repository.FindAll(a => a.FirstNames.Contains(username) || a.LastName.Contains(username))
+                             .ToListAsync();
         }
+
         public Task<User> FindById(int id)
         {
-            return _repository.First(i => i.Id == id);
+            return Repository.First(u => u.Id == id);
         }
     }
 }
