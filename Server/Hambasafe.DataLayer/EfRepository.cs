@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
+using Hambasafe.DataLayer.Extensions;
 using Microsoft.Data.Entity;
 
 namespace Hambasafe.DataLayer
@@ -15,8 +17,6 @@ namespace Hambasafe.DataLayer
 
         private DbSet<TEntity> Entities => DbContext.Set<TEntity>();
 
-        public IQueryable<TEntity> Items => Entities;
-
         public EfRepository(HambasafeDataContext dbContext)
         {
             DbContext = dbContext;
@@ -24,7 +24,7 @@ namespace Hambasafe.DataLayer
 
         public IQueryable<TEntity> GetAll()
         {
-            return Items.AsQueryable();
+            return Entities.AsQueryable();
         }
 
         public bool Any(Expression<Func<TEntity, bool>> where = null)
@@ -49,10 +49,8 @@ namespace Hambasafe.DataLayer
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            Entities.Add(entity);
-            DbContext.SaveChanges();
-
             // TODO : Return entity here with id
+            AddRange(entity.ToEnumerable());
         }
 
         public void AddRange(IEnumerable<TEntity> entities)
@@ -75,7 +73,17 @@ namespace Hambasafe.DataLayer
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            Entities.Update(entity);
+            UpdateRange(entity.ToEnumerable());
+        }
+
+        public void UpdateRange(IEnumerable<TEntity> entities)
+        {
+            if (entities == null)
+            {
+                throw new ArgumentNullException(nameof(entities));
+            }
+
+            Entities.UpdateRange(entities);
             DbContext.SaveChanges();
         }
 
@@ -86,8 +94,7 @@ namespace Hambasafe.DataLayer
                 throw new ArgumentNullException(nameof(entity));
             }
 
-            Entities.Remove(entity);
-            DbContext.SaveChangesAsync();
+            DeleteRange(entity.ToEnumerable());
         }
 
         public void DeleteRange(IEnumerable<TEntity> entities)

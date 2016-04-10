@@ -15,8 +15,8 @@ namespace Hambasafe.DataLayer
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
         void Update(TEntity entity);
+        void UpdateRange(IEnumerable<TEntity> entities);
         void Delete(TEntity entity);
         void DeleteRange(IEnumerable<TEntity> entities);
-        IQueryable<TEntity> Items { get; }
     }
 }
