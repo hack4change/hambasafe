@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Linq;
 using Autofac;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
 using Hambasafe.Services.Services;
-using HambaSafe.Logic.UnitTests;
-using Microsoft.Data.Entity;
-using Microsoft.Extensions.DependencyInjection;
+using Hambasafe.Logic.UnitTests;
 using Xunit;
 
 namespace Hambasafe.Services.Tests.Services
@@ -20,7 +17,7 @@ namespace Hambasafe.Services.Tests.Services
             var container = Bootstrapper.Container;
             _eventService = container.Resolve<IEventService>();
         }
-       
+
         [Fact]
         public async void FindAll()
         {
@@ -38,8 +35,8 @@ namespace Hambasafe.Services.Tests.Services
     }
     public class EventDatabaseFixture : IDisposable
     {
-        private IRepository<Event> _repository;
-        private Event[] _events = new Event[] { new Event
+        private readonly IRepository<Event> _repository;
+        private readonly Event[] _events = { new Event
             {
                 Id = 1
             },

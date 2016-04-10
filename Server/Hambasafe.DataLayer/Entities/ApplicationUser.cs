@@ -1,9 +1,8 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace HambaSafe.DataLayer.Entities
+namespace Hambasafe.DataLayer.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-
     }
 }

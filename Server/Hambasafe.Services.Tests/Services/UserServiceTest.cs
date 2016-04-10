@@ -4,7 +4,7 @@ using Autofac;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
 using Hambasafe.Services.Services;
-using HambaSafe.Logic.UnitTests;
+using Hambasafe.Logic.UnitTests;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;

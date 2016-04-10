@@ -1,29 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
-using Hambasafe.Api.Models;
-using Hambasafe.Api.Models.v1;
 using Hambasafe.DataLayer.Entities;
-using HambaSafe.DataLayer.Entities;
 using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Http.Authentication;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
 
 namespace Hambasafe.Api.Controllers.v1
 {
     [Route("v1/[controller]")]
-  //  [Authorize(ActiveAuthenticationSchemes = "Bearer")]
+    //  [Authorize(ActiveAuthenticationSchemes = "Bearer")]
     public class AuthenticationController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -38,6 +29,7 @@ namespace Hambasafe.Api.Controllers.v1
             _signInManager = signInManager;
             _tokenOptions = tokenOptions;
         }
+
         public class FacebookUserViewModel
         {
             [JsonProperty("id")]
@@ -51,14 +43,12 @@ namespace Hambasafe.Api.Controllers.v1
             [JsonProperty("email")]
             public string Email { get; set; }
         }
-        [HttpPost]
 
+        [HttpPost]
         [AllowAnonymous]
         [Route("ExternalLogin")]
         public async Task<dynamic> VerifyFacebookAccessToken([FromForm]string accessToken)
         {
-            
-            
             var path = "https://graph.facebook.com/me?access_token=" + accessToken;
             var client = new HttpClient();
             var uri = new Uri(path);
@@ -66,20 +56,13 @@ namespace Hambasafe.Api.Controllers.v1
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var fbUser  = Newtonsoft.Json.JsonConvert.DeserializeObject<FacebookUserViewModel>(content);
-                return new {token = GetToken("test",DateTime.Now.AddHours(20))};
+                var fbUser = JsonConvert.DeserializeObject<FacebookUserViewModel>(content);
+                return new { token = GetToken("test", DateTime.Now.AddHours(20)) };
 
             }
 
             return HttpStatusCode.Unauthorized;
         }
-     
-
-
-
-      
-      
-
 
         private string GetToken(string user, DateTime? expires)
         {
@@ -96,8 +79,8 @@ namespace Hambasafe.Api.Controllers.v1
                 subject: identity,
                 expires: expires
                 );
+
             return handler.WriteToken(securityToken);
         }
-        
     }
 }

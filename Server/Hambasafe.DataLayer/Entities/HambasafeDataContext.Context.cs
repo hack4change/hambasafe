@@ -1,5 +1,4 @@
-﻿using HambaSafe.DataLayer.Entities;
-using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 
@@ -18,7 +17,7 @@ namespace Hambasafe.DataLayer.Entities
         {
         }
 
-
+        // TODO : Should this not be cahnged to singular? This could maybe be the reason for pluralised table names...
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<AttendanceRating> AttendanceRatings { get; set; }
         public virtual DbSet<BlockedUser> BlockedUsers { get; set; }
