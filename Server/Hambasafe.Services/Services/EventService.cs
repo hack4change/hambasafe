@@ -10,6 +10,7 @@ namespace Hambasafe.Services.Services
     {
         Task<List<Event>> FindAll();
         Task<Event> FindById(int id);
+        Task<int> Add(Event @event);
     }
 
     public class EventService : ServiceBase<Event>, IEventService
@@ -30,7 +31,17 @@ namespace Hambasafe.Services.Services
 
         public Task<Event> FindById(int id)
         {
-            return Repository.First(e => e.Id == id);
+            return Repository.FindAll(e => e.Id == id)
+                             .Include(e => e.OwnerUser)
+                             .Include(e => e.EventType)
+                             .Include(e => e.StartLocation)
+                             .Include(e => e.EndLocation)
+                             .FirstOrDefaultAsync();
+        }
+
+        public Task<int> Add(Event @event)
+        {
+            return Repository.Add(@event);
         }
     }
 }

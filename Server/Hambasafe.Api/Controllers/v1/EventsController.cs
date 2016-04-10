@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hambasafe.Api.Models.v1;
@@ -16,48 +14,40 @@ namespace Hambasafe.Api.Controllers.v1
     {
         private readonly IEventService _eventService;
         private readonly IMapper _mapper;
+
         public EventsController(IEventService eventService, IMapper mapper)
 
         {
             _eventService = eventService;
             _mapper = mapper;
         }
-
-        /// <summary>
-        /// Implemented
-        /// </summary>
+        
         [AllowAnonymous]
         [Route("create-event"), HttpPost]
-        public async Task<HttpStatusCode> CreateEvent(EventModel eventModel)
+        public async Task<EventModel> CreateEvent(EventModel eventModel)
         {
+            var eventEntity = _mapper.Map<Event>(eventModel);
 
-            using (var dataContext = new HambasafeDataContext())
-            {
+            await _eventService.Add(eventEntity);
 
-                var eventEntity = _mapper.Map<Event>(eventModel);
-                dataContext.Events.Add(eventEntity);
-                await dataContext.SaveChangesAsync();
-
-                return HttpStatusCode.OK;
-            }
-
+            return _mapper.Map<EventModel>(eventEntity);
         }
-
-
+        
         [AllowAnonymous]
         [Route("event"), HttpGet]
         public async Task<EventModel> GetEvent(int id)
         {
             var eventEntity = await _eventService.FindById(id);
+
             return _mapper.Map<EventModel>(eventEntity);
         }
-
-
+        
         [AllowAnonymous]
         [Route("events"), HttpGet]
         public async Task<List<EventModel>> GetEvents()
         {
             var events = await _eventService.FindAll();
+
             return _mapper.Map<List<Event>, List<EventModel>>(events);
 
         }
@@ -175,7 +165,5 @@ namespace Hambasafe.Api.Controllers.v1
 
         //    return coord1.GetDistanceTo(coord2);
         //}
-
-
     }
 }
