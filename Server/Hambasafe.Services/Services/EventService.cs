@@ -12,25 +12,28 @@ namespace Hambasafe.Services.Services
         Task<Event> FindById(int id);
     }
 
-    public class EventService : ServiceBase<Event>, IEventService
+    public class EventService : IEventService
     {
-        public EventService(IRepository<Event> repository) : base(repository)
+        private readonly IRepository<Event> _repository;
+
+        public EventService(IRepository<Event> repository)
         {
+            _repository = repository;
         }
 
         public Task<List<Event>> FindAll()
         {
-            return Repository.FindAll()
-                             .Include(e => e.OwnerUser)
-                             .Include(e => e.EventType)
-                             .Include(e => e.StartLocation)
-                             .Include(e => e.EndLocation)
-                             .ToListAsync();
+            return _repository.FindAll()
+                              .Include(e => e.OwnerUser)
+                              .Include(e => e.EventType)
+                              .Include(e => e.StartLocation)
+                              .Include(e => e.EndLocation)
+                              .ToListAsync();
         }
 
         public Task<Event> FindById(int id)
         {
-            return Repository.First(e => e.Id == id);
+            return _repository.First(e => e.Id == id);
         }
     }
 }
