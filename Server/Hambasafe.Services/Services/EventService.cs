@@ -13,15 +13,18 @@ namespace Hambasafe.Services.Services
         Task<int> Add(Event @event);
     }
 
-    public class EventService : ServiceBase<Event>, IEventService
+    public class EventService : IEventService
     {
-        public EventService(IRepository<Event> repository) : base(repository)
+        private readonly IRepository<Event> _repository;
+
+        public EventService(IRepository<Event> repository)
         {
+            _repository = repository;
         }
 
         public Task<List<Event>> FindAll()
         {
-            return Repository.FindAll()
+            return _repository.FindAll()
                              .Include(e => e.OwnerUser)
                              .Include(e => e.EventType)
                              .Include(e => e.StartLocation)
