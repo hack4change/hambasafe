@@ -44,10 +44,10 @@ namespace Hambasafe.Api
                     .AddSqlServer()
                     .AddDbContext<HambasafeDataContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
             services.AddEntityFramework()
-                  .AddSqlServer()
-                  .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                    .AddSqlServer()
+                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc();
             services.AddSwaggerGen();
