@@ -13,6 +13,7 @@ namespace Hambasafe.Api.Controllers.v1
     {
         private readonly IEventTypeService _eventTypeService;
         private readonly IMapper _mapper;
+
         public EventTypeController(IEventTypeService eventTypeService, IMapper mapper)
         {
             _eventTypeService = eventTypeService;

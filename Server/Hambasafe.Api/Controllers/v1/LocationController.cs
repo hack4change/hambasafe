@@ -1,66 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hambasafe.Api.Models.v1;
-using Hambasafe.DataLayer.Entities;
+using Hambasafe.Services.Services;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 
 namespace Hambasafe.Api.Controllers.v1
 {
     [Route("v1/[controller]")]
-    public class LocationController 
+    public class LocationController
     {
-        IMapper Mapper;
-        public LocationController( IMapper mapper) 
+        private readonly IEventLocationService _eventLocationService;
+        private readonly IMapper _mapper;
+
+        public LocationController(IEventLocationService eventLocationService, IMapper mapper)
         {
-            Mapper = mapper;
+            _eventLocationService = eventLocationService;
+            _mapper = mapper;
         }
 
-        /// <summary>
-        /// Implemented
-        /// </summary>
         [AllowAnonymous]
         [Route("locations"), HttpGet]
-        public async Task<List<EventLocationModel>> GetAllLocations()
+        public async Task<List<EventLocationModel>> GetLocations()
         {
-            
-                var dataContext = new HambasafeDataContext();
-                var locations = Mapper.Map<List<EventLocation>, List<EventLocationModel>>(dataContext.EventLocations.ToList());
-                return  locations;
-            
-         
+            var eventLocations = await _eventLocationService.FindAll();
+
+            return _mapper.Map<List<EventLocationModel>>(eventLocations);
         }
 
-        /// <summary>
-        /// Implemented
-        /// </summary>
         [AllowAnonymous]
         [Route("locations-by-suburb"), HttpGet]
-        public async Task<List<EventLocationModel>> GetLocationsBySuburb(string suburb)
+        public async Task<List<EventLocationModel>> GetLocationsBySuburb([FromQuery]string suburb)
         {
-           
-                var dataContext = new HambasafeDataContext();
+            var eventLocations = await _eventLocationService.FindBySuburb(suburb);
 
-                var locations = Mapper.Map<List<EventLocation>, List<EventLocationModel>>(dataContext.EventLocations
-                                          .Where(el => el.Suburb.ToLower() == suburb.ToLower())
-                                          .ToList());
-                return  locations;
-           
+            return _mapper.Map<List<EventLocationModel>>(eventLocations);
         }
 
-        /// <summary>
-        /// Implemented
-        /// </summary>
         [AllowAnonymous]
         [Route("location"), HttpGet]
-        public async Task<EventLocation> GetLocation(int id)
+        public async Task<EventLocationModel> GetLocation([FromQuery]int id)
         {
-                var dataContext = new HambasafeDataContext();
-                return  dataContext.EventLocations.First(l => l.Id == id);
+            var eventLocation = await _eventLocationService.FindById(id);
+
+            return _mapper.Map<EventLocationModel>(eventLocation);
         }
     }
 }
