@@ -34,17 +34,17 @@ namespace Hambasafe.Services.Services
 
         public Task<Event> FindById(int id)
         {
-            return Repository.FindAll(e => e.Id == id)
-                             .Include(e => e.OwnerUser)
-                             .Include(e => e.EventType)
-                             .Include(e => e.StartLocation)
-                             .Include(e => e.EndLocation)
-                             .FirstOrDefaultAsync();
+            return _repository.FindAll(e => e.Id == id)
+                              .Include(e => e.OwnerUser)
+                              .Include(e => e.EventType)
+                              .Include(e => e.StartLocation)
+                              .Include(e => e.EndLocation)
+                              .FirstOrDefaultAsync();
         }
 
         public Task<int> Add(Event @event)
         {
-            return Repository.Add(@event);
+            return _repository.Add(@event);
         }
     }
 }
