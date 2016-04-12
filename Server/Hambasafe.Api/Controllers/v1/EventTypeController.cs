@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hambasafe.Api.Models.v1;
-using Hambasafe.DataLayer.Entities;
 using Hambasafe.Services.Services;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
@@ -15,6 +13,7 @@ namespace Hambasafe.Api.Controllers.v1
     {
         private readonly IEventTypeService _eventTypeService;
         private readonly IMapper _mapper;
+
         public EventTypeController(IEventTypeService eventTypeService, IMapper mapper)
         {
             _eventTypeService = eventTypeService;
