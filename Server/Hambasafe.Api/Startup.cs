@@ -106,15 +106,15 @@ namespace Hambasafe.Api
                 appBuilder.Use(async (context, next) =>
                 {
                     var error = context.Features[typeof(IExceptionHandlerFeature)] as IExceptionHandlerFeature;
-                        // This should be much more intelligent - at the moment only expired 
-                        // security tokens are caught - might be worth checking other possible 
-                        // exceptions such as an invalid signature.
-                        if (error?.Error is SecurityTokenExpiredException)
+                    // This should be much more intelligent - at the moment only expired 
+                    // security tokens are caught - might be worth checking other possible 
+                    // exceptions such as an invalid signature.
+                    if (error?.Error is SecurityTokenExpiredException)
                     {
                         context.Response.StatusCode = 401;
-                            // What you choose to return here is up to you, in this case a simple 
-                            // bit of JSON to say you're no longer authenticated.
-                            context.Response.ContentType = "application/json";
+                        // What you choose to return here is up to you, in this case a simple 
+                        // bit of JSON to say you're no longer authenticated.
+                        context.Response.ContentType = "application/json";
                         await context.Response.WriteAsync(
                             JsonConvert.SerializeObject(
                                 new { authenticated = false, tokenExpired = true }));
@@ -123,14 +123,14 @@ namespace Hambasafe.Api
                     {
                         context.Response.StatusCode = 500;
                         context.Response.ContentType = "application/json";
-                            // TODO: Shouldn't pass the exception message straight out, change this.
-                            await context.Response.WriteAsync(
-                                    JsonConvert.SerializeObject
-                                        (new { success = false, error = error.Error.Message }));
+                        // TODO: Shouldn't pass the exception message straight out, change this.
+                        await context.Response.WriteAsync(
+                                JsonConvert.SerializeObject
+                                    (new { success = false, error = error.Error.Message }));
                     }
-                        // We're not trying to handle anything else so just let the default 
-                        // handler handle.
-                        else
+                    // We're not trying to handle anything else so just let the default 
+                    // handler handle.
+                    else
                     {
                         await next();
                     }
@@ -139,22 +139,22 @@ namespace Hambasafe.Api
 
             app.UseJwtBearerAuthentication(options =>
             {
-                    // Basic settings - signing key to validate with, audience and issuer.
-                    options.TokenValidationParameters.IssuerSigningKey = _key;
+                // Basic settings - signing key to validate with, audience and issuer.
+                options.TokenValidationParameters.IssuerSigningKey = _key;
                 options.TokenValidationParameters.ValidAudience = _tokenOptions.Audience;
                 options.TokenValidationParameters.ValidIssuer = _tokenOptions.Issuer;
 
-                    // When receiving a token, check that we've signed it.
-                    options.TokenValidationParameters.ValidateSignature = true;
+                // When receiving a token, check that we've signed it.
+                options.TokenValidationParameters.ValidateSignature = true;
 
-                    // When receiving a token, check that it is still valid.
-                    options.TokenValidationParameters.ValidateLifetime = true;
+                // When receiving a token, check that it is still valid.
+                options.TokenValidationParameters.ValidateLifetime = true;
 
-                    // This defines the maximum allowable clock skew - i.e. provides a tolerance on the token expiry time 
-                    // when validating the lifetime. As we're creating the tokens locally and validating them on the same 
-                    // machines which should have synchronised time, this can be set to zero. Where external tokens are
-                    // used, some leeway here could be useful.
-                    options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(0);
+                // This defines the maximum allowable clock skew - i.e. provides a tolerance on the token expiry time 
+                // when validating the lifetime. As we're creating the tokens locally and validating them on the same 
+                // machines which should have synchronised time, this can be set to zero. Where external tokens are
+                // used, some leeway here could be useful.
+                options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(0);
             });
 
             app.UseMvc();
