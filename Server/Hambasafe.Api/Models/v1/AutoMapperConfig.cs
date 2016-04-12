@@ -6,12 +6,10 @@ namespace Hambasafe.Api.Models.v1
     {
         protected override void Configure()
         {
-            CreateMap<Event, EventModel>();
-            CreateMap<EventLocation, EventLocationModel>();
-            CreateMap<EventType, EventTypeModel>();
-            CreateMap<User, UserModel>();
-
-
+            CreateMap<Event, EventModel>().ReverseMap();
+            CreateMap<EventLocation, EventLocationModel>().ReverseMap();
+            CreateMap<EventType, EventTypeModel>().ReverseMap();
+            CreateMap<User, UserModel>().ReverseMap();
         }
     }
 }
