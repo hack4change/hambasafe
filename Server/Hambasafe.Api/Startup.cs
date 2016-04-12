@@ -42,15 +42,12 @@ namespace Hambasafe.Api
         {
             services.AddEntityFramework()
                     .AddSqlServer()
-                    .AddDbContext<HambasafeDataContext>(options =>
-                                 options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                    .AddDbContext<HambasafeDataContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
             services.AddEntityFramework()
                   .AddSqlServer()
-                  .AddDbContext<ApplicationDbContext>(options =>
-                               options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                  .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
 
             services.AddMvc();
             services.AddSwaggerGen();
@@ -85,6 +82,17 @@ namespace Hambasafe.Api
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    serviceScope.ServiceProvider.GetService<HambasafeDataContext>().Database.Migrate();
+                    //serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
+                }
+            }
+
             app.UseIISPlatformHandler();
             app.UseIdentity();
             app.UseFacebookAuthentication(o =>
@@ -117,8 +125,8 @@ namespace Hambasafe.Api
                         context.Response.ContentType = "application/json";
                         // TODO: Shouldn't pass the exception message straight out, change this.
                         await context.Response.WriteAsync(
-                            JsonConvert.SerializeObject
-                                (new { success = false, error = error.Error.Message }));
+                                JsonConvert.SerializeObject
+                                    (new { success = false, error = error.Error.Message }));
                     }
                     // We're not trying to handle anything else so just let the default 
                     // handler handle.
