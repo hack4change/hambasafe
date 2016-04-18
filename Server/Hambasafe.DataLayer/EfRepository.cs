@@ -25,14 +25,14 @@ namespace Hambasafe.DataLayer
             return Entities.AsQueryable();
         }
 
-        public Task<TEntity> First(Expression<Func<TEntity, bool>> where = null)
+        public async Task<TEntity> First(Expression<Func<TEntity, bool>> where = null)
         {
             if (where == null)
             {
                 where = e => true;
             }
 
-            return Entities.FirstOrDefaultAsync(where);
+            return await Entities.FirstOrDefaultAsync(where);
         }
 
         public IQueryable<TEntity> FindAll(Expression<Func<TEntity, bool>> where = null)
@@ -40,37 +40,37 @@ namespace Hambasafe.DataLayer
             return null != where ? Entities.Where(where) : Entities;
         }
 
-        public Task<int> Add(TEntity entity)
+        public async Task<int> Add(TEntity entity)
         {
-            return AddRange(entity.ToEnumerable());
+            return await AddRange(entity.ToEnumerable());
         }
 
-        public Task<int> AddRange(IEnumerable<TEntity> entities)
+        public async Task<int> AddRange(IEnumerable<TEntity> entities)
         {
             Entities.AddRange(entities);
-            return DbContext.SaveChangesAsync();
+            return await DbContext.SaveChangesAsync();
         }
 
-        public Task<int> Update(TEntity entity)
+        public async Task<int> Update(TEntity entity)
         {
-            return UpdateRange(entity.ToEnumerable());
+            return await UpdateRange(entity.ToEnumerable());
         }
 
-        public Task<int> UpdateRange(IEnumerable<TEntity> entities)
+        public async Task<int> UpdateRange(IEnumerable<TEntity> entities)
         {
             Entities.UpdateRange(entities);
-            return DbContext.SaveChangesAsync();
+            return await DbContext.SaveChangesAsync();
         }
 
-        public Task<int> Delete(TEntity entity)
+        public async Task<int> Delete(TEntity entity)
         {
-            return DeleteRange(entity.ToEnumerable());
+            return await DeleteRange(entity.ToEnumerable());
         }
 
-        public Task<int> DeleteRange(IEnumerable<TEntity> entities)
+        public async Task<int> DeleteRange(IEnumerable<TEntity> entities)
         {
             Entities.RemoveRange(entities);
-            return DbContext.SaveChangesAsync();
+            return await DbContext.SaveChangesAsync();
         }
     }
 }
