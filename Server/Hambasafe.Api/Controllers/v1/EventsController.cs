@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hambasafe.Api.Models.v1;
@@ -24,18 +25,26 @@ namespace Hambasafe.Api.Controllers.v1
         
         [AllowAnonymous]
         [Route("create-event"), HttpPost]
-        public async Task<EventModel> CreateEvent(EventModel eventModel)
+        public async Task<int> CreateEvent([FromBody]EventModel eventModel)
         {
+            if (eventModel.EventType == null)
+            {
+                throw new ValidationException("EventType is required");
+            }
+
+            if (eventModel.StartLocation == null)
+            {
+                throw new ValidationException("Start Location is required");
+            }
+
             var eventEntity = _mapper.Map<Event>(eventModel);
 
-            await _eventService.Add(eventEntity);
-
-            return _mapper.Map<EventModel>(eventEntity);
+            return await _eventService.Add(eventEntity);
         }
         
         [AllowAnonymous]
         [Route("event"), HttpGet]
-        public async Task<EventModel> GetEvent(int id)
+        public async Task<EventModel> GetEvent([FromQuery]int id)
         {
             var eventEntity = await _eventService.FindById(id);
 
