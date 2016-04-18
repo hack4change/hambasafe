@@ -2,11 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Hambasafe.DataLayer.Entities
 {
-
     public class User 
     {
         public User()
@@ -18,13 +16,15 @@ namespace Hambasafe.DataLayer.Entities
             //BlockedUsers1 = new HashSet<BlockedUser>();
             //Connections = new HashSet<Connection>();
             //Connections1 = new HashSet<Connection>();
-            //Events = new HashSet<Event>();
+            Events = new HashSet<Event>();
             //Invitations = new HashSet<Invitation>();
             //Invitations1 = new HashSet<Invitation>();
         }
+
         [Key]
         [Column("UserId")]
         public int Id { get; set; }
+
         public string Token { get; set; }
         public string FirstNames { get; set; }
         public string LastName { get; set; }
@@ -40,7 +40,8 @@ namespace Hambasafe.DataLayer.Entities
         public DateTime? DateValidated { get; set; }
         public DateTime? DateLastLogin { get; set; }
 
-        //implement as needed
+        [ForeignKey("PictureImageResourceId")]
+        public virtual ImageResource PictureImageResource { get; set; }
 
         //public virtual ICollection<Attendance> Attendances { get; set; }
         //public virtual ICollection<AttendanceRating> AttendanceRatings { get; set; }
@@ -50,8 +51,6 @@ namespace Hambasafe.DataLayer.Entities
         //public virtual ICollection<Connection> Connections { get; set; }
         //public virtual ICollection<Connection> Connections1 { get; set; }
         public virtual ICollection<Event> Events { get; set; }
-        [ForeignKey("PictureImageResourceId")]
-        public virtual ImageResource PictureImageResource { get; set; }
         //public virtual ICollection<Invitation> Invitations { get; set; }
         //public virtual ICollection<Invitation> Invitations1 { get; set; }
     }

@@ -4,16 +4,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hambasafe.DataLayer.Entities
 {
-
     public class EventType
     {
         public EventType()
         {
             Events = new HashSet<Event>();
         }
+
         [Key]
         [Column("EventTypeId")]
         public int Id { get; set; }
+
         public string Name { get; set; }
         public string Description { get; set; }
 

@@ -31,6 +31,8 @@ namespace Hambasafe.Services.Tests.Services
             var c = await _eventService.FindById(2);
             Assert.Equal(c.Id, 2);
         }
+
+        // TODO : Add the Add(@event) test
     }
 
     public class EventDatabaseFixture : IDisposable
@@ -51,16 +53,13 @@ namespace Hambasafe.Services.Tests.Services
 
         public EventDatabaseFixture()
         {
-
             _repository = Bootstrapper.Container.Resolve<IRepository<Event>>();
             _repository.AddRange(_events);
-
         }
 
         public void Dispose()
         {
             _repository.DeleteRange(_events);
         }
-
     }
 }

@@ -25,6 +25,7 @@ namespace Hambasafe.Services.Tests.Services
             var c = await _userService.FindAll();
             Assert.Equal(c.Count, 2);
         }
+
         [Fact]
         public async void FindById()
         {
@@ -91,6 +92,5 @@ namespace Hambasafe.Services.Tests.Services
         {
             _repository.DeleteRange(_users);
         }
-
     }
 }

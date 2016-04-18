@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -17,7 +18,6 @@ namespace Hambasafe.Api.Controllers.v1
         private readonly IMapper _mapper;
 
         public EventsController(IEventService eventService, IMapper mapper)
-
         {
             _eventService = eventService;
             _mapper = mapper;
@@ -27,21 +27,13 @@ namespace Hambasafe.Api.Controllers.v1
         [Route("create-event"), HttpPost]
         public async Task<int> CreateEvent([FromBody]EventModel eventModel)
         {
-            if (eventModel.EventType == null)
-            {
-                throw new ValidationException("EventType is required");
-            }
-
-            if (eventModel.StartLocation == null)
-            {
-                throw new ValidationException("Start Location is required");
-            }
+            ValidateEventModel(eventModel);
 
             var eventEntity = _mapper.Map<Event>(eventModel);
 
             return await _eventService.Add(eventEntity);
         }
-        
+
         [AllowAnonymous]
         [Route("event"), HttpGet]
         public async Task<EventModel> GetEvent([FromQuery]int id)
@@ -58,7 +50,34 @@ namespace Hambasafe.Api.Controllers.v1
             var events = await _eventService.FindAll();
 
             return _mapper.Map<List<Event>, List<EventModel>>(events);
+        }
 
+        private static void ValidateEventModel(EventModel eventModel)
+        {
+            if (eventModel == null)
+            {
+                throw new ArgumentNullException(nameof(eventModel));
+            }
+
+            if (eventModel.EventType == null)
+            {
+                throw new ValidationException("Event Type is required");
+            }
+
+            if (eventModel.StartLocation == null)
+            {
+                throw new ValidationException("Start Location is required");
+            }
+
+            if (eventModel.EndLocation == null)
+            {
+                throw new ValidationException("End Location is required");
+            }
+
+            if (eventModel.OwnerUser == null)
+            {
+                throw new ValidationException("Owner User is required");
+            }
         }
 
         //[AllowAnonymous]
