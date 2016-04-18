@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
+using Hambasafe.Services.Exceptions;
 using Microsoft.AspNet.Http.Features;
 using Microsoft.Data.Entity;
 
@@ -46,7 +47,14 @@ namespace Hambasafe.Services.Services
 
         public async Task<int> Add(Event @event)
         {
-            return await _repository.Add(@event);
+            try
+            {
+                return await _repository.Add(@event);
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DataException("Error occured while adding an Event", ex.InnerException);
+            }
         }
     }
 }
