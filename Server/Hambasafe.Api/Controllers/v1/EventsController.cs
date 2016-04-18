@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hambasafe.Api.Models.v1;
@@ -16,50 +16,68 @@ namespace Hambasafe.Api.Controllers.v1
     {
         private readonly IEventService _eventService;
         private readonly IMapper _mapper;
-        public EventsController(IEventService eventService, IMapper mapper)
 
+        public EventsController(IEventService eventService, IMapper mapper)
         {
             _eventService = eventService;
             _mapper = mapper;
         }
-
-        /// <summary>
-        /// Implemented
-        /// </summary>
+        
         [AllowAnonymous]
         [Route("create-event"), HttpPost]
-        public async Task<HttpStatusCode> CreateEvent(EventModel eventModel)
+        public async Task<int> CreateEvent([FromBody]EventModel eventModel)
         {
+            ValidateEventModel(eventModel);
 
-            using (var dataContext = new HambasafeDataContext())
-            {
+            var eventEntity = _mapper.Map<Event>(eventModel);
 
-                var eventEntity = _mapper.Map<Event>(eventModel);
-                dataContext.Events.Add(eventEntity);
-                await dataContext.SaveChangesAsync();
-
-                return HttpStatusCode.OK;
-            }
-
+            return await _eventService.Add(eventEntity);
         }
-
 
         [AllowAnonymous]
         [Route("event"), HttpGet]
-        public async Task<EventModel> GetEvent(int id)
+        public async Task<EventModel> GetEvent([FromQuery]int id)
         {
             var eventEntity = await _eventService.FindById(id);
+
             return _mapper.Map<EventModel>(eventEntity);
         }
-
-
+        
         [AllowAnonymous]
         [Route("events"), HttpGet]
         public async Task<List<EventModel>> GetEvents()
         {
             var events = await _eventService.FindAll();
-            return _mapper.Map<List<Event>, List<EventModel>>(events);
 
+            return _mapper.Map<List<Event>, List<EventModel>>(events);
+        }
+
+        private static void ValidateEventModel(EventModel eventModel)
+        {
+            if (eventModel == null)
+            {
+                throw new ArgumentNullException(nameof(eventModel));
+            }
+
+            if (eventModel.EventType == null)
+            {
+                throw new ValidationException("Event Type is required");
+            }
+
+            if (eventModel.StartLocation == null)
+            {
+                throw new ValidationException("Start Location is required");
+            }
+
+            if (eventModel.EndLocation == null)
+            {
+                throw new ValidationException("End Location is required");
+            }
+
+            if (eventModel.OwnerUser == null)
+            {
+                throw new ValidationException("Owner User is required");
+            }
         }
 
         //[AllowAnonymous]
@@ -175,7 +193,5 @@ namespace Hambasafe.Api.Controllers.v1
 
         //    return coord1.GetDistanceTo(coord2);
         //}
-
-
     }
 }

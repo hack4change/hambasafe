@@ -22,22 +22,22 @@ namespace Hambasafe.Services.Services
             _repository = repository;
         }
 
-        public Task<List<User>> FindAll()
+        public async Task<List<User>> FindAll()
         {
-            return _repository.FindAll()
-                              .ToListAsync();
+            return await _repository.FindAll()
+                                    .ToListAsync();
         }
 
-        public Task<List<User>> FindAllByUsername(string username)
+        public async Task<List<User>> FindAllByUsername(string username)
         {
             //case matching is done by the db.
-            return _repository.FindAll(a => a.FirstNames.Contains(username) || a.LastName.Contains(username))
-                              .ToListAsync();
+            return await _repository.FindAll(a => a.FirstNames.Contains(username) || a.LastName.Contains(username))
+                                    .ToListAsync();
         }
 
-        public Task<User> FindById(int id)
+        public async Task<User> FindById(int id)
         {
-            return _repository.First(u => u.Id == id);
+            return await _repository.First(u => u.Id == id);
         }
     }
 }

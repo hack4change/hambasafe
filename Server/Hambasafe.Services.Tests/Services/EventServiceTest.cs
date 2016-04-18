@@ -24,6 +24,7 @@ namespace Hambasafe.Services.Tests.Services
             var c = await _eventService.FindAll();
             Assert.Equal(c.Count, 2);
         }
+
         [Fact]
         public async void FindById()
         {
@@ -31,31 +32,34 @@ namespace Hambasafe.Services.Tests.Services
             Assert.Equal(c.Id, 2);
         }
 
-
+        // TODO : Add the Add(@event) test
     }
+
     public class EventDatabaseFixture : IDisposable
     {
         private readonly IRepository<Event> _repository;
-        private readonly Event[] _events = { new Event
+
+        private readonly Event[] _events =
+        {
+            new Event
             {
                 Id = 1
             },
             new Event
             {
                 Id = 2
-            }};
+            }
+        };
+
         public EventDatabaseFixture()
         {
-
             _repository = Bootstrapper.Container.Resolve<IRepository<Event>>();
             _repository.AddRange(_events);
-
         }
 
         public void Dispose()
         {
             _repository.DeleteRange(_events);
         }
-
     }
 }
