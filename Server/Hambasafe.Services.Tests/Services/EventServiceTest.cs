@@ -24,26 +24,31 @@ namespace Hambasafe.Services.Tests.Services
             var c = await _eventService.FindAll();
             Assert.Equal(c.Count, 2);
         }
+
         [Fact]
         public async void FindById()
         {
             var c = await _eventService.FindById(2);
             Assert.Equal(c.Id, 2);
         }
-
-
     }
+
     public class EventDatabaseFixture : IDisposable
     {
         private readonly IRepository<Event> _repository;
-        private readonly Event[] _events = { new Event
+
+        private readonly Event[] _events =
+        {
+            new Event
             {
                 Id = 1
             },
             new Event
             {
                 Id = 2
-            }};
+            }
+        };
+
         public EventDatabaseFixture()
         {
 

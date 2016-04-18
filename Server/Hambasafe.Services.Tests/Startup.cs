@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Hambasafe.DataLayer;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hambasafe.Services.Tests
@@ -19,13 +15,11 @@ namespace Hambasafe.Services.Tests
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEntityFramework()
-                  .AddInMemoryDatabase()
-                  .AddDbContext<Hambasafe.DataLayer.Entities.HambasafeDataContext>();
+                    .AddInMemoryDatabase()
+                    .AddDbContext<DataLayer.Entities.HambasafeDataContext>();
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule<DataAccessModule>();
             containerBuilder.RegisterModule<ServicesModule>();
-        
-
        
             containerBuilder.Populate(services);
 
@@ -36,7 +30,6 @@ namespace Hambasafe.Services.Tests
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
-
         }
 
         // Entry point for the application.

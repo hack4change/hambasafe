@@ -36,7 +36,9 @@ namespace Hambasafe.Services.Tests.Services
     public class EventTypeDatabaseFixture : IDisposable
     {
         private readonly IRepository<EventType> _repository;
-        private readonly EventType[] _eventTypes = {
+
+        private readonly EventType[] _eventTypes =
+        {
             new EventType
             {
                 Id = 1
