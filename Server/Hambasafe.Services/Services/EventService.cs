@@ -22,29 +22,29 @@ namespace Hambasafe.Services.Services
             _repository = repository;
         }
 
-        public Task<List<Event>> FindAll()
+        public async Task<List<Event>> FindAll()
         {
-            return _repository.FindAll()
-                             .Include(e => e.OwnerUser)
-                             .Include(e => e.EventType)
-                             .Include(e => e.StartLocation)
-                             .Include(e => e.EndLocation)
-                             .ToListAsync();
+            return await _repository.FindAll()
+                                    .Include(e => e.OwnerUser)
+                                    .Include(e => e.EventType)
+                                    .Include(e => e.StartLocation)
+                                    .Include(e => e.EndLocation)
+                                    .ToListAsync();
         }
 
-        public Task<Event> FindById(int id)
+        public async Task<Event> FindById(int id)
         {
-            return _repository.FindAll(e => e.Id == id)
-                              .Include(e => e.OwnerUser)
-                              .Include(e => e.EventType)
-                              .Include(e => e.StartLocation)
-                              .Include(e => e.EndLocation)
-                              .FirstOrDefaultAsync();
+            return await _repository.FindAll(e => e.Id == id)
+                                    .Include(e => e.OwnerUser)
+                                    .Include(e => e.EventType)
+                                    .Include(e => e.StartLocation)
+                                    .Include(e => e.EndLocation)
+                                    .FirstOrDefaultAsync();
         }
 
-        public Task<int> Add(Event @event)
+        public async Task<int> Add(Event @event)
         {
-            return _repository.Add(@event);
+            return await _repository.Add(@event);
         }
     }
 }
