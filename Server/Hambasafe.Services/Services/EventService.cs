@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
@@ -10,6 +11,8 @@ namespace Hambasafe.Services.Services
     public interface IEventService
     {
         Task<List<Event>> FindAll();
+        Task<List<Event>> FindBySuburb(string suburb);
+        Task<List<Event>> FindByCoordinates(decimal latitude, decimal longitude, decimal distance);
         Task<Event> FindById(int id);
         Task<int> Add(Event @event);
     }
@@ -37,6 +40,30 @@ namespace Hambasafe.Services.Services
                                          .Include(e => e.StartLocation)
                                          .Include(e => e.EndLocation)
                                          .ToListAsync();
+        }
+
+        public async Task<List<Event>> FindBySuburb(string suburb)
+        {
+            return await _eventRepository.FindAll(e => e.StartLocation.Suburb.Equals(suburb, StringComparison.OrdinalIgnoreCase)) 
+                                         .Include(e => e.OwnerUser)
+                                         .Include(e => e.EventType)
+                                         .Include(e => e.StartLocation)
+                                         .Include(e => e.EndLocation)
+                                         .ToListAsync();
+        }
+
+        public async Task<List<Event>> FindByCoordinates(decimal latitude, decimal longitude, decimal distance)
+        {
+            // TODO : Wire up DbGeography specific coordinate search logic
+            return await FindAll();
+
+            ////var locationids = context.EventLocations.Where(a => a.Latitude != null && a.Longitude != null && GetDistance(latitude, longitude, a.Latitude.Value, a.Longitude.Value) <= radius)
+            ////                            .Select(e => e.EventLocationId)
+            ////                            .ToArray();
+
+            ////var events = context.Events.Where(a => locationids.Contains(
+            ////    a.EventLocation.EventLocationId)).Select(a => new EventModel(a))
+            ////                                .ToArray();
         }
 
         public async Task<Event> FindById(int id)
