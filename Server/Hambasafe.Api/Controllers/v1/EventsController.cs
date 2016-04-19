@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -56,6 +55,8 @@ namespace Hambasafe.Api.Controllers.v1
         [Route("events-by-suburb"), HttpGet]
         public async Task<List<EventModel>> GetEventsBySuburb([FromQuery]string suburb)
         {
+            ValidateSuburb(suburb);
+
             var events = await _eventService.FindBySuburb(suburb);
 
             return _mapper.Map<List<Event>, List<EventModel>>(events);
@@ -63,13 +64,11 @@ namespace Hambasafe.Api.Controllers.v1
 
         [AllowAnonymous]
         [Route("events-by-coordinates"), HttpGet]
-        public async Task<List<EventModel>> GetEventsByCoordinates([FromBody]CoordinateModel coordinateModel)
+        public async Task<List<EventModel>> GetEventsByCoordinates([FromQuery]double latitude, [FromQuery]double longitude, [FromQuery]double distance)
         {
-            ValidateCoordinateModel(coordinateModel);
+            ValidateCoordinates(latitude, longitude, distance);
 
-            var events = await _eventService.FindByCoordinates(coordinateModel.Latitude.GetValueOrDefault(0),
-                                                               coordinateModel.Longitude.GetValueOrDefault(0),
-                                                               coordinateModel.Distance.GetValueOrDefault(0));
+            var events = await _eventService.FindByCoordinates(latitude, longitude, distance);
 
             return _mapper.Map<List<Event>, List<EventModel>>(events);
         }
@@ -78,7 +77,7 @@ namespace Hambasafe.Api.Controllers.v1
         {
             if (eventModel == null)
             {
-                throw new ArgumentNullException(nameof(eventModel));
+                throw new ValidationException($"Invalid data for {nameof(eventModel)}");
             }
 
             if (eventModel.EventType == null)
@@ -102,29 +101,32 @@ namespace Hambasafe.Api.Controllers.v1
             }
         }
 
-        private static void ValidateCoordinateModel(CoordinateModel coordinateModel)
+        private static void ValidateSuburb(string suburb)
         {
-            if (coordinateModel == null)
+            if (string.IsNullOrEmpty(suburb))
             {
-                throw new ArgumentNullException(nameof(coordinateModel));
-            }
-
-            if (!coordinateModel.Latitude.HasValue)
-            {
-                throw new ValidationException("Latitude is required");
-            }
-
-            if (!coordinateModel.Longitude.HasValue)
-            {
-                throw new ValidationException("Longitude is required");
-            }
-
-            if (!coordinateModel.Distance.HasValue)
-            {
-                throw new ValidationException("Distance is required");
+                throw new ValidationException($"Parameter {nameof(suburb)} is required");
             }
         }
 
+        private static void ValidateCoordinates(double latitude, double longitude, double distance)
+        {
+            if (latitude < -90 || latitude > 90)
+            {
+                throw new ValidationException($"Parameter {nameof(latitude)} is invalid - must be between -90 and 90");
+            }
+
+            if (longitude < -180 || longitude > 180)
+            {
+                throw new ValidationException($"Parameter {nameof(longitude)} is required - must be between -180 and 180");
+            }
+
+            if (distance <= default(double))
+            {
+                throw new ValidationException($"Parameter {nameof(distance)} is required");
+            }
+        }
+        
         //[AllowAnonymous]
         //[Route("events-by-user"), HttpGet]
         //public async Task<HttpResponseMessage> GetEventsByUser(int userid)
