@@ -46,7 +46,7 @@ namespace Hambasafe.Services.Services
 
         public async Task<List<Event>> FindBySuburb(string suburb)
         {
-            return await _eventRepository.FindAll(e => e.StartLocation.Suburb.Equals(suburb, StringComparison.OrdinalIgnoreCase))
+            return await _eventRepository.FindAll(e => e.StartLocation.Suburb.StartsWith(suburb, StringComparison.OrdinalIgnoreCase))
                                          .Include(e => e.OwnerUser)
                                          .Include(e => e.EventType)
                                          .Include(e => e.StartLocation)
