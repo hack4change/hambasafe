@@ -68,8 +68,8 @@ namespace Hambasafe.Api.Controllers.v1
             ValidateCoordinateModel(coordinateModel);
 
             var events = await _eventService.FindByCoordinates(coordinateModel.Latitude.GetValueOrDefault(0),
-                                                                coordinateModel.Longitude.GetValueOrDefault(0),
-                                                                coordinateModel.Distance.GetValueOrDefault(0));
+                                                               coordinateModel.Longitude.GetValueOrDefault(0),
+                                                               coordinateModel.Distance.GetValueOrDefault(0));
 
             return _mapper.Map<List<Event>, List<EventModel>>(events);
         }

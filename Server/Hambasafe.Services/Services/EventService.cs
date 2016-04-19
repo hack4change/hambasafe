@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
 using Hambasafe.Services.Exceptions;
+using Hambasafe.Services.Helper;
 using Microsoft.Data.Entity;
 
 namespace Hambasafe.Services.Services
@@ -12,7 +14,7 @@ namespace Hambasafe.Services.Services
     {
         Task<List<Event>> FindAll();
         Task<List<Event>> FindBySuburb(string suburb);
-        Task<List<Event>> FindByCoordinates(decimal latitude, decimal longitude, decimal distance);
+        Task<List<Event>> FindByCoordinates(double latitude, double longitude, double distance);
         Task<Event> FindById(int id);
         Task<int> Add(Event @event);
     }
@@ -44,7 +46,7 @@ namespace Hambasafe.Services.Services
 
         public async Task<List<Event>> FindBySuburb(string suburb)
         {
-            return await _eventRepository.FindAll(e => e.StartLocation.Suburb.Equals(suburb, StringComparison.OrdinalIgnoreCase)) 
+            return await _eventRepository.FindAll(e => e.StartLocation.Suburb.Equals(suburb, StringComparison.OrdinalIgnoreCase))
                                          .Include(e => e.OwnerUser)
                                          .Include(e => e.EventType)
                                          .Include(e => e.StartLocation)
@@ -52,18 +54,23 @@ namespace Hambasafe.Services.Services
                                          .ToListAsync();
         }
 
-        public async Task<List<Event>> FindByCoordinates(decimal latitude, decimal longitude, decimal distance)
+        public async Task<List<Event>> FindByCoordinates(double latitude, double longitude, double distance)
         {
-            // TODO : Wire up DbGeography specific coordinate search logic
-            return await FindAll();
+            // Unfortunately DbGeography is not implemented in EF7 - will have to fetch all locations with coordinates and then manually calculate distance
+            var locations = await _eventLocationRepository.FindAll(el => el.Latitude.HasValue && el.Longitude.HasValue)
+                                                          .Select(el => new { el.Id, Latitude = el.Latitude.Value, Longitude = el.Longitude.Value })
+                                                          .ToListAsync();
 
-            ////var locationids = context.EventLocations.Where(a => a.Latitude != null && a.Longitude != null && GetDistance(latitude, longitude, a.Latitude.Value, a.Longitude.Value) <= radius)
-            ////                            .Select(e => e.EventLocationId)
-            ////                            .ToArray();
+            var locationIds = locations.Where(l => DistanceCalculator.Distance(l.Latitude, l.Longitude, latitude, longitude) <= distance)
+                                       .Select(l => l.Id)
+                                       .ToList();
 
-            ////var events = context.Events.Where(a => locationids.Contains(
-            ////    a.EventLocation.EventLocationId)).Select(a => new EventModel(a))
-            ////                                .ToArray();
+            return await _eventRepository.FindAll(e => locationIds.Contains(e.StartEventLocationId))
+                                         .Include(e => e.OwnerUser)
+                                         .Include(e => e.EventType)
+                                         .Include(e => e.StartLocation)
+                                         .Include(e => e.EndLocation)
+                                         .ToListAsync();
         }
 
         public async Task<Event> FindById(int id)
