@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
@@ -22,7 +21,7 @@ namespace Hambasafe.Api.Controllers.v1
             _eventService = eventService;
             _mapper = mapper;
         }
-        
+
         [AllowAnonymous]
         [Route("create-event"), HttpPost]
         public async Task<int> CreateEvent([FromBody]EventModel eventModel)
@@ -42,7 +41,7 @@ namespace Hambasafe.Api.Controllers.v1
 
             return _mapper.Map<EventModel>(eventEntity);
         }
-        
+
         [AllowAnonymous]
         [Route("events"), HttpGet]
         public async Task<List<EventModel>> GetEvents()
@@ -52,11 +51,33 @@ namespace Hambasafe.Api.Controllers.v1
             return _mapper.Map<List<Event>, List<EventModel>>(events);
         }
 
+        [AllowAnonymous]
+        [Route("events-by-suburb"), HttpGet]
+        public async Task<List<EventModel>> GetEventsBySuburb([FromQuery]string suburb)
+        {
+            ValidateSuburb(suburb);
+
+            var events = await _eventService.FindBySuburb(suburb);
+
+            return _mapper.Map<List<Event>, List<EventModel>>(events);
+        }
+
+        [AllowAnonymous]
+        [Route("events-by-coordinates"), HttpGet]
+        public async Task<List<EventModel>> GetEventsByCoordinates([FromQuery]double latitude, [FromQuery]double longitude, [FromQuery]double distance)
+        {
+            ValidateCoordinates(latitude, longitude, distance);
+
+            var events = await _eventService.FindByCoordinates(latitude, longitude, distance);
+
+            return _mapper.Map<List<Event>, List<EventModel>>(events);
+        }
+
         private static void ValidateEventModel(EventModel eventModel)
         {
             if (eventModel == null)
             {
-                throw new ArgumentNullException(nameof(eventModel));
+                throw new ValidationException($"Invalid data for {nameof(eventModel)}");
             }
 
             if (eventModel.EventType == null)
@@ -80,6 +101,32 @@ namespace Hambasafe.Api.Controllers.v1
             }
         }
 
+        private static void ValidateSuburb(string suburb)
+        {
+            if (string.IsNullOrEmpty(suburb))
+            {
+                throw new ValidationException($"Parameter {nameof(suburb)} is required");
+            }
+        }
+
+        private static void ValidateCoordinates(double latitude, double longitude, double distance)
+        {
+            if (latitude < -90 || latitude > 90)
+            {
+                throw new ValidationException($"Parameter {nameof(latitude)} is invalid - must be between -90 and 90");
+            }
+
+            if (longitude < -180 || longitude > 180)
+            {
+                throw new ValidationException($"Parameter {nameof(longitude)} is required - must be between -180 and 180");
+            }
+
+            if (distance <= default(double))
+            {
+                throw new ValidationException($"Parameter {nameof(distance)} is required");
+            }
+        }
+        
         //[AllowAnonymous]
         //[Route("events-by-user"), HttpGet]
         //public async Task<HttpResponseMessage> GetEventsByUser(int userid)
@@ -135,50 +182,6 @@ namespace Hambasafe.Api.Controllers.v1
         //                                        .ToArray();
 
         //        return Request.CreateResponse(HttpStatusCode.OK, events);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return HandleError(error);
-        //    }
-        //}
-
-        //[AllowAnonymous]
-        //[Route("events-by-suburb"), HttpGet]
-        //public async Task<HttpResponseMessage> GetEventsBySuburb(string suburbname)
-        //{
-        //    try
-        //    {
-        //        var context = new HambasafeDataContext();
-
-        //        var events = context.Events.Where(a =>
-        //            a.EventLocation.Suburb.ToUpper().Contains(suburbname.ToUpper())).Select(a => new EventModel(a))
-        //                                        .ToArray();
-
-        //        return Request.CreateResponse(HttpStatusCode.OK, events);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return HandleError(error);
-        //    }
-        //}
-
-        //[AllowAnonymous]
-        //[Route("events-by-coordinates"), HttpGet]
-        //public async Task<HttpResponseMessage> GetEventsByCoordinates(double latitude, double longitude, int radius)
-        //{
-        //    try
-        //    {
-        //        var context = new HambasafeDataContext();
-
-        //        var locationids = context.EventLocations.Where(a => a.Latitude != null && a.Longitude != null && GetDistance(latitude, longitude, a.Latitude.Value, a.Longitude.Value) <= radius)
-        //                                .Select(e => e.EventLocationId)
-        //                                .ToArray();
-
-        //        var events = context.Events.Where(a => locationids.Contains(
-        //            a.EventLocation.EventLocationId)).Select(a => new EventModel(a))
-        //                                        .ToArray();
-
-        //        return Request.CreateResponse(HttpStatusCode.OK);
         //    }
         //    catch (Exception error)
         //    {
