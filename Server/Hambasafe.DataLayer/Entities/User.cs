@@ -53,5 +53,25 @@ namespace Hambasafe.DataLayer.Entities
         public virtual ICollection<Event> Events { get; set; }
         //public virtual ICollection<Invitation> Invitations { get; set; }
         //public virtual ICollection<Invitation> Invitations1 { get; set; }
+
+        public void MapUser(User user)
+        {
+            // Copy valid variables from the user to current
+            // Id cannot map
+            // Token cannot map
+            FirstNames = !string.IsNullOrWhiteSpace(user.FirstNames) ? user.FirstNames : FirstNames;
+            LastName = !string.IsNullOrWhiteSpace(user.LastName) ? user.LastName : LastName;
+            Gender = !string.IsNullOrWhiteSpace(user.Gender) ? user.Gender : Gender;
+            DateOfBirth = user.DateOfBirth != default(DateTime) ? user.DateOfBirth : DateOfBirth;
+            IdentityDocumentUrl = !string.IsNullOrWhiteSpace(user.IdentityDocumentUrl) ? user.IdentityDocumentUrl : IdentityDocumentUrl;
+            PictureImageResourceId = user.PictureImageResourceId.HasValue ? user.PictureImageResourceId : PictureImageResourceId;
+            Status = !string.IsNullOrWhiteSpace(user.Status) ? user.Status : Status;
+            MobileNumber = !string.IsNullOrWhiteSpace(user.MobileNumber) ? user.MobileNumber : MobileNumber;
+            EmailAddress = !string.IsNullOrWhiteSpace(user.EmailAddress) ? user.EmailAddress : EmailAddress;
+            // DateCreated cannot map
+            DateUpdated = DateTime.UtcNow;
+            // DateValidated cannot map
+            // DateLastLogin cannot map
+        }
     }
 }

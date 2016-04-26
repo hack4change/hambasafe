@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hambasafe.Api.Models.v1;
@@ -15,64 +14,103 @@ namespace Hambasafe.Api.Controllers.v1
     [Route("v1/[controller]")]
     public class UsersController
     {
-        IMapper Mapper;
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public UsersController(IMapper mapper, IUserService userService)
+        public UsersController(IUserService userService, IMapper mapper)
         {
-            Mapper = mapper;
             _userService = userService;
+            _mapper = mapper;
         }
 
-        //[AllowAnonymous]
-        //[Route("create-user"), HttpPost]
-        //public async Task<HttpResponseMessage> CreateUser(UserModel newUser)
-        //{
-        //    try
-        //    {
-        //        //TODO add this 
+        [AllowAnonymous]
+        [Route("create-user"), HttpPost]
+        public async Task<int> CreateUser([FromBody]UserModel userModel)
+        {
+            ValidateUserModel(userModel);
 
-        //        return Request.CreateResponse(HttpStatusCode.OK);
-        //    }
-        //    catch (Exception error)
-        //    {
-        //        return HandleError(error);
-        //    }
-        //}
+            var userEntity = _mapper.Map<User>(userModel);
 
-        /// <summary>
-        /// Implemented
-        /// </summary>
+            return await _userService.Add(userEntity);
+        }
+
+        [AllowAnonymous]
+        [Route("update-user"), HttpPost]
+        public async Task<int> UpdateUser([FromBody]UserModel userModel)
+        {
+            ValidateUserModel(userModel);
+
+            var userEntity = _mapper.Map<User>(userModel);
+
+            return await _userService.Update(userEntity);
+        }
+
         [AllowAnonymous]
         [Route("users"), HttpGet]
         public async Task<List<UserModel>> GetAllUsers()
         {
             var users = await _userService.FindAll();
-            return Mapper.Map<List<User>, List<UserModel>>(users);
 
-
+            return _mapper.Map<List<User>, List<UserModel>>(users);
         }
 
-        /// <summary>
-        /// Implemented
-        /// </summary>
         [AllowAnonymous]
         [Route("users-by-name"), HttpGet]
-        public async Task<List<UserModel>> GetUsers(string username)
+        public async Task<List<UserModel>> GetUsersByName([FromQuery]string name)
         {
-            var users = await _userService.FindAllByUsername(username);
-            return Mapper.Map<List<User>, List<UserModel>>(users);
-        }
+            var users = await _userService.FindAllByName(name);
 
-        /// <summary>
-        /// Implemented
-        /// </summary>
+            return _mapper.Map<List<User>, List<UserModel>>(users);
+        }
+        
         [AllowAnonymous]
         [Route("user"), HttpGet]
-        public async Task<UserModel> GetUser(int id)
+        public async Task<UserModel> GetUser([FromQuery]int id, [FromQuery]string emailAddress)
         {
-            var userEntity = await _userService.FindById(id);
-            return Mapper.Map<UserModel>(userEntity);
+            User userEntity;
+            if (!string.IsNullOrWhiteSpace(emailAddress))
+            {
+                userEntity = await _userService.FindByUserName(emailAddress);
+            }
+            else
+            {
+                userEntity = await _userService.FindById(id);
+            }
+            
+            return _mapper.Map<UserModel>(userEntity);
+        }
+
+        private static void ValidateUserModel(UserModel userModel)
+        {
+            if (userModel == null)
+            {
+                throw new ValidationException($"Invalid data for {nameof(userModel)}");
+            }
+
+            if (string.IsNullOrWhiteSpace(userModel.FirstNames))
+            {
+                throw new ValidationException("First Name is required");
+            }
+
+            if (string.IsNullOrWhiteSpace(userModel.LastName))
+            {
+                throw new ValidationException("Last Name is required");
+            }
+
+            if (string.IsNullOrWhiteSpace(userModel.EmailAddress))
+            {
+                throw new ValidationException("Email Address is required");
+            }
+
+            if (string.IsNullOrWhiteSpace(userModel.MobileNumber))
+            {
+                throw new ValidationException("Mobile Number is required");
+            }
+
+            if (userModel.DateOfBirth <= SqlDateTime.MinValue)
+            {
+                throw new ValidationException("Invalid Date of Birth");
+            }
         }
     }
 }
