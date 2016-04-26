@@ -36,28 +36,28 @@ namespace Hambasafe.Services.Tests.Services
         [Fact]
         public async void FindAllByUsernameFindFullFirstName()
         {
-            var c = await _userService.FindAllByUsername("Test2");
+            var c = await _userService.FindAllByName("Test2");
             Assert.Equal(c.First().FirstNames, "Test2");
         }
 
         [Fact]
         public async void FindAllByUsernameFindPartialFirstName()
         {
-            var c = await _userService.FindAllByUsername("Test");
+            var c = await _userService.FindAllByName("Test");
             Assert.Equal(c.Count, 2);
         }
 
         [Fact]
         public async void FindAllByUsernameFullSurname()
         {
-            var c = await _userService.FindAllByUsername("Sur2");
+            var c = await _userService.FindAllByName("Sur2");
             Assert.Equal(c.First().LastName, "Sur2");
         }
 
         [Fact]
         public async void FindAllByUsernameFindPartialSurname()
         {
-            var c = await _userService.FindAllByUsername("Sur");
+            var c = await _userService.FindAllByName("Sur");
             Assert.Equal(c.Count, 2);
         }
     }
