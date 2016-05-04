@@ -46,6 +46,17 @@ namespace Hambasafe.Api.Controllers.v1
         }
 
         [AllowAnonymous]
+        [Route("upload-identification"), HttpPost]
+        public async Task<int> UploadIdentification([FromBody]UserIdentificationModel userIdentificationModel)
+        {
+            ValidateUserIdentificationModel(userIdentificationModel);
+
+            var userIdentificationEntity = _mapper.Map<UserIdentification>(userIdentificationModel);
+
+            return await _userService.SaveIdentification(userIdentificationEntity);
+        }
+
+        [AllowAnonymous]
         [Route("users"), HttpGet]
         public async Task<List<UserModel>> GetAllUsers()
         {
@@ -111,6 +122,24 @@ namespace Hambasafe.Api.Controllers.v1
             {
                 throw new ValidationException("Invalid Date of Birth");
             }
+        }
+
+        private static void ValidateUserIdentificationModel(UserIdentificationModel userIdentificationModel)
+        {
+            if (userIdentificationModel == null)
+            {
+                throw new ValidationException($"Invalid data for {nameof(userIdentificationModel)}");
+            }
+
+            if (userIdentificationModel.UserId == default(int) || userIdentificationModel.UserId <= 0)
+            {
+                throw new ValidationException("Invalid UserId");
+            }
+
+            ////if (userIdentificationModel.Data == null || userIdentificationModel.Data.Length == 0)
+            ////{
+            ////    throw new ValidationException("Invalid Data");
+            ////}
         }
     }
 }
