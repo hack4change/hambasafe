@@ -10,6 +10,7 @@ namespace Hambasafe.Api.Models.v1
             CreateMap<EventLocation, EventLocationModel>().ReverseMap();
             CreateMap<EventType, EventTypeModel>().ReverseMap();
             CreateMap<User, UserModel>().ReverseMap();
+            CreateMap<UserIdentificationModel, UserIdentification>();
         }
     }
 }

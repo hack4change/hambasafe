@@ -16,6 +16,7 @@ namespace Hambasafe.Services.Services
         Task<List<User>> FindAllByName(string name);
         Task<int> Add(User user);
         Task<int> Update(User user);
+        Task<int> SaveIdentification(UserIdentification userIdentification);
     }
 
     public class UserService : IUserService
@@ -56,7 +57,7 @@ namespace Hambasafe.Services.Services
             try
             {
                 // Validate that this user does not exist
-                var userExists = await _repository.FindAll(u => u.Id == user.Id  || u.EmailAddress.Equals(user.EmailAddress, StringComparison.OrdinalIgnoreCase))
+                var userExists = await _repository.FindAll(u => u.Id == user.Id || u.EmailAddress.Equals(user.EmailAddress, StringComparison.OrdinalIgnoreCase))
                                                   .AnyAsync();
 
                 if (userExists)
@@ -89,7 +90,7 @@ namespace Hambasafe.Services.Services
                 var existingUser = await GetExistingUser(user);
 
                 existingUser.MapUser(user);
-                
+
                 var result = await _repository.Update(existingUser);
 
                 if (result != 1)
@@ -98,11 +99,37 @@ namespace Hambasafe.Services.Services
                 }
 
                 return user.Id;
-
             }
             catch (DbUpdateException ex)
             {
                 throw new DataException("Error occured while updating a User", ex.InnerException);
+            }
+        }
+
+        public async Task<int> SaveIdentification(UserIdentification userIdentification)
+        {
+            try
+            {
+                // TODO : Persist the user identification data
+                var documentUrl = $"[DOCUMENTURL]/{userIdentification.Identifier}";
+                ////File.WriteAllBytes(documentUrl, userIdentification.Data);
+
+                var user = await GetExistingUser(new User { Id = userIdentification.UserId });
+
+                user.IdentityDocumentUrl = documentUrl;
+
+                var result = await _repository.Update(user);
+
+                if (result != 1)
+                {
+                    throw new DataException($"Expected to update 1 user, but instead updated {result}");
+                }
+
+                return user.Id;
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DataException("Error occured while saving identification", ex.InnerException);
             }
         }
 
