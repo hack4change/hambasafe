@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
@@ -110,9 +111,8 @@ namespace Hambasafe.Services.Services
         {
             try
             {
-                // TODO : Persist the user identification data
-                var documentUrl = $"[DOCUMENTURL]/{userIdentification.Identifier}";
-                ////File.WriteAllBytes(documentUrl, userIdentification.Data);
+                var documentUrl = $"[DOCUMENTURL]/{userIdentification.Identifier}.{userIdentification.FileExtension.Replace(".", "")}";
+                File.WriteAllBytes(documentUrl, userIdentification.ByteData);
 
                 var user = await GetExistingUser(new User { Id = userIdentification.UserId });
 
