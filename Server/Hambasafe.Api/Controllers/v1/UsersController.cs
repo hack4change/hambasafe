@@ -8,6 +8,7 @@ using Hambasafe.DataLayer.Entities;
 using Hambasafe.Services.Services;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Data.Entity.Query.ExpressionTranslators.Internal;
 
 namespace Hambasafe.Api.Controllers.v1
 {
@@ -73,7 +74,7 @@ namespace Hambasafe.Api.Controllers.v1
 
             return _mapper.Map<List<User>, List<UserModel>>(users);
         }
-        
+
         [AllowAnonymous]
         [Route("user"), HttpGet]
         public async Task<UserModel> GetUser([FromQuery]int id, [FromQuery]string emailAddress)
@@ -87,7 +88,7 @@ namespace Hambasafe.Api.Controllers.v1
             {
                 userEntity = await _userService.FindById(id);
             }
-            
+
             return _mapper.Map<UserModel>(userEntity);
         }
 
@@ -136,10 +137,15 @@ namespace Hambasafe.Api.Controllers.v1
                 throw new ValidationException("Invalid UserId");
             }
 
-            ////if (userIdentificationModel.Data == null || userIdentificationModel.Data.Length == 0)
-            ////{
-            ////    throw new ValidationException("Invalid Data");
-            ////}
+            if (string.IsNullOrEmpty(userIdentificationModel.FileExtension))
+            {
+                throw new ValidationException("Invalid File Extenion");
+            }
+
+            if (string.IsNullOrEmpty(userIdentificationModel.Base64Data))
+            {
+                throw new ValidationException("Invalid Data");
+            }
         }
     }
 }

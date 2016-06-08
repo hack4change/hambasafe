@@ -5,6 +5,8 @@ namespace Hambasafe.Api.Models.v1
     {
         public int UserId { get; set; }
 
-        public byte[] Data { get; set; }
+        public string FileExtension { get; set; }
+
+        public string Base64Data { get; set; }
     }
 }
