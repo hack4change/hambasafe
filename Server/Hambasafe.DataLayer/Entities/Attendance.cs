@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hambasafe.DataLayer.Entities
 {
-
     public partial class Attendance
     {
         public Attendance()
         {
             AttendanceRatings = new HashSet<AttendanceRating>();
         }
+
         [Key]
         [Column("AttendanceId")]
         public int Id { get; set; }
