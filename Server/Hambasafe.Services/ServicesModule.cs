@@ -7,6 +7,7 @@ namespace Hambasafe.Services
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<AttendanceService>().As<IAttendanceService>();
             builder.RegisterType<EventService>().As<IEventService>();
             builder.RegisterType<EventLocationService>().As<IEventLocationService>();
             builder.RegisterType<EventTypeService>().As<IEventTypeService>();

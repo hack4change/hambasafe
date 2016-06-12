@@ -6,6 +6,7 @@ namespace Hambasafe.Api.Models.v1
     {
         protected override void Configure()
         {
+            CreateMap<Attendance, AttendanceModel>().ReverseMap();
             CreateMap<Event, EventModel>().ReverseMap();
             CreateMap<EventLocation, EventLocationModel>().ReverseMap();
             CreateMap<EventType, EventTypeModel>().ReverseMap();
