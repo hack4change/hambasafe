@@ -111,6 +111,12 @@ namespace Hambasafe.DataLayer.Migrations
 
                     b.Property<int>("StartEventLocationId");
 
+                    b.Property<decimal>("Distance");
+
+                    b.Property<string>("Intensity");
+
+                    b.Property<bool?>("IsDeleted");
+
                     b.HasKey("Id");
                 });
 
@@ -133,6 +139,8 @@ namespace Hambasafe.DataLayer.Migrations
                     b.Property<string>("Province");
 
                     b.Property<string>("Suburb");
+
+                    b.Property<string>("City");
 
                     b.HasKey("Id");
                 });

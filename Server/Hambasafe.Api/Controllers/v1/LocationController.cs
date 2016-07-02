@@ -39,6 +39,15 @@ namespace Hambasafe.Api.Controllers.v1
         }
 
         [AllowAnonymous]
+        [Route("locations-by-city"), HttpGet]
+        public async Task<List<EventLocationModel>> GetLocationsByCity([FromQuery]string city)
+        {
+            var eventLocations = await _eventLocationService.FindByCity(city);
+
+            return _mapper.Map<List<EventLocationModel>>(eventLocations);
+        }
+
+        [AllowAnonymous]
         [Route("location"), HttpGet]
         public async Task<EventLocationModel> GetLocation([FromQuery]int id)
         {
