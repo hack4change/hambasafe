@@ -21,7 +21,8 @@ namespace Hambasafe.DataLayer.Migrations
                     Longitude = table.Column<double>(nullable: true),
                     PostCode = table.Column<string>(nullable: true),
                     Province = table.Column<string>(nullable: true),
-                    Suburb = table.Column<string>(nullable: true)
+                    Suburb = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -166,7 +167,10 @@ namespace Hambasafe.DataLayer.Migrations
                     MaxWaitingMinutes = table.Column<short>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     OwnerUserId = table.Column<int>(nullable: false),
-                    StartEventLocationId = table.Column<int>(nullable: false)
+                    StartEventLocationId = table.Column<int>(nullable: false),
+                    Distance = table.Column<decimal>(nullable: true),
+                    Intensity = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {

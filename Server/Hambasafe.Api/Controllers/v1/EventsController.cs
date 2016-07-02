@@ -34,6 +34,13 @@ namespace Hambasafe.Api.Controllers.v1
         }
 
         [AllowAnonymous]
+        [Route("delete-event"), HttpPost]
+        public async Task<bool> DeleteEvent([FromQuery] int id)
+        {
+            return await _eventService.DeleteById(id);
+        }
+
+        [AllowAnonymous]
         [Route("event"), HttpGet]
         public async Task<EventModel> GetEvent([FromQuery]int id)
         {

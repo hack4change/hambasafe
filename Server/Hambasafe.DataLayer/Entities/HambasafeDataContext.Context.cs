@@ -16,8 +16,7 @@ namespace Hambasafe.DataLayer.Entities
         public HambasafeDataContext(DbContextOptions options) : base(options)
         {
         }
-
-        // TODO : Should this not be cahnged to singular? This could maybe be the reason for pluralised table names...
+        
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<AttendanceRating> AttendanceRatings { get; set; }
         public virtual DbSet<BlockedUser> BlockedUsers { get; set; }

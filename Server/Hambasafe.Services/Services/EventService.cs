@@ -17,6 +17,7 @@ namespace Hambasafe.Services.Services
         Task<List<Event>> FindByCoordinates(double latitude, double longitude, double distance);
         Task<Event> FindById(int id);
         Task<int> Add(Event @event);
+        Task<bool> DeleteById(int id);
     }
 
     public class EventService : IEventService
@@ -37,6 +38,7 @@ namespace Hambasafe.Services.Services
         public async Task<List<Event>> FindAll()
         {
             return await _eventRepository.FindAll()
+                                         .Where(e => !e.IsDeleted.HasValue || e.IsDeleted.Value == false)
                                          .Include(e => e.OwnerUser)
                                          .Include(e => e.EventType)
                                          .Include(e => e.StartLocation)
@@ -47,6 +49,7 @@ namespace Hambasafe.Services.Services
         public async Task<List<Event>> FindBySuburb(string suburb)
         {
             return await _eventRepository.FindAll(e => e.StartLocation.Suburb.StartsWith(suburb, StringComparison.OrdinalIgnoreCase))
+                                         .Where(e => !e.IsDeleted.HasValue || e.IsDeleted.Value == false)
                                          .Include(e => e.OwnerUser)
                                          .Include(e => e.EventType)
                                          .Include(e => e.StartLocation)
@@ -66,6 +69,7 @@ namespace Hambasafe.Services.Services
                                        .ToList();
 
             return await _eventRepository.FindAll(e => locationIds.Contains(e.StartEventLocationId))
+                                         .Where(e => !e.IsDeleted.HasValue || e.IsDeleted.Value == false)
                                          .Include(e => e.OwnerUser)
                                          .Include(e => e.EventType)
                                          .Include(e => e.StartLocation)
@@ -76,6 +80,7 @@ namespace Hambasafe.Services.Services
         public async Task<Event> FindById(int id)
         {
             return await _eventRepository.FindAll(e => e.Id == id)
+                                         .Where(e => !e.IsDeleted.HasValue || e.IsDeleted.Value == false)
                                          .Include(e => e.OwnerUser)
                                          .Include(e => e.EventType)
                                          .Include(e => e.StartLocation)
@@ -92,6 +97,9 @@ namespace Hambasafe.Services.Services
                 @event.EndEventLocationId = await GetEventLocationId(@event.EndEventLocationId, @event.EndLocation);
                 @event.OwnerUserId = await GetUserId(@event.OwnerUserId, @event.OwnerUser);
 
+                // If the IsDeleted has not been set, then set it to false
+                @event.IsDeleted = @event.IsDeleted ?? false;
+
                 var result = await _eventRepository.Add(@event);
 
                 if (result != 1)
@@ -105,6 +113,29 @@ namespace Hambasafe.Services.Services
             {
                 throw new DataException("Error occured while adding an Event", ex.InnerException);
             }
+        }
+
+        public async Task<bool> DeleteById(int id)
+        {
+            // Find the event that matches the id
+            var existingEvent = await _eventRepository.First(e => e.Id == id);
+
+            if (existingEvent == null)
+            {
+                throw new DataException($"Cannot find event for id:{id}");
+            }
+
+            // Do not actually delete the event as we may want to do some historic auditing on associated data - simply mark it as deleted
+            existingEvent.IsDeleted = true;
+
+            var result = await _eventRepository.Update(existingEvent);
+
+            if (result != 1)
+            {
+                throw new DataException($"Expected to delete 1 event, but instead deleted {result}");
+            }
+
+            return true;
         }
 
         private async Task<int> GetEventTypeId(int id, EventType eventType)

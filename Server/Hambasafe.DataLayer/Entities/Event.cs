@@ -29,10 +29,13 @@ namespace Hambasafe.DataLayer.Entities
         public bool? IsPublic { get; set; }
         public short MaxWaitingMinutes { get; set; }
         public string Attributes { get; set; }
+        public decimal? Distance { get; set; }
+        public string Intensity { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
+        public bool? IsDeleted  { get; set; }
 
-        [ForeignKey("StartEventLocationId")]
+    [ForeignKey("StartEventLocationId")]
         public virtual EventLocation StartLocation { get; set; }
         [ForeignKey("EndEventLocationId")]
         public virtual EventLocation EndLocation { get; set; }

@@ -11,6 +11,7 @@ namespace Hambasafe.Services.Services
     {
         Task<List<EventLocation>> FindAll();
         Task<List<EventLocation>> FindBySuburb(string suburb);
+        Task<List<EventLocation>> FindByCity(string city);
         Task<EventLocation> FindById(int id);
     }
 
@@ -31,6 +32,12 @@ namespace Hambasafe.Services.Services
         public async Task<List<EventLocation>> FindBySuburb(string suburb)
         {
             return await _repository.FindAll(el => el.Suburb.StartsWith(suburb, StringComparison.OrdinalIgnoreCase))
+                                    .ToListAsync();
+        }
+
+        public async Task<List<EventLocation>> FindByCity(string city)
+        {
+            return await _repository.FindAll(el => el.City.StartsWith(city, StringComparison.OrdinalIgnoreCase))
                                     .ToListAsync();
         }
 
