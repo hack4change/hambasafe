@@ -21,7 +21,7 @@ namespace Hambasafe.Services.Tests
                     {
                         if (_container == null)
                         {
-                            var db = new DbContextOptionsBuilder();
+                            var db = new DbContextOptionsBuilder<HambasafeDataContext>();
                             db.UseInMemoryDatabase();
 
                             var builder = new ContainerBuilder();
