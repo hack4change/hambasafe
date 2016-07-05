@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:56478/",
+      "applicationUrl": "http://localhost:52886/",
       "sslPort": 0
     }
   },
@@ -11,18 +11,18 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "swagger/ui",
+      "launchUrl": "api/values",
       "environmentVariables": {
-        "Hosting:Environment": "Development"
-      },
-      "sdkVersion": "dnx-coreclr-win-x86.1.0.0-rc1-update2"
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     },
-    "web": {
-      "commandName": "web",
+    "Hambasafe.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:5000/api/values",
       "environmentVariables": {
-        "Hosting:Environment": "Development"
-      },
-      "sdkVersion": "dnx-coreclr-win-x86.1.0.0-rc1-update2"
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }

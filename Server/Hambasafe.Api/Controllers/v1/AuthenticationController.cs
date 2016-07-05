@@ -6,9 +6,10 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Hambasafe.DataLayer.Entities;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace Hambasafe.Api.Controllers.v1
@@ -72,13 +73,16 @@ namespace Hambasafe.Api.Controllers.v1
             // For now, just creating a simple generic identity.
             ClaimsIdentity identity = new ClaimsIdentity(new GenericIdentity(user, "TokenAuth"), new[] { new Claim("EntityID", "1", ClaimValueTypes.Integer) });
 
-            var securityToken = handler.CreateToken(
-                issuer: _tokenOptions.Issuer,
-                audience: _tokenOptions.Audience,
-                signingCredentials: _tokenOptions.SigningCredentials,
-                subject: identity,
-                expires: expires
-                );
+            var securityToken = handler.CreateToken(new SecurityTokenDescriptor()
+            {
+                Issuer = _tokenOptions.Issuer,
+                Audience = _tokenOptions.Audience,
+                SigningCredentials = _tokenOptions.SigningCredentials,
+                Subject = identity,
+                Expires = expires
+            });
+                
+                
 
             return handler.WriteToken(securityToken);
         }

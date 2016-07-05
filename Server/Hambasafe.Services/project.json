@@ -1,24 +1,15 @@
 ﻿{
   "version": "1.0.0-*",
-  "description": "Hambasafe.Services Class Library",
-  "authors": [ "madan" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
-  "frameworks": {
-    "dotnet5.4": {
-      "dependencies": {
-        "Autofac": "4.0.0-rc1-177",
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Collections": "4.0.11-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Threading": "4.0.11-beta-23516"
-      }
-    }
-  },
+
   "dependencies": {
-    "EntityFramework.Core": "7.0.0-rc1-final",
-    "Hambasafe.DataLayer": "1.0.0-*"
+    "NETStandard.Library": "1.6.0",
+    "Hambasafe.DataLayer": "1.0.0-*",
+    "Autofac": "4.0.0-rc3-286"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
   }
 }

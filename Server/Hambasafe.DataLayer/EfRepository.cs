@@ -5,7 +5,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Hambasafe.DataLayer.Entities;
 using Hambasafe.DataLayer.Extensions;
-using Microsoft.Data.Entity;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace Hambasafe.DataLayer
 {

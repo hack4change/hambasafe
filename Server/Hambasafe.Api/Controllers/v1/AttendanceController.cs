@@ -4,8 +4,9 @@ using AutoMapper;
 using Hambasafe.Api.Models.v1;
 using Hambasafe.DataLayer.Entities;
 using Hambasafe.Services.Services;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace Hambasafe.Api.Controllers.v1
 {

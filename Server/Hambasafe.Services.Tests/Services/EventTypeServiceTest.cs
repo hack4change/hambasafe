@@ -3,7 +3,6 @@ using Autofac;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
 using Hambasafe.Services.Services;
-using Hambasafe.Logic.UnitTests;
 using Xunit;
 
 namespace Hambasafe.Services.Tests.Services

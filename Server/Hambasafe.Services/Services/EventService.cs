@@ -6,7 +6,7 @@ using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
 using Hambasafe.Services.Exceptions;
 using Hambasafe.Services.Helper;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hambasafe.Services.Services
 {

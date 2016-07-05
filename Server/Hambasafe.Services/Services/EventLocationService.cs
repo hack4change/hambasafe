@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hambasafe.Services.Services
 {

@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Hambasafe.DataLayer.Entities;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hambasafe.DataLayer
 {

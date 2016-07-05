@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
 using Hambasafe.Services.Exceptions;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hambasafe.Services.Services
 {

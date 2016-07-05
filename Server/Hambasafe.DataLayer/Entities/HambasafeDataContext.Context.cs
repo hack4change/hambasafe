@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hambasafe.DataLayer.Entities
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
     }
 
     public class HambasafeDataContext : DbContext
@@ -13,10 +15,10 @@ namespace Hambasafe.DataLayer.Entities
         public HambasafeDataContext()
         {
         }
-        public HambasafeDataContext(DbContextOptions options) : base(options)
+        public HambasafeDataContext(DbContextOptions<HambasafeDataContext> options) : base(options)
         {
         }
-        
+
         public virtual DbSet<Attendance> Attendances { get; set; }
         public virtual DbSet<AttendanceRating> AttendanceRatings { get; set; }
         public virtual DbSet<BlockedUser> BlockedUsers { get; set; }

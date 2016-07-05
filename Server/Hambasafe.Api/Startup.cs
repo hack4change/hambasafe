@@ -1,21 +1,27 @@
 ﻿using System;
-using System.IdentityModel.Tokens;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using Autofac;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
+using AutoMapper;
+using Hambasafe.Api.Models.v1;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Data.Entity;
-using Autofac.Extensions.DependencyInjection;
-using AutoMapper;
-using Hambasafe.Api.Models.v1;
-using Hambasafe.DataLayer.Entities;
-using Microsoft.AspNet.Diagnostics;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Hambasafe.DataLayer.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors.Internal;
+using Microsoft.EntityFrameworkCore;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Hambasafe.Api
 {
@@ -28,28 +34,47 @@ namespace Hambasafe.Api
 
         public Startup(IHostingEnvironment env)
         {
-            // Set up configuration sources.
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; set; }
+        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFramework()
-                    .AddSqlServer()
-                    .AddDbContext<HambasafeDataContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
-            services.AddEntityFramework()
-                    .AddSqlServer()
-                    .AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+            var inMemory = bool.Parse(Configuration["Data:InMemory"]);
+            if (!inMemory)
+            {
+                services.AddDbContext<HambasafeDataContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                services.AddIdentity<ApplicationUser, IdentityRole>()
+                   .AddEntityFrameworkStores<ApplicationDbContext>();
+            }
+            else
+            {
+                services.AddDbContext<HambasafeDataContext>(options => options.UseInMemoryDatabase());
+            } 
+           
 
+            services.AddCors(options => options.AddPolicy("AllowAllOrigins",
+               builder =>
+               {
+                   builder
+                       .AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .SetPreflightMaxAge(TimeSpan.FromSeconds(2520));
+               }));
             services.AddMvc();
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowAllOrigins"));
+            });
             services.AddSwaggerGen();
             var containerBuilder = new ContainerBuilder();
             RSAParameters keyParams = RSAKeyUtils.GetRandomKey();
@@ -57,6 +82,9 @@ namespace Hambasafe.Api
             // Create the key, and a set of token options to record signing credentials 
             // using that key, along with the other parameters we will need in the 
             // token controlller.
+
+
+
             _key = new RsaSecurityKey(keyParams);
             _tokenOptions = new TokenAuthOptions()
             {
@@ -81,25 +109,24 @@ namespace Hambasafe.Api
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
-            if (env.IsDevelopment())
+            app.UseDeveloperExceptionPage();
+            var inMemory = bool.Parse(Configuration["Data:InMemory"]);
+            if (!inMemory)
             {
-                app.UseDeveloperExceptionPage();
-
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
                     serviceScope.ServiceProvider.GetService<HambasafeDataContext>().Database.Migrate();
                     //serviceScope.ServiceProvider.GetService<ApplicationDbContext>().Database.Migrate();
                 }
+                app.UseIdentity();
+                app.UseFacebookAuthentication(new FacebookOptions
+                {
+                    AppId = "216973471993488",
+                    AppSecret = "ad89d09791b171b006f831095fb1f274",
+                });
             }
-
-            app.UseIISPlatformHandler();
-            app.UseIdentity();
-            app.UseFacebookAuthentication(o =>
-            {
-                o.AppId = "216973471993488";
-                o.AppSecret = "ad89d09791b171b006f831095fb1f274";
-            });
+            
+           
 
             app.UseExceptionHandler(appBuilder =>
             {
@@ -137,32 +164,30 @@ namespace Hambasafe.Api
                 });
             });
 
-            app.UseJwtBearerAuthentication(options =>
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
                 // Basic settings - signing key to validate with, audience and issuer.
-                options.TokenValidationParameters.IssuerSigningKey = _key;
-                options.TokenValidationParameters.ValidAudience = _tokenOptions.Audience;
-                options.TokenValidationParameters.ValidIssuer = _tokenOptions.Issuer;
-
-                // When receiving a token, check that we've signed it.
-                options.TokenValidationParameters.ValidateSignature = true;
-
-                // When receiving a token, check that it is still valid.
-                options.TokenValidationParameters.ValidateLifetime = true;
-
-                // This defines the maximum allowable clock skew - i.e. provides a tolerance on the token expiry time 
-                // when validating the lifetime. As we're creating the tokens locally and validating them on the same 
-                // machines which should have synchronised time, this can be set to zero. Where external tokens are
-                // used, some leeway here could be useful.
-                options.TokenValidationParameters.ClockSkew = TimeSpan.FromMinutes(0);
+              TokenValidationParameters = new TokenValidationParameters
+              {
+                  IssuerSigningKey = _key,
+                  ValidAudience = _tokenOptions.Audience,
+                  ValidIssuer = _tokenOptions.Issuer,
+                  // This defines the maximum allowable clock skew - i.e. provides a tolerance on the token expiry time 
+                  // when validating the lifetime. As we're creating the tokens locally and validating them on the same 
+                  // machines which should have synchronised time, this can be set to zero. Where external tokens are
+                  // used, some leeway here could be useful.
+                  ClockSkew = TimeSpan.FromMinutes(0),
+                  ValidateLifetime = true
+              },
+               
             });
 
             app.UseMvc();
-            app.UseSwaggerGen();
+            // Enable middleware to serve generated Swagger as a JSON endpoint
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
             app.UseSwaggerUi();
         }
-
-        // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }

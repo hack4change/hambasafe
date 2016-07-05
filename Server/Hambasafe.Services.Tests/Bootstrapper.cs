@@ -1,10 +1,9 @@
 using Autofac;
 using Hambasafe.DataLayer;
 using Hambasafe.DataLayer.Entities;
-using Hambasafe.Services;
-using Microsoft.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
-namespace Hambasafe.Logic.UnitTests
+namespace Hambasafe.Services.Tests
 {
     public static class Bootstrapper
     {

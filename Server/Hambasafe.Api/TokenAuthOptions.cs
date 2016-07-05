@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Hambasafe.Api
 {
